@@ -11,6 +11,10 @@ import { Dashboard } from './pages/Dashboard';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import { HomeLayout } from './layouts/HomeLayout';
+import Map from './pages/Map';
+import Training from './pages/Training';
+import Exercises from './pages/Exercises';
 
 const App: React.FC = () => {
   return (
@@ -26,10 +30,17 @@ const App: React.FC = () => {
           <Route path="/plans" element={<Plans />} />
         </Route>
 
-        {/* ROTAS INTERNAS / ADMIN */}
+        {/* ROTA ADMIN */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+
+        {/* ROTAS INTERNAS */}
+        <Route element={<HomeLayout />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/home/map" element={<Map />} />
+          <Route path="/home/training" element={<Training />} />
+          <Route path="/home/exercises" element={<Exercises />} />
         </Route>
 
       </Routes>
