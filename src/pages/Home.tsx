@@ -39,6 +39,7 @@ export default function Home() {
         </Card>
       </div>
 
+      {/* Métricas */}
       <div
         className="flex flex-col md:grid md:grid-cols-2 md:gap-2 lg:flex lg:flex-row"
         id="metrics-cards"
@@ -127,6 +128,7 @@ export default function Home() {
         </Card>
       </div>
 
+      {/* Ações Rápidas */}
       <div className="flex flex-col md:flex-row" id="middle-cards">
         <Card className="bg-white w-full flex flex-col">
           <div className="bg-red-200 rounded w-fit p-2">
@@ -167,6 +169,7 @@ export default function Home() {
         </Card>
       </div>
 
+      {/* Treino de Hoje */}
       <div className="flex w-full" id="workout">
         <Card className="bg-white w-full flex flex-col">
           <h2 className="text-xl font-normal text-black mb-4">
