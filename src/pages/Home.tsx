@@ -10,6 +10,7 @@ import {
   Map,
 } from "lucide-react";
 import { Card } from "../components/ui/Card";
+import { MetricCard } from "../components/ui/MetricCard";
 import { Button } from "../components/ui/Button";
 import { Link } from "react-router-dom";
 
@@ -19,7 +20,7 @@ const average_train = 20;
 const average_minutes = 45;
 const train_target = 60;
 const personal_records = 3;
-const ocupancy_rate = 30;
+const ocupancy_rate = 50;
 
 const todayWorkout = [
   { exercise: "Supino Reto", equipment: "Barra Livre", sets: 4, reps: 12 },
@@ -29,7 +30,27 @@ const todayWorkout = [
   { exercise: "Rosca Direta", equipment: "Barra EZ", sets: 4, reps: 10 },
 ];
 
+const getOccupancyStatus = (rate: number) => {
+  if (rate < 35) {
+    return {
+      color: "text-green-600",
+      message: "Baixa - ótimo momento!",
+    };
+  } else if (rate < 70) {
+    return {
+      color: "text-amber-500",
+      message: "Média",
+    };
+  } else {
+    return {
+      color: "text-red-600",
+      message: "Alta",
+    };
+  }
+};
+
 export default function Home() {
+  const occupancyStatus = getOccupancyStatus(ocupancy_rate);
   return (
     <div className="bg-gray-50 p-6 justify-center px-12">
       <div className="flex w-full h-min" id="welcome-card">
@@ -44,88 +65,58 @@ export default function Home() {
         className="flex flex-col md:grid md:grid-cols-2 md:gap-2 lg:flex lg:flex-row"
         id="metrics-cards"
       >
-        <Card className="bg-white h-[25vh] w-full  flex flex-col">
-          <div className="top flex">
-            <p className="font-light text-start text-base text-gray-600">
-              Treinos Esta Semana
-            </p>
-            <Activity className="h-6 w-6 text-blue-600 ml-auto" />
-          </div>
-
-          <p className="font-normal text-2xl mt-3 text-black flex flex-1">
-            {trains}
-          </p>
-
-          <p
-            className={`flex items-center gap-1 text-sm mt-2 ${average_train > 0 ? "text-green-600" : "text-red-600"}`}
-          >
-            {average_train < 0 ? <MoveDown size={10} /> : <MoveUp size={10} />}
-            <span>{Math.abs(average_train)}% da semana passada</span>
-          </p>
-        </Card>
-
-        <Card className="bg-white h-[25vh] w-full flex flex-col">
-          <div className="top flex">
-            <p className="font-light text-start text-gray-600">Tempo Médio</p>
-            <Timer className="h-6 w-6 text-purple-600 ml-auto" />
-          </div>
-          <div className="mid flex-1">
-            <p className="font-normal text-2xl mt-3 text-black">
-              {average_minutes}min
-            </p>
-          </div>
-          <div className="bottom">
-            <p className="text-sm text-purple-600">Meta: {train_target}min</p>
-          </div>
-        </Card>
-
-        <Card className="bg-white h-[25vh] w-full flex flex-col">
-          <div className="top flex">
-            <p className="font-light text-start text-gray-600">
-              Recordes Pessoais
-            </p>
-            <TrendingUp className="h-6 w-6 text-orange-600 ml-auto" />
-          </div>
-          <div className="mid flex-1">
-            <p className="font-normal text-2xl mt-3 text-black">
-              {personal_records}
-            </p>
-          </div>
-          <div className="bottom">
-            <p className="text-sm text-orange-600">Novos esse mês</p>
-          </div>
-        </Card>
-
-        <Card className="bg-white h-[25vh] w-full flex flex-col">
-          <div className="top flex">
-            <p className="font-light text-start text-gray-600">
-              Lotação da Academia
-            </p>
-            <Flame className="h-6 w-6 text-red-600 ml-auto" />
-          </div>
-          <div className="mid flex-1">
-            <p className="font-normal text-2xl mt-3 text-black">
-              {ocupancy_rate}%
-            </p>
-          </div>
-          <div className="bottom">
+        <MetricCard
+          title="Treinos Esta Semana"
+          icon={Activity}
+          iconColor="text-blue-600"
+          value={trains}
+          bottomContent={
             <p
-              className={`text-sm font-medium ${
-                ocupancy_rate < 35
-                  ? "text-green-600"
-                  : ocupancy_rate < 70
-                    ? "text-amber-500"
-                    : "text-red-600"
+              className={`flex items-center gap-1 text-sm mt-2 ${
+                average_train > 0 ? "text-green-600" : "text-red-600"
               }`}
             >
-              {ocupancy_rate < 35
-                ? "Baixa - ótimo momento!"
-                : ocupancy_rate < 70
-                  ? "Média"
-                  : "Alta"}
+              {average_train < 0 ? (
+                <MoveDown size={10} />
+              ) : (
+                <MoveUp size={10} />
+              )}
+              <span>{Math.abs(average_train)}% da semana passada</span>
             </p>
-          </div>
-        </Card>
+          }
+        />
+
+        <MetricCard
+          title="Tempo Médio"
+          icon={Timer}
+          iconColor="text-purple-600"
+          value={`${average_minutes}min`}
+          bottomContent={
+            <p className="text-sm text-purple-600">Meta: {train_target}min</p>
+          }
+        />
+
+        <MetricCard
+          title="Recordes Pessoais"
+          icon={TrendingUp}
+          iconColor="text-orange-600"
+          value={personal_records}
+          bottomContent={
+            <p className="text-sm text-orange-600">Novos esse mês</p>
+          }
+        />
+
+        <MetricCard
+          title="Lotação da Academia"
+          icon={Flame}
+          iconColor="text-red-600"
+          value={`${ocupancy_rate}%`}
+          bottomContent={
+            <p className={`text-sm font-medium ${occupancyStatus.color}`}>
+              {occupancyStatus.message}
+            </p>
+          }
+        />
       </div>
 
       {/* Ações Rápidas */}
