@@ -36,17 +36,19 @@ const getOccupancyStatus = (rate: number) => {
       color: "text-green-600",
       message: "Baixa - ótimo momento!",
     };
-  } else if (rate < 70) {
+  }
+
+  if (rate < 70) {
     return {
       color: "text-amber-500",
       message: "Média",
     };
-  } else {
-    return {
-      color: "text-red-600",
-      message: "Alta",
-    };
   }
+
+  return {
+    color: "text-red-600",
+    message: "Alta",
+  };
 };
 
 export default function Home() {
