@@ -13,6 +13,7 @@ import { Card } from "../components/ui/Card";
 import { MetricCard } from "../components/ui/MetricCard";
 import { Button } from "../components/ui/Button";
 import { Link } from "react-router-dom";
+import { hardOccupancyThreshold, lowOccupancyThreshold } from "../constants";
 
 const name = "Alex";
 const trains = "5/4";
@@ -31,12 +32,12 @@ const todayWorkout = [
 ];
 
 const getOccupancyStatus = (rate: number) => {
-  if (rate < 35) {
+  if (rate < lowOccupancyThreshold) {
     return {
       color: "text-green-600",
       message: "Baixa - ótimo momento!",
     };
-  } else if (rate < 70) {
+  } else if (rate < hardOccupancyThreshold) {
     return {
       color: "text-amber-500",
       message: "Média",
@@ -122,41 +123,49 @@ export default function Home() {
       {/* Ações Rápidas */}
       <div className="flex flex-col md:flex-row" id="middle-cards">
         <Card className="bg-white w-full flex flex-col">
-          <div className="bg-red-200 rounded w-fit p-2">
-            <Map className="h-6 w-6 text-red-600" />
-          </div>
-          <span className="font-medium mt-3 text-black md:text-base">
-            Ver mapa da academia
-          </span>
-          <p className="text-xs md:text-sm text-gray-500 mt-1">
-            Veja a disponibilidade de equipamentos e densidade de pessoas em
-            tempo real
-          </p>
+          <Link to="/home/map">
+            <div className="bg-red-200 rounded w-fit p-2">
+              <Map className="h-6 w-6 text-red-600" />
+            </div>
+
+            <span className="font-medium mt-3 text-black md:text-base">
+              Ver mapa da academia
+            </span>
+
+            <p className="text-xs md:text-sm text-gray-500 mt-1">
+              Veja a disponibilidade de equipamentos e densidade de pessoas em
+              tempo real
+            </p>
+          </Link>
         </Card>
 
         <Card className="bg-white w-full flex flex-col">
-          <div className="bg-pink-200 rounded w-fit p-2">
-            <ListChecks className="h-6 w-6 text-pink-600" />
-          </div>
-          <span className="font-medium mt-3 text-black text-xs md:text-base ">
-            Gerenciar treino
-          </span>
-          <p className="text-xs md:text-sm text-gray-500 mt-1">
-            Crie e personalize sua rotina de treino adaptativa
-          </p>
+          <Link to="/home/training">
+            <div className="bg-pink-200 rounded w-fit p-2">
+              <ListChecks className="h-6 w-6 text-pink-600" />
+            </div>
+            <span className="font-medium mt-3 text-black text-xs md:text-base ">
+              Gerenciar treino
+            </span>
+            <p className="text-xs md:text-sm text-gray-500 mt-1">
+              Crie e personalize sua rotina de treino adaptativa
+            </p>
+          </Link>
         </Card>
 
         <Card className="bg-white w-full flex flex-col">
-          <div className="bg-purple-200 rounded w-fit p-2">
-            <BicepsFlexed className="h-6 w-6 text-purple-600" />
-          </div>
-          <span className="font-medium mt-3 text-black text-sm md:text-base">
-            Explorar exercícios
-          </span>
-          <p className="text-xs md:text-sm text-gray-500 mt-1">
-            Encontre exercícios alternativos quando o equipamento estiver
-            ocupado
-          </p>
+          <Link to="/home/exercises">
+            <div className="bg-purple-200 rounded w-fit p-2">
+              <BicepsFlexed className="h-6 w-6 text-purple-600" />
+            </div>
+            <span className="font-medium mt-3 text-black text-sm md:text-base">
+              Explorar exercícios
+            </span>
+            <p className="text-xs md:text-sm text-gray-500 mt-1">
+              Encontre exercícios alternativos quando o equipamento estiver
+              ocupado
+            </p>
+          </Link>
         </Card>
       </div>
 
