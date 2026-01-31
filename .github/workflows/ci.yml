@@ -1,0 +1,40 @@
+name: CI - Testes e Build
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [24.x, 22.x]
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar lint
+        run: npm run lint
+
+      - name: Auditoria de Segurança
+        run: npm audit --audit-level=high
+
+      - name: Executar testes
+        run: npm test -- --run
+
+      - name: Build do projeto
+        run: npm run build
