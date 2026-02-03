@@ -5,7 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Dumbbell, Menu, X } from "lucide-react";
 
 export const NavbarHome: React.FC = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
