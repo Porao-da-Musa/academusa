@@ -3,9 +3,9 @@ import { NavbarHome } from "../components/NavBarHome";
 
 export function HomeLayout() {
   return (
-    <div className="min-h-screen bg-gray-50">      
+    <div className="min-h-screen bg-gray-5 mb-5">
       <NavbarHome />
-      <div>
+      <div className="pt-[10vh]">
         <Outlet />
       </div>
     </div>
