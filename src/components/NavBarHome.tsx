@@ -10,14 +10,6 @@ export const NavbarHome: React.FC = () => {
 
   const isAuthPage = location.pathname === "/login";
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   if (isAuthPage) {
     return (
       <nav className="absolute top-0 left-0 w-full p-6 z-50">
@@ -54,7 +46,7 @@ export const NavbarHome: React.FC = () => {
         shadow-lg 
         transition-all duration-300 
         group
-        ${isScrolled || isMobileMenuOpen ? "shadow-xl scale-[1.02]" : ""}
+        ${isMobileMenuOpen ? "shadow-xl scale-[1.02]" : ""}
         `}
     >
       <div className="flex items-center justify-between">
