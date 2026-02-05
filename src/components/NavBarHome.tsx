@@ -9,7 +9,7 @@ export const NavbarHome: React.FC = () => {
   const location = useLocation();
 
   const isAuthPage = location.pathname === "/login";
-
+  const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
