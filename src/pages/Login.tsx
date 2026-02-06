@@ -21,7 +21,7 @@ export default function Login() {
       console.log("Usuário logado:", user); // <-- check
 
       // redirecionar para Dashboard ou Admin
-      navigate("/dashboard");
+      navigate("/home");
 
     } catch (err: any) {
       setError(err.message ?? "Erro ao fazer login.");

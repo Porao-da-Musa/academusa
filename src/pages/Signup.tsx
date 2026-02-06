@@ -37,7 +37,7 @@ export default function Signup() {
     }
 
     try {
-      const user = registerUser(fullName, email, password);
+      await registerUser(fullName, email, password);
 
       setMessage("Usuário cadastrado com sucesso!");
 
