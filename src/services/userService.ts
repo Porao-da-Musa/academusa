@@ -1,21 +1,20 @@
 import users from "../data/users.json";
+import {supabase} from "./supabase.ts";
 
-export function registerUser(name: string, email: string, password: string) {
-  const exists = users.find(u => u.email === email);
-
-  if (exists) {
-    throw new Error("E-mail já cadastrado!");
-  }
-
-  const newUser = {
-    id: users.length + 1,
-    name,
+export async function registerUser(name: string, email: string, password: string) {
+  const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
-    password
-  };
+    password,
+    options: {
+      data: {
+        name: name
+      }
+    }
+  });
 
-  users.push(newUser);
-  return newUser;
+  if (authError) {
+    throw new Error(`Erro ao registrar usuário: ${authError.message}`);
+  }
 }
 
 export function login(email: string, password: string) {
