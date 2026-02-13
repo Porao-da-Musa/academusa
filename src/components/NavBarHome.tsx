@@ -1,6 +1,6 @@
 //components -> navbar
 
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Dumbbell, Menu, X } from "lucide-react";
 
@@ -9,6 +9,14 @@ export const NavbarHome: React.FC = () => {
   const location = useLocation();
 
   const isAuthPage = location.pathname === "/login";
+  const [isScrolled, setIsScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   if (isAuthPage) {
     return (
@@ -46,7 +54,7 @@ export const NavbarHome: React.FC = () => {
         shadow-lg 
         transition-all duration-300 
         group
-        ${isMobileMenuOpen ? "shadow-xl scale-[1.02]" : ""}
+        ${isScrolled || isMobileMenuOpen ? "shadow-xl scale-[1.02]" : ""}
         `}
     >
       <div className="flex items-center justify-between">
