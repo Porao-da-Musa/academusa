@@ -15,11 +15,11 @@ Este projeto agora conta com testes unitários automatizados e validação de co
 
 ## ⚠️ Observação sobre Arquivos Legados
 
-O projeto possui arquivos criados nas primeiras 3 semanas que ainda não possuem cobertura de testes.
-
-- **Estratégia Atual**: Para não bloquear o desenvolvimento (pipeline), a configuração atual do Vitest foca na cobertura dos arquivos que estão sendo testados/modificados.
-
 - **Discussão Necessária**: Precisamos definir um plano de ação para subir os testes dos componentes antigos sem comprometer a velocidade das entregas atuais.
+
+## ⚠️⚠️⚠️ AVISO IMPORTANTE ⚠️⚠️⚠️
+
+ATUALMENTE, ESTA SETADO PARA 0 A COBERTURA DO COVERAGE, ATÉ DISCURTIRMOS COMO VAI FICAR OS ARQUIVOS SEM TESTE. PERMANECERA ASSIM!!!
 
 ## Como rodar
 
