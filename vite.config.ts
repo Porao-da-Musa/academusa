@@ -12,6 +12,20 @@ export default defineConfig({
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],
+      include: [
+        "src/components/**/*.{ts,tsx}",
+        "src/layouts/**/*.{ts,tsx}",
+        "src/pages/**/*.{ts,tsx}",
+      ],
+
+      exclude: [
+        "src/tests/**",
+        "**/*.test.{ts,tsx}",
+        "**/*.d.ts",
+        "src/main.tsx",
+        "vite.config.ts",
+      ],
+
       thresholds: {
         global: {
           lines: 75,
