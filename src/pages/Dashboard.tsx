@@ -1,6 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { NavbarDashboard } from '../components/NavBarDashboard';
+import { useNavigate } from "react-router-dom";
+import { NavbarDashboard } from "../components/NavBarDashboard";
 
 interface CardInfo {
   title: string;
@@ -9,10 +8,26 @@ interface CardInfo {
 }
 
 const cards: CardInfo[] = [
-  { title: 'Financeiro', description: 'Ver receitas e despesas', route: '/dashboard/financeiro' },
-  { title: 'Relatórios', description: 'Performance e dados', route: '/dashboard/relatorios' },
-  { title: 'Alunos', description: 'Gerencie seus alunos', route: '/dashboard/alunos' },
-  { title: 'Treinos', description: 'Plano de treinos', route: '/dashboard/treinos' },
+  {
+    title: "Financeiro",
+    description: "Ver receitas e despesas",
+    route: "/dashboard/financeiro",
+  },
+  {
+    title: "Relatórios",
+    description: "Performance e dados",
+    route: "/dashboard/relatorios",
+  },
+  {
+    title: "Alunos",
+    description: "Gerencie seus alunos",
+    route: "/dashboard/alunos",
+  },
+  {
+    title: "Treinos",
+    description: "Plano de treinos",
+    route: "/dashboard/treinos",
+  },
 ];
 
 export function Dashboard() {

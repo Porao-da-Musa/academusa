@@ -15,6 +15,7 @@ import { HomeLayout } from './layouts/HomeLayout';
 import Map from './pages/Map';
 import Training from './pages/Training';
 import Exercises from './pages/Exercises';
+import NotFound from './pages/NotFound';
 
 const App: React.FC = () => {
   return (
@@ -43,6 +44,7 @@ const App: React.FC = () => {
           <Route path="/home/exercises" element={<Exercises />} />
         </Route>
 
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
