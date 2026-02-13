@@ -5,7 +5,6 @@ const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-200 py-24 px-6">
       <div className="max-w-6xl mx-auto space-y-24">
-        {/* HEADER */}
         <div className="text-center space-y-4">
           <h1 className="text-5xl font-black text-slate-900">
             Sobre o Academusa
