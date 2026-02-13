@@ -17,6 +17,10 @@ Este projeto agora conta com testes unitários automatizados e validação de co
 
 - **Discussão Necessária**: Precisamos definir um plano de ação para subir os testes dos componentes antigos sem comprometer a velocidade das entregas atuais.
 
+## ⚠️⚠️⚠️ AVISO IMPORTANTE ⚠️⚠️⚠️
+
+ATUALMENTE, ESTA SETADO PARA 0 A COBERTURA DO COVERAGE, ATÉ DISCURTIRMOS COMO VAI FICAR OS ARQUIVOS SEM TESTE. PERMANECERA ASSIM!!!
+
 ## Como rodar
 
 ```bash
