@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { data, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { supabase } from "../services/supabaseConfig";
 
 interface ProtectedRouteProps {
@@ -13,9 +13,17 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   useEffect(() => {
     const checkAuth = async () => {
       const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setAuthenticated(!!session);
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
+
+      if (error) {
+        setAuthenticated(false);
+        alert("Erro ao verificar autenticação. Por favor, tente novamente.");
+      } else {
+        setAuthenticated(Boolean(user));
+      }
+
       setLoading(false);
     };
 
