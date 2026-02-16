@@ -11,13 +11,15 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const [authenticated, setAuthenticated] = useState(false);
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setAuthenticated(!!session);
-      setLoading(false);
-    };
+const { data, error } = await supabase.auth.getSession();
+
+if (error) {
+ // LIDA COM O ERRO
+}
+
+setAuthenticated(!!data.session);
+setLoading(false);
+
 
     checkAuth();
 
