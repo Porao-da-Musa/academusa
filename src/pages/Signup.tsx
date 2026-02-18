@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { signup } from "../services/supabaseConfig";
+import { signup } from "../services/authService";
 
 export default function Signup() {
   const navigate = useNavigate?.() ?? (() => {});
