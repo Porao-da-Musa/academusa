@@ -22,6 +22,7 @@ export default function Signup() {
   };
 
   const handleSignup = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     setError(null);
     setMessage(null);
@@ -43,6 +44,7 @@ export default function Signup() {
         navigate("/login");
       }, 1200);
     } catch (err: any) {
+      setLoading(false);
       setError(err.message ?? "Erro ao cadastrar usuário.");
     } finally {
       setLoading(false);
