@@ -49,4 +49,33 @@ describe("Login Component", () => {
       expect(screen.getByText("Home Page")).toBeInTheDocument();
     });
   });
+
+  it("shows error message on failed login", async () => {
+    const { login } = await import("../services/authService");
+    vi.mocked(login).mockRejectedValueOnce(
+      new Error("Invalid login credentials"),
+    );
+
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>,
+    );
+
+    const emailInput = screen.getByLabelText(/e-mail/i);
+    const passwordInput = screen.getByLabelText(/senha/i);
+    const loginButton = screen.getByRole("button", { name: /Entrar/i });
+
+    await user.type(emailInput, "aluno@academusa.com.br");
+    await user.type(passwordInput, "wrongpassword");
+    await user.click(loginButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Erro ao entrar. Verifique suas credenciais./i),
+      ).toBeInTheDocument();
+    });
+  });
 });

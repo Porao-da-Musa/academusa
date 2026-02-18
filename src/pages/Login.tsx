@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/userService";
+import { login } from "../services/authService";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -18,8 +18,8 @@ export default function Login() {
     try {
       const user = await login(email, password);
       if (user) navigate("/home");
-    } catch (err: any | string) {
-      setError(err.message ?? "Erro ao entrar. Verifique suas credenciais.");
+    } catch (err: Error | string) {
+      setError("Erro ao entrar. Verifique suas credenciais.");
     } finally {
       setLoading(false);
     }
