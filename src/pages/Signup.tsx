@@ -1,9 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// IMPORTANT: this component assumes you have a Supabase client exported from src/lib/supabaseClient
-// Example (src/lib/supabaseClient.ts):
-// import { createClient } from '@supabase/supabase-js'
-// export const supabase = createClient(import.meta.env.VITE_SUPABASE_URL!, import.meta.env.VITE_SUPABASE_ANON_KEY!)
 
 import { registerUser } from "../services/userService";
 
@@ -26,6 +22,7 @@ export default function Signup() {
   };
 
   const handleSignup = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     setError(null);
     setMessage(null);
@@ -44,8 +41,8 @@ export default function Signup() {
       setTimeout(() => {
         navigate("/login");
       }, 1200);
-
     } catch (err: any) {
+      setLoading(false);
       setError(err.message ?? "Erro ao cadastrar usuário.");
     }
   };
@@ -118,9 +115,9 @@ export default function Signup() {
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-600">
-          Já tem conta?{' '}
+          Já tem conta?{" "}
           <button
-            onClick={() => navigate('/login')}
+            onClick={() => navigate("/login")}
             className="text-indigo-600 font-medium hover:underline"
           >
             Entrar

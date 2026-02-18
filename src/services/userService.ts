@@ -1,15 +1,18 @@
-import users from "../data/users.json";
-import {supabase} from "./supabase.ts";
+import { supabase } from "./supabase.ts";
 
-export async function registerUser(name: string, email: string, password: string) {
-  const { data: authData, error: authError } = await supabase.auth.signUp({
+export async function registerUser(
+  name: string,
+  email: string,
+  password: string,
+) {
+  const { error: authError } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: {
-        name: name
-      }
-    }
+        name: name,
+      },
+    },
   });
 
   if (authError) {
@@ -17,10 +20,17 @@ export async function registerUser(name: string, email: string, password: string
   }
 }
 
-export function login(email: string, password: string) {
-  const user = users.find(u => u.email === email && u.password === password);
+export async function login(email: string, password: string) {
+  const { data: user, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("email", email)
+    .eq("password", password)
+    .maybeSingle();
 
-  if (!user) throw new Error("Credenciais inválidas.");
+  if (error || !user) {
+    throw new Error("Credenciais inválidas.");
+  }
 
   return user;
 }
