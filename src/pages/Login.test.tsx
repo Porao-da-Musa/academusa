@@ -1,8 +1,14 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Login from "./Login";
+
+vi.mock("../services/supabaseConfig", () => ({
+  login: vi
+    .fn()
+    .mockResolvedValue({ id: "123", email: "aluno@academusa.com.br" }),
+}));
 
 describe("Login Component", () => {
   it("renders the login form", () => {
@@ -39,17 +45,8 @@ describe("Login Component", () => {
     await user.type(passwordInput, "aluniacademusa");
     await user.click(loginButton);
 
-    // Verifica se foi redirecionado para /home
     await waitFor(() => {
       expect(screen.getByText("Home Page")).toBeInTheDocument();
     });
-  });
-  it("allows login with valid credentials", async () => {
-    const user = userEvent.setup();
-    render(
-      <MemoryRouter>
-        <Login />
-      </MemoryRouter>,
-    );
   });
 });
