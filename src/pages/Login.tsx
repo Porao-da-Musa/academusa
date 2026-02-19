@@ -1,29 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/userService";
+import { login } from "../services/authService";
 
 export default function Login() {
-  const navigate = useNavigate?.() ?? (() => {});
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
 
     try {
-      const user = login(email, password);
-
-      console.log("Usuário logado:", user); // <-- check
-
-      // redirecionar para Dashboard ou Admin
-      navigate("/home");
-    } catch (err: any) {
-      setError(err.message ?? "Erro ao fazer login.");
+      const user = await login(email, password);
+      if (user) navigate("/home");
+    } catch (err: Error | string) {
+      setError(err.message ?? "Erro ao entrar. Verifique suas credenciais.");
     } finally {
       setLoading(false);
     }

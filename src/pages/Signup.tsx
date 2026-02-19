@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { registerUser } from "../services/userService";
+import { signup } from "../services/authService";
 
 export default function Signup() {
   const navigate = useNavigate?.() ?? (() => {});
@@ -33,8 +33,10 @@ export default function Signup() {
       return;
     }
 
+    setLoading(true);
+
     try {
-      await registerUser(fullName, email, password);
+      const user = await signup(email, password);
 
       setMessage("Usuário cadastrado com sucesso!");
 
@@ -44,6 +46,8 @@ export default function Signup() {
     } catch (err: any) {
       setLoading(false);
       setError(err.message ?? "Erro ao cadastrar usuário.");
+    } finally {
+      setLoading(false);
     }
   };
 

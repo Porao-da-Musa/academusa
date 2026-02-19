@@ -1,5 +1,5 @@
 import users from "../data/users.json";
-import { supabase } from "./supabase.ts";
+import { supabase } from "./supabaseClient.ts";
 
 export async function registerUser(
   name: string,
