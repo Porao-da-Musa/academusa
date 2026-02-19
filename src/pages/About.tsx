@@ -5,28 +5,32 @@ const About: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-200 py-24 px-6">
       <div className="max-w-6xl mx-auto space-y-24">
-        
         {/* HEADER */}
         <div className="text-center space-y-4">
-          <h1 className="text-5xl font-black text-slate-900">Sobre o Academusa</h1>
+          <h1 className="text-5xl font-black text-slate-900">
+            Sobre o Academusa
+          </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Nossa missão é conectar treinadores e alunos com tecnologia de alto nível,
-            proporcionando desempenho, organização e resultados reais.
+            Nossa missão é conectar treinadores e alunos com tecnologia de alto
+            nível, proporcionando desempenho, organização e resultados reais.
           </p>
         </div>
 
         {/* BLOCO 1 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          
           {/* Texto */}
           <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-slate-900">Feito para Treinadores Modernos</h2>
+            <h2 className="text-4xl font-bold text-slate-900">
+              Feito para Treinadores Modernos
+            </h2>
             <p className="text-slate-600 text-lg">
-              Dê aos seus alunos uma experiência profissional, visual e extremamente motivadora.
-              O FitSync permite monitorar progresso, engajamento e performance com poucos cliques.
+              Dê aos seus alunos uma experiência profissional, visual e
+              extremamente motivadora. O FitSync permite monitorar progresso,
+              engajamento e performance com poucos cliques.
             </p>
             <p className="text-slate-600 text-lg">
-              Tudo isso com dashboards intuitivos, automações inteligentes e design de última geração.
+              Tudo isso com dashboards intuitivos, automações inteligentes e
+              design de última geração.
             </p>
           </div>
 
@@ -41,7 +45,9 @@ const About: React.FC = () => {
                       <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-400 to-orange-600"></div>
                       <div>
                         <p className="font-bold text-slate-900">João Silva</p>
-                        <p className="text-sm text-slate-500">Personal Trainer</p>
+                        <p className="text-sm text-slate-500">
+                          Personal Trainer
+                        </p>
                       </div>
                     </div>
                     <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
@@ -51,7 +57,9 @@ const About: React.FC = () => {
 
                   <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-6 space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-slate-600 font-medium">Treinos Esta Semana</span>
+                      <span className="text-slate-600 font-medium">
+                        Treinos Esta Semana
+                      </span>
                       <TrendingUp className="h-5 w-5 text-green-500" />
                     </div>
                     <div className="text-5xl font-black text-slate-900">24</div>
@@ -88,88 +96,108 @@ const About: React.FC = () => {
                     <CheckCircle className="h-8 w-8 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-slate-900 text-lg">+47% Resultados</p>
-                    <p className="text-sm text-slate-600">Nos últimos 30 dias</p>
+                    <p className="font-bold text-slate-900 text-lg">
+                      +47% Resultados
+                    </p>
+                    <p className="text-sm text-slate-600">
+                      Nos últimos 30 dias
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
 
         {/* BLOCO 2 */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-
           {/* Card invertido */}
           <div className="relative z-10 hidden lg:block">
             <div className="relative">
               <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 transform -rotate-2 hover:rotate-0 transition-all duration-500">
                 <div className="space-y-6">
-                  <h3 className="text-3xl font-bold text-slate-900">Tecnologia Inteligente</h3>
+                  <h3 className="text-3xl font-bold text-slate-900">
+                    Tecnologia Inteligente
+                  </h3>
                   <p className="text-slate-600">
-                    Criamos ferramentas que trabalham por você: alertas automáticos, análise de performance e insights prontos.
+                    Criamos ferramentas que trabalham por você: alertas
+                    automáticos, análise de performance e insights prontos.
                   </p>
-                  <p className="text-slate-600">
-                    Você foca no treino
-                  </p>
+                  <p className="text-slate-600">Você foca no treino</p>
                 </div>
               </div>
 
               <div className="absolute -bottom-6 -right-6 bg-white/95 backdrop-blur-xl rounded-2xl shadow-2xl p-6 transform rotate-3 hover:rotate-0 transition-all duration-500">
-                <p className="font-bold text-slate-900">Automação Inteligente</p>
-                <p className="text-sm text-slate-600">Sem retrabalho. Sem planilhas.</p>
+                <p className="font-bold text-slate-900">
+                  Automação Inteligente
+                </p>
+                <p className="text-sm text-slate-600">
+                  Sem retrabalho. Sem planilhas.
+                </p>
               </div>
             </div>
           </div>
 
           {/* Texto */}
           <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-slate-900">Mais Tempo Para o que Importa</h2>
+            <h2 className="text-4xl font-bold text-slate-900">
+              Mais Tempo Para o que Importa
+            </h2>
             <p className="text-slate-600 text-lg">
               Planejamento, acompanhamento e comunicação — tudo num só lugar.
             </p>
             <p className="text-slate-600 text-lg">
-              Reduzimos tarefas repetitivas para você atender mais alunos e criar treinos melhores.
+              Reduzimos tarefas repetitivas para você atender mais alunos e
+              criar treinos melhores.
             </p>
           </div>
-
         </div>
 
         {/* BLOCO 3 */}
         <div className="text-center space-y-6">
-          <h2 className="text-4xl font-bold text-slate-900">Compromisso com Resultados</h2>
+          <h2 className="text-4xl font-bold text-slate-900">
+            Compromisso com Resultados
+          </h2>
           <p className="text-slate-600 max-w-2xl mx-auto text-lg">
-            Nosso foco é claro: levar treinadores e alunos a alcançarem seus objetivos de forma simples, motivadora e eficiente.
+            Nosso foco é claro: levar treinadores e alunos a alcançarem seus
+            objetivos de forma simples, motivadora e eficiente.
           </p>
 
           <div className="flex justify-center mt-8">
             <div className="bg-white/90 backdrop-blur-xl px-10 py-6 rounded-3xl shadow-xl transform hover:-translate-y-1 transition-all">
               <p className="font-black text-5xl text-slate-900">+10.000</p>
-              <p className="text-slate-600 font-medium">Resultados Transformados</p>
+              <p className="text-slate-600 font-medium">
+                Resultados Transformados
+              </p>
             </div>
           </div>
         </div>
-        
+
         {/* Footer */}
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div className="flex items-center gap-3">
-                <div className="bg-black/20 p-2 rounded-lg">
-                  <Dumbbell className="h-6 w-6 text-black" />
-                </div>
-                <span className="text-xl font-bold text-black">Academusa</span>
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-3">
+              <div className="bg-black/20 p-2 rounded-lg">
+                <Dumbbell className="h-6 w-6 text-black" />
               </div>
-              <p className="text-black/70 text-center">
-                © 2025 Academusa. Todos os direitos reservados.
-              </p>
-              <div className="flex gap-6 text-black/70 text-sm">
-                <a href="#" className="hover:text-black transition-colors">Termos</a>
-                <a href="#" className="hover:text-black transition-colors">Privacidade</a>
-                <a href="#" className="hover:text-black transition-colors">Contato</a>
-              </div>
+              <span className="text-xl font-bold text-black">Academusa</span>
+            </div>
+            <p className="text-black/70 text-center">
+              © 2025 Academusa. Todos os direitos reservados.
+            </p>
+            <div className="flex gap-6 text-black/70 text-sm">
+              <a href="#" className="hover:text-black transition-colors">
+                Termos
+              </a>
+              <a href="#" className="hover:text-black transition-colors">
+                Privacidade
+              </a>
+              <a href="#" className="hover:text-black transition-colors">
+                Contato
+              </a>
             </div>
           </div>
+        </div>
       </div>
     </div>
   );
