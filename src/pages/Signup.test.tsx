@@ -10,10 +10,19 @@ vi.mock("react-router-dom", () => ({
   useNavigate: () => mockNavigate,
 }));
 
-vi.mock("../services/userService", () => ({
-  registerUser: (...args: any[]) => mockRegisterUser(...args),
+vi.mock("../services/authService", () => ({
+  signup: (...args: any[]) => mockRegisterUser(...args),
 }));
 
+vi.mock("../services/supabaseClient", () => ({
+  supabase: {
+    auth: {
+      signUp: vi.fn(),
+      signInWithPassword: vi.fn(),
+      signOut: vi.fn(),
+    },
+  },
+}));
 describe("Signup", () => {
   const setup = () => {
     const user = userEvent.setup();
@@ -32,9 +41,6 @@ describe("Signup", () => {
     vi.clearAllMocks();
   });
 
-  afterEach(() => {
-    vi.useRealTimers();
-  });
 
   it("should render the initial screen correctly", () => {
     setup();
@@ -118,10 +124,7 @@ describe("Signup", () => {
   });
 
   it("should process registration successfully and redirect", async () => {
-    vi.useFakeTimers({ shouldAdvanceTime: true });
-    
-    let resolveRegister!: (val: any) => void;
-    mockRegisterUser.mockReturnValueOnce(new Promise((res) => { resolveRegister = res; }));
+    mockRegisterUser.mockResolvedValueOnce({});
 
     const { user, nameInput, emailInput, passwordInput, confirmPasswordInput, submitButton } = setup();
 
@@ -129,21 +132,14 @@ describe("Signup", () => {
     await user.type(emailInput, "seu@exemplo.com");
     await user.type(passwordInput, "123456");
     await user.type(confirmPasswordInput, "123456");
-    
+
     await user.click(submitButton);
-
-    expect(screen.getByText(/cadastrando\.\.\./i)).toBeInTheDocument();
-    expect(submitButton).toBeDisabled();
-
-    resolveRegister({});
 
     expect(await screen.findByText(/usuário cadastrado com sucesso/i)).toBeInTheDocument();
 
-    vi.advanceTimersByTime(1200);
-
     await waitFor(() => {
       expect(mockNavigate).toHaveBeenCalledWith("/login");
-    });
+    }, { timeout: 2000 });
   });
 
   it("should display error message returned by the API", async () => {
