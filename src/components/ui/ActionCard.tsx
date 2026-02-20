@@ -20,7 +20,6 @@ const iconVariants = {
   },
 } as const;
 
-
 interface ActionCardProps {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
@@ -60,4 +59,3 @@ export const ActionCard = ({
     </button>
   );
 };
-
