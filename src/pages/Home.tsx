@@ -64,7 +64,7 @@ export default function Home() {
 
       {/* Métricas */}
       <div
-        className="flex flex-col md:grid md:grid-cols-2 md:gap-2 lg:flex lg:flex-row"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-2"
         id="metrics-cards"
       >
         <MetricCard
@@ -74,7 +74,7 @@ export default function Home() {
           value={trains}
           bottomContent={
             <p
-              className={`flex items-center gap-1 text-sm mt-2 ${
+              className={`flex items-center gap-1 text-sm mt-1 ${
                 average_train > 0 ? "text-green-600" : "text-red-600"
               }`}
             >
@@ -94,7 +94,7 @@ export default function Home() {
           iconColor="text-purple-600"
           value={`${average_minutes}min`}
           bottomContent={
-            <p className="text-sm text-purple-600">Meta: {train_target}min</p>
+            <p className="text-sm text-purple-600 mt-1">Meta: {train_target} min</p>
           }
         />
 
@@ -104,7 +104,7 @@ export default function Home() {
           iconColor="text-orange-600"
           value={personal_records}
           bottomContent={
-            <p className="text-sm text-orange-600">Novos esse mês</p>
+            <p className="text-sm text-orange-600 mt-1">Novos esse mês</p>
           }
         />
 
@@ -114,7 +114,7 @@ export default function Home() {
           iconColor="text-red-600"
           value={`${ocupancy_rate}%`}
           bottomContent={
-            <p className={`text-sm font-medium ${occupancyStatus.color}`}>
+            <p className={`text-sm font-medium ${occupancyStatus.color} mt-1`}>
               {occupancyStatus.message}
             </p>
           }
