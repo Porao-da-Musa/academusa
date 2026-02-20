@@ -2,15 +2,30 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Dumbbell, Menu, X } from "lucide-react";
 import { Button } from "./ui/Button";
-{
-  /* Outra nav bar para gestao do dashboard */
+
+interface NavRoute {
+  label: string;
+  path: string;
+  isAnchor?: boolean;
 }
-export const Navbar: React.FC = () => {
+
+interface NavBarProps {
+  variant?: "public" | "dashboard" | "home";
+  routes?: NavRoute[];
+  logoText?: string;
+}
+
+export const Navbar: React.FC<NavBarProps> = ({
+  variant = "public",
+  routes = [],
+  logoText = "Academusa",
+}) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const isAuthPage = location.pathname === "/login";
+  const isAuthPage =
+    location.pathname === "/login" || location.pathname === "/signup";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,120 +38,164 @@ export const Navbar: React.FC = () => {
   if (isAuthPage) {
     return (
       <nav className="absolute top-0 left-0 w-full p-6 z-50">
-        <Link
-          to="/"
-          className="flex items-center gap-2 text-brand-500 hover:text-brand-400 transition-colors w-fit"
-        >
-          <div className="bg-brand-500/10 p-2 rounded-lg">
-            <img
-              src="/favicon.png"
-              alt="Academusa"
-              className="h-6 w-6 object-contain"
-            />
+        <Link to="/" className="flex items-center gap-2 group w-fit">
+          <div className="bg-brand-500 p-2 rounded-lg shadow-lg group-hover:bg-brand-400 transition-colors">
+            <Dumbbell className="h-6 w-6 text-white" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">
-            Academusa
+          <span className="text-xl font-bold tracking-tight text-slate-900">
+            {logoText}
           </span>
         </Link>
       </nav>
     );
   }
 
+  const isHomeVariant = variant === "home";
+
   return (
     <nav
       className={`
-        fixed top-4 left-1/2 -translate-x-1/2 
-        z-50 px-6 py-3 
-        bg-white text-slate-900 
-        rounded-full shadow-lg 
-        transition-all duration-300 
-        group
-        ${isScrolled || isMobileMenuOpen ? "shadow-xl scale-[1.02]" : ""}
-        `}
+        fixed z-50 transition-all duration-300
+        ${
+          isHomeVariant
+            ? "w-full px-6 py-3 bg-white border-b border-slate-200 shadow-sm"
+            : "top-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-white/95 backdrop-blur-sm rounded-full shadow-md border border-slate-100"
+        }
+        ${!isHomeVariant && (isScrolled || isMobileMenuOpen) ? "shadow-lg scale-[1.01]" : ""}
+      `}
     >
-      <div className="flex items-center gap-10">
+      <div
+        className={`flex items-center ${isHomeVariant ? "justify-between" : "gap-10"}`}
+      >
         {/* Logo */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 transition-colors duration-300 group-hover:text-black"
-        >
-          <div className="p-2 rounded-lg bg-slate-200 group-hover:bg-slate-300 transition-colors">
-            <Dumbbell className="h-5 w-5 text-slate-900 group-hover:text-black" />
+        <Link to="/" className="flex items-center gap-2 group transition-all">
+          <div
+            className={`p-2 rounded-lg transition-colors ${isHomeVariant ? "bg-orange-50" : "bg-slate-100"}`}
+          >
+            <Dumbbell
+              className={`${isHomeVariant ? "h-7 w-7 text-orange-600" : "h-5 w-5 text-slate-700"} group-hover:scale-105 transition-transform`}
+            />
           </div>
-          <span className="text-lg font-bold tracking-tight">Academusa</span>
+          <span
+            className={`font-bold tracking-tight text-slate-900 ${isHomeVariant ? "text-xl" : "text-lg"}`}
+          >
+            {logoText}
+          </span>
         </Link>
 
         {/* Desktop Nav */}
-        {["features", "about", "plans"].map((section) => {
-          if (section === "about") {
+        <div className="hidden md:flex items-center gap-1">
+          {routes.map((route) => {
+            const isActive = location.pathname === route.path;
+            const baseClass =
+              "text-sm font-medium px-4 py-2 rounded-full transition-all duration-200 border";
+
+            if (route.isAnchor) {
+              return (
+                <a
+                  key={route.label}
+                  href={route.path}
+                  className={`${baseClass} text-slate-600 border-transparent hover:text-orange-600 hover:bg-orange-50`}
+                >
+                  {route.label}
+                </a>
+              );
+            }
+
             return (
               <Link
-                key={section}
-                to="/about"
-                className="
-                    text-sm font-medium text-slate-800
-                    px-3 py-1.5 rounded-full
-                    transition-all
-                    hover:text-black hover:border-black 
-                    border border-transparent 
-                    hover:border-black
-                    "
+                key={route.label}
+                to={route.path}
+                className={`
+                  ${baseClass}
+                  ${
+                    isActive
+                      ? "bg-orange-600 text-white border-orange-600 shadow-sm"
+                      : "text-slate-600 border-transparent hover:text-orange-600 hover:bg-orange-50"
+                  }
+                `}
               >
-                Sobre
+                {route.label}
               </Link>
             );
-          }
-
-          return (
-            <a
-              key={section}
-              href={`#${section}`}
-              className="
-                    text-sm font-medium text-slate-800
-                    px-3 py-1.5 rounded-full
-                    transition-all
-                    hover:text-black hover:border-black 
-                    border border-transparent 
-                    hover:border-black
-                "
-            >
-              {section === "features" && "Funcionalidades"}
-              {section === "plans" && "Planos"}
-            </a>
-          );
-        })}
-
-        {/* Auth Buttons */}
-        <div className="hidden md:flex items-center gap-3">
-          <Link to="/login">
-            <Button
-              variant="primary"
-              size="sm"
-              className="border-slate-400 text-slate-800 hover:border-black hover:text-black"
-            >
-              Entrar
-            </Button>
-          </Link>
-
-          <Link to="/signup">
-            <Button
-              variant="primary"
-              size="sm"
-              className="bg-black text-white hover:bg-slate-800"
-            >
-              Começar
-            </Button>
-          </Link>
+          })}
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* Auth Buttons - Apenas Public */}
+        {variant === "public" && (
+          <div className="hidden md:flex items-center gap-3">
+            <Link to="/login">
+              <Button
+                variant="outline"
+                size="sm"
+                className="rounded-full px-5 border-slate-300 text-slate-700 hover:border-orange-500 hover:text-orange-500 hover:bg-orange-50 transition-all"
+              >
+                Entrar
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button
+                variant="primary"
+                size="sm"
+                className="rounded-full px-5 bg-orange-600 text-white hover:bg-orange-700 shadow-sm transition-all"
+              >
+                Começar
+              </Button>
+            </Link>
+          </div>
+        )}
+
+        {/* Mobile Toggle */}
         <button
-          className="md:hidden text-black hover:text-slate-700 transition"
+          className="md:hidden p-2 text-slate-600 hover:text-orange-600 transition-colors"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? <X /> : <Menu />}
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
+
+      {/* Mobile Menu Content */}
+      {isMobileMenuOpen && (
+        <div
+          className={`
+          md:hidden absolute left-0 top-full mt-2 w-full bg-white border border-slate-200 shadow-xl p-4
+          ${isHomeVariant ? "" : "rounded-2xl"}
+        `}
+        >
+          <div className="flex flex-col gap-2">
+            {routes.map((route) => {
+              const isActive = location.pathname === route.path;
+              return (
+                <Link
+                  key={route.label}
+                  to={route.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`px-4 py-3 rounded-lg transition-colors ${isActive ? "bg-orange-600 text-white" : "text-slate-700 hover:bg-orange-50 hover:text-orange-600"}`}
+                >
+                  {route.label}
+                </Link>
+              );
+            })}
+            {variant === "public" && (
+              <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
+                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button
+                    variant="outline"
+                    className="w-full rounded-xl border-slate-300"
+                  >
+                    Entrar
+                  </Button>
+                </Link>
+                <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button className="w-full rounded-xl bg-orange-600 text-white">
+                    Começar
+                  </Button>
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
