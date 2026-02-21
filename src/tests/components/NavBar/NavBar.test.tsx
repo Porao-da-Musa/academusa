@@ -1,7 +1,7 @@
-import { render, screen, act } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router-dom";
-import { Navbar } from "../../../components/NavBar";
+import { Navbar, NavbarVariant } from "../../../components/NavBar";
 
 const mockRoutes = [
   { label: "Funcionalidades", path: "/#features", isAnchor: true },
@@ -15,10 +15,10 @@ const dashboardRoutes = [
 ];
 
 describe("Componente Navbar", () => {
-  it("deve renderizar a logo e as rotas públicas corretamente", () => {
+  it("it should render the logo and public routes correctly", () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
-        <Navbar variant="public" routes={mockRoutes} />
+        <Navbar variant={NavbarVariant.PUBLIC} routes={mockRoutes} />
       </MemoryRouter>,
     );
 
@@ -27,10 +27,10 @@ describe("Componente Navbar", () => {
     expect(screen.getByText("Entrar")).toBeInTheDocument();
   });
 
-  it("deve aplicar estilos ativos à rota atual", () => {
+  it("it should apply active styles to the current route", () => {
     render(
       <MemoryRouter initialEntries={["/about"]}>
-        <Navbar variant="public" routes={mockRoutes} />
+        <Navbar variant={NavbarVariant.PUBLIC} routes={mockRoutes} />
       </MemoryRouter>,
     );
 
@@ -38,10 +38,10 @@ describe("Componente Navbar", () => {
     expect(linkSobre).toHaveClass("bg-orange-600");
   });
 
-  it("deve renderizar versão simplificada em páginas de autenticação", () => {
+  it("it should render simplified version in authentication pages", () => {
     render(
       <MemoryRouter initialEntries={["/login"]}>
-        <Navbar variant="public" routes={mockRoutes} />
+        <Navbar variant={NavbarVariant.PUBLIC} routes={mockRoutes} />
       </MemoryRouter>,
     );
 
@@ -49,10 +49,10 @@ describe("Componente Navbar", () => {
     expect(screen.queryByText("Sobre")).not.toBeInTheDocument();
   });
 
-  it("deve renderizar a variante dashboard sem botões de autenticação", () => {
+  it("it should render dashboard variant without authentication buttons", () => {
     render(
       <MemoryRouter>
-        <Navbar variant="dashboard" routes={dashboardRoutes} />
+        <Navbar variant={NavbarVariant.DASHBOARD} routes={dashboardRoutes} />
       </MemoryRouter>,
     );
 
@@ -60,27 +60,25 @@ describe("Componente Navbar", () => {
     expect(screen.queryByText("Entrar")).not.toBeInTheDocument();
   });
 
-  it("deve alterar o estilo ao rolar a página (scroll)", () => {
+  it("it should change the style when scrolling the page", () => {
     const { container } = render(
       <MemoryRouter>
-        <Navbar variant="public" routes={mockRoutes} />
+        <Navbar variant={NavbarVariant.PUBLIC} routes={mockRoutes} />
       </MemoryRouter>,
     );
 
     const nav = container.querySelector("nav");
 
-    act(() => {
-      window.scrollY = 50;
-      window.dispatchEvent(new Event("scroll"));
-    });
+    window.scrollY = 50;
+    fireEvent.scroll(window);
 
     expect(nav).toHaveClass("shadow-lg");
   });
 
-  it("deve navegar para os caminhos corretos através dos links", () => {
+  it("it should navigate to the correct paths through the links", () => {
     render(
       <MemoryRouter>
-        <Navbar variant="public" routes={mockRoutes} />
+        <Navbar variant={NavbarVariant.PUBLIC} routes={mockRoutes} />
       </MemoryRouter>,
     );
 

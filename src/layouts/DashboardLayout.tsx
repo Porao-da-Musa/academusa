@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "../components/NavBar";
+import { NavbarVariant } from "../types/navbar.types";
 
 const dashboardRoutes = [
   { label: "Alunos", path: "/dashboard/alunos" },
@@ -11,7 +12,7 @@ const dashboardRoutes = [
 export function DashboardLayout() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar variant="dashboard" routes={dashboardRoutes} />
+      <Navbar variant={NavbarVariant.DASHBOARD} routes={dashboardRoutes} />
       <div className="p-4 pt-24">
         <Outlet />
       </div>

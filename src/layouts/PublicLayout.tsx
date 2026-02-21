@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "../components/NavBar";
+import { NavbarVariant } from "../types/navbar.types";
 
 const publicRoutes = [
   { label: "Funcionalidades", path: "/features", isAnchor: true },
@@ -10,7 +11,7 @@ const publicRoutes = [
 export function PublicLayout() {
   return (
     <div className="min-h-screen">
-      <Navbar variant="public" routes={publicRoutes} />
+      <Navbar variant={NavbarVariant.PUBLIC} routes={publicRoutes} />
       <Outlet />
     </div>
   );

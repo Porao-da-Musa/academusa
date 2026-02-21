@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Navbar } from "../components/NavBar";
+import { NavbarVariant } from "../types/navbar.types";
 
 const homeRoutes = [
   { label: "Painel", path: "/home" },
@@ -11,7 +12,11 @@ const homeRoutes = [
 export function HomeLayout() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar variant="home" routes={homeRoutes} logoText="FitFlow Academia" />
+      <Navbar
+        variant={NavbarVariant.HOME}
+        routes={homeRoutes}
+        logoText="FitFlow Academia"
+      />
       <div className="pt-[10vh]">
         <Outlet />
       </div>

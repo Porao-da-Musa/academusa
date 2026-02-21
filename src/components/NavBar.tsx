@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Dumbbell, Menu, X } from "lucide-react";
-import { Button } from "./ui/Button";
+import { AuthButtons } from "./ui/AuthButtons";
+import { NavbarVariant } from "../types/navbar.types";
 
 interface NavRoute {
   label: string;
@@ -10,13 +11,13 @@ interface NavRoute {
 }
 
 interface NavBarProps {
-  variant?: "public" | "dashboard" | "home";
+  variant?: NavbarVariant;
   routes?: NavRoute[];
   logoText?: string;
 }
 
 export const Navbar: React.FC<NavBarProps> = ({
-  variant = "public",
+  variant = NavbarVariant.PUBLIC,
   routes = [],
   logoText = "Academusa",
 }) => {
@@ -38,11 +39,18 @@ export const Navbar: React.FC<NavBarProps> = ({
   if (isAuthPage) {
     return (
       <nav className="absolute top-0 left-0 w-full p-6 z-50">
-        <Link to="/" className="flex items-center gap-2 group w-fit">
-          <div className="bg-brand-500 p-2 rounded-lg shadow-lg group-hover:bg-brand-400 transition-colors">
-            <Dumbbell className="h-6 w-6 text-white" />
+        <Link
+          to="/"
+          className="flex items-center gap-2 text-brand-500 hover:text-brand-400 transition-colors w-fit"
+        >
+          <div className="bg-brand-500/10 p-2 rounded-lg">
+            <img
+              src="/favicon.png"
+              alt="Academusa"
+              className="h-6 w-6 object-contain"
+            />
           </div>
-          <span className="text-xl font-bold tracking-tight text-slate-900">
+          <span className="text-xl font-bold tracking-tight text-white">
             {logoText}
           </span>
         </Link>
@@ -50,7 +58,7 @@ export const Navbar: React.FC<NavBarProps> = ({
     );
   }
 
-  const isHomeVariant = variant === "home";
+  const isHomeVariant = variant === NavbarVariant.HOME;
 
   return (
     <nav
@@ -121,29 +129,7 @@ export const Navbar: React.FC<NavBarProps> = ({
           })}
         </div>
 
-        {/* Auth Buttons - Apenas Public */}
-        {variant === "public" && (
-          <div className="hidden md:flex items-center gap-3">
-            <Link to="/login">
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded-full px-5 border-slate-300 text-slate-700 hover:border-orange-500 hover:text-orange-500 hover:bg-orange-50 transition-all"
-              >
-                Entrar
-              </Button>
-            </Link>
-            <Link to="/signup">
-              <Button
-                variant="primary"
-                size="sm"
-                className="rounded-full px-5 bg-orange-600 text-white hover:bg-orange-700 shadow-sm transition-all"
-              >
-                Começar
-              </Button>
-            </Link>
-          </div>
-        )}
+        {variant === NavbarVariant.PUBLIC && <AuthButtons />}
 
         {/* Mobile Toggle */}
         <button
@@ -176,22 +162,12 @@ export const Navbar: React.FC<NavBarProps> = ({
                 </Link>
               );
             })}
-            {variant === "public" && (
-              <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
-                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button
-                    variant="outline"
-                    className="w-full rounded-xl border-slate-300"
-                  >
-                    Entrar
-                  </Button>
-                </Link>
-                <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button className="w-full rounded-xl bg-orange-600 text-white">
-                    Começar
-                  </Button>
-                </Link>
-              </div>
+
+            {variant === NavbarVariant.PUBLIC && (
+              <AuthButtons
+                isMobile
+                onLinkClick={() => setIsMobileMenuOpen(false)}
+              />
             )}
           </div>
         </div>
