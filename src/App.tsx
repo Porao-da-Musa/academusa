@@ -2,6 +2,7 @@ import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { PublicLayout } from "./layouts/PublicLayout";
 import { DashboardLayout } from "./layouts/DashboardLayout";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 // Pages
 import LandingPage from "./pages/LandingPage";
@@ -31,12 +32,24 @@ const App: React.FC = () => {
         </Route>
 
         {/* ROTA ADMIN */}
-        <Route element={<DashboardLayout />}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <DashboardLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 
         {/* ROTAS INTERNAS */}
-        <Route element={<HomeLayout />}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <HomeLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="/home" element={<Home />} />
           <Route path="/home/map" element={<Map />} />
           <Route path="/home/training" element={<Training />} />
