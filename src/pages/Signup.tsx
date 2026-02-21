@@ -14,10 +14,22 @@ export default function Signup() {
   const [message, setMessage] = useState<string | null>(null);
 
   const validate = () => {
-    if (!fullName.trim()) return "Por favor informe seu nome.";
-    if (!email.includes("@")) return "E-mail inválido.";
-    if (password.length < 6) return "Senha deve ter ao menos 6 caracteres.";
-    if (password !== confirmPassword) return "As senhas não conferem.";
+    if (!fullName.trim()) {
+      setLoading(false);
+      return "Por favor informe seu nome.";
+    }
+    if (!email.includes("@")) {
+      setLoading(false);
+      return "E-mail inválido.";
+    }
+    if (password.length < 6) {
+      setLoading(false);
+      return "Senha deve ter ao menos 6 caracteres.";
+    }
+    if (password !== confirmPassword) {
+      setLoading(false);
+      return "As senhas não conferem.";
+    }
     return null;
   };
 
@@ -32,11 +44,9 @@ export default function Signup() {
       setError(v);
       return;
     }
-
     setLoading(true);
-
     try {
-      const user = await signup(email, password);
+      const user = await signup(fullName, email, password);
 
       setMessage("Usuário cadastrado com sucesso!");
 
@@ -56,54 +66,62 @@ export default function Signup() {
       <div className="w-full max-w-md bg-white text-slate-900 rounded-2xl shadow-md p-8">
         <h1 className="text-2xl font-semibold mb-2">Criar conta</h1>
 
-        <form onSubmit={handleSignup} className="space-y-4">
-          <label className="block">
-            <span className="text-sm font-medium">Nome completo</span>
+        <form onSubmit={handleSignup} className="space-y-4" noValidate>
+          <div className="block">
+            <label htmlFor="name" className="text-sm font-medium">
+              Nome completo
+            </label>
             <input
+              id="name"
               className="mt-1 block w-full rounded-lg border px-3 py-2 bg-white text-black placeholder-slate-400 focus:outline-none focus:ring"
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Ex.: Maria Silva"
-              required
             />
-          </label>
+          </div>
 
-          <label className="block">
-            <span className="text-sm font-medium">E‑mail</span>
+          <div className="block">
+            <label htmlFor="email" className="text-sm font-medium">
+              E-mail
+            </label>
             <input
+              id="email"
               type="email"
               className="mt-1 block w-full rounded-lg border px-3 py-2 bg-white text-black placeholder-slate-400 focus:outline-none focus:ring"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="seu@exemplo.com"
-              required
             />
-          </label>
+          </div>
 
           <div className="grid grid-cols-2 gap-4">
-            <label className="block">
-              <span className="text-sm font-medium">Senha</span>
+            <div>
+              <label htmlFor="password" className="text-sm font-medium">
+                Senha
+              </label>
               <input
+                id="password"
                 type="password"
                 className="mt-1 block w-full rounded-lg border px-3 py-2 bg-white text-black placeholder-slate-400 focus:outline-none focus:ring"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="********"
-                required
               />
-            </label>
+            </div>
 
-            <label className="block">
-              <span className="text-sm font-medium">Confirmar senha</span>
+            <div>
+              <label htmlFor="confirmPassword" className="text-sm font-medium">
+                Confirmar senha
+              </label>
               <input
+                id="confirmPassword"
                 type="password"
                 className="mt-1 block w-full rounded-lg border px-3 py-2 bg-white text-black placeholder-slate-400 focus:outline-none focus:ring"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="********"
-                required
               />
-            </label>
+            </div>
           </div>
 
           {error && <div className="text-red-600 text-sm">{error}</div>}
