@@ -1,7 +1,8 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { MemoryRouter } from "react-router-dom";
-import { Navbar, NavbarVariant } from "../../../components/NavBar";
+import { Navbar } from "../../../components/NavBar";
+import { NavbarVariant } from "../../../types/navbar.types";
 
 const mockRoutes = [
   { label: "Funcionalidades", path: "/#features", isAnchor: true },

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { signup } from "../services/authService";
 
 export default function Signup() {
@@ -46,16 +45,19 @@ export default function Signup() {
     }
     setLoading(true);
     try {
-      const user = await signup(fullName, email, password);
+      await signup(fullName, email, password);
 
       setMessage("Usuário cadastrado com sucesso!");
 
       setTimeout(() => {
         navigate("/login");
       }, 1200);
-    } catch (err: any) {
-      setLoading(false);
-      setError(err.message ?? "Erro ao cadastrar usuário.");
+    } catch (err) {
+      if (err instanceof Error && err.message) {
+        setError(err.message);
+      } else {
+        setError("Erro ao cadastrar usuário.");
+      }
     } finally {
       setLoading(false);
     }
