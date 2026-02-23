@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import Signup from "./Signup";
 
 const mockNavigate = vi.fn();
@@ -11,7 +11,7 @@ vi.mock("react-router-dom", () => ({
 }));
 
 vi.mock("../services/authService", () => ({
-  signup: (...args: any[]) => mockRegisterUser(...args),
+  signup: (...args: unknown[]) => mockRegisterUser(...args),
 }));
 
 vi.mock("../services/supabaseClient", () => ({
@@ -41,11 +41,12 @@ describe("Signup", () => {
     vi.clearAllMocks();
   });
 
-
   it("should render the initial screen correctly", () => {
     setup();
 
-    expect(screen.getByRole("heading", { name: /criar conta/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: /criar conta/i }),
+    ).toBeInTheDocument();
     expect(screen.getByLabelText(/nome completo/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/e-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/^senha$/i)).toBeInTheDocument();
@@ -60,7 +61,13 @@ describe("Signup", () => {
   });
 
   it("should display error if name is empty", async () => {
-    const { user, submitButton, emailInput, passwordInput, confirmPasswordInput } = setup();
+    const {
+      user,
+      submitButton,
+      emailInput,
+      passwordInput,
+      confirmPasswordInput,
+    } = setup();
 
     await user.type(emailInput, "seu@exemplo.com");
     await user.type(passwordInput, "123456");
@@ -72,7 +79,14 @@ describe("Signup", () => {
   });
 
   it("should display error if name contains only spaces", async () => {
-    const { user, nameInput, submitButton, emailInput, passwordInput, confirmPasswordInput } = setup();
+    const {
+      user,
+      nameInput,
+      submitButton,
+      emailInput,
+      passwordInput,
+      confirmPasswordInput,
+    } = setup();
 
     await user.type(nameInput, "     ");
     await user.type(emailInput, "seu@exemplo.com");
@@ -85,40 +99,63 @@ describe("Signup", () => {
   });
 
   it("should display error for invalid email format", async () => {
-    const { user, nameInput, emailInput, submitButton, passwordInput, confirmPasswordInput } = setup();
-    
+    const {
+      user,
+      nameInput,
+      emailInput,
+      submitButton,
+      passwordInput,
+      confirmPasswordInput,
+    } = setup();
+
     await user.type(nameInput, "Maria Silva");
     await user.type(emailInput, "emailinvalido");
     await user.type(passwordInput, "123456");
     await user.type(confirmPasswordInput, "123456");
     await user.click(submitButton);
-    
+
     expect(screen.getByText(/e-mail inválido/i)).toBeInTheDocument();
     expect(mockRegisterUser).not.toHaveBeenCalled();
   });
 
   it("should display error for password with less than 6 characters", async () => {
-    const { user, nameInput, emailInput, passwordInput, confirmPasswordInput, submitButton } = setup();
-    
+    const {
+      user,
+      nameInput,
+      emailInput,
+      passwordInput,
+      confirmPasswordInput,
+      submitButton,
+    } = setup();
+
     await user.type(nameInput, "Maria Silva");
     await user.type(emailInput, "seu@exemplo.com");
     await user.type(passwordInput, "123");
     await user.type(confirmPasswordInput, "123");
     await user.click(submitButton);
-    
-    expect(screen.getByText(/senha deve ter ao menos 6 caracteres/i)).toBeInTheDocument();
+
+    expect(
+      screen.getByText(/senha deve ter ao menos 6 caracteres/i),
+    ).toBeInTheDocument();
     expect(mockRegisterUser).not.toHaveBeenCalled();
   });
 
   it("should display error if passwords do not match", async () => {
-    const { user, nameInput, emailInput, passwordInput, confirmPasswordInput, submitButton } = setup();
-    
+    const {
+      user,
+      nameInput,
+      emailInput,
+      passwordInput,
+      confirmPasswordInput,
+      submitButton,
+    } = setup();
+
     await user.type(nameInput, "Maria Silva");
     await user.type(emailInput, "seu@exemplo.com");
     await user.type(passwordInput, "123456");
     await user.type(confirmPasswordInput, "456123");
     await user.click(submitButton);
-    
+
     expect(screen.getByText(/as senhas não conferem/i)).toBeInTheDocument();
     expect(mockRegisterUser).not.toHaveBeenCalled();
   });
@@ -126,7 +163,14 @@ describe("Signup", () => {
   it("should process registration successfully and redirect", async () => {
     mockRegisterUser.mockResolvedValueOnce({});
 
-    const { user, nameInput, emailInput, passwordInput, confirmPasswordInput, submitButton } = setup();
+    const {
+      user,
+      nameInput,
+      emailInput,
+      passwordInput,
+      confirmPasswordInput,
+      submitButton,
+    } = setup();
 
     await user.type(nameInput, "Maria Silva");
     await user.type(emailInput, "seu@exemplo.com");
@@ -135,18 +179,30 @@ describe("Signup", () => {
 
     await user.click(submitButton);
 
-    expect(await screen.findByText(/usuário cadastrado com sucesso/i)).toBeInTheDocument();
+    expect(
+      await screen.findByText(/usuário cadastrado com sucesso/i),
+    ).toBeInTheDocument();
 
-    await waitFor(() => {
-      expect(mockNavigate).toHaveBeenCalledWith("/login");
-    }, { timeout: 2000 });
+    await waitFor(
+      () => {
+        expect(mockNavigate).toHaveBeenCalledWith("/login");
+      },
+      { timeout: 2000 },
+    );
   });
 
   it("should display error message returned by the API", async () => {
     const apiError = "Este e-mail já está em uso.";
     mockRegisterUser.mockRejectedValueOnce(new Error(apiError));
 
-    const { user, nameInput, emailInput, passwordInput, confirmPasswordInput, submitButton } = setup();
+    const {
+      user,
+      nameInput,
+      emailInput,
+      passwordInput,
+      confirmPasswordInput,
+      submitButton,
+    } = setup();
 
     await user.type(nameInput, "Maria Silva");
     await user.type(emailInput, "seu@exemplo.com");
@@ -163,9 +219,16 @@ describe("Signup", () => {
   });
 
   it("should display default error message if API fails without message", async () => {
-    mockRegisterUser.mockRejectedValueOnce({}); 
+    mockRegisterUser.mockRejectedValueOnce({});
 
-    const { user, nameInput, emailInput, passwordInput, confirmPasswordInput, submitButton } = setup();
+    const {
+      user,
+      nameInput,
+      emailInput,
+      passwordInput,
+      confirmPasswordInput,
+      submitButton,
+    } = setup();
 
     await user.type(nameInput, "Maria Silva");
     await user.type(emailInput, "seu@exemplo.com");
