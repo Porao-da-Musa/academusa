@@ -196,6 +196,20 @@ describe("Login Component", () => {
   });
 
   it("disables login button while loading", async () => {
+    vi.mocked(login).mockImplementation(
+      () =>
+        new Promise((resolve) =>
+          setTimeout(
+            () =>
+              resolve({
+                data: { id: "123", email: "aluno@academusa.com.br" },
+                error: null,
+              }),
+            100,
+          ),
+        ),
+    );
+
     const user = userEvent.setup();
 
     render(
@@ -215,6 +229,110 @@ describe("Login Component", () => {
 
     await user.click(loginButton);
 
-    expect(loginButton).toBeDisabled();
+    await waitFor(() => {
+      expect(loginButton).toBeDisabled();
+    });
+
+    await waitFor(
+      () => {
+        expect(loginButton).not.toBeDisabled();
+      },
+      { timeout: 2000 },
+    );
+  });
+
+  it("shows correct UI behavior during async loading state", async () => {
+    vi.mocked(login).mockImplementation(
+      () =>
+        new Promise((resolve) =>
+          setTimeout(
+            () =>
+              resolve({
+                data: { id: "123", email: "aluno@academusa.com.br" },
+                error: null,
+              }),
+            150,
+          ),
+        ),
+    );
+
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter initialEntries={["/login"]}>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<div>Home Page</div>} />
+        </Routes>
+      </MemoryRouter>,
+    );
+
+    const emailInput = screen.getByLabelText(/e-mail/i);
+    const passwordInput = screen.getByLabelText(/senha/i);
+    const loginButton = screen.getByRole("button", { name: /Entrar/i });
+
+    await user.type(emailInput, "aluno@academusa.com.br");
+    await user.type(passwordInput, "aluniacademusa");
+
+    // Estado inicial: botão habilitado com texto "Entrar"
+    expect(loginButton).not.toBeDisabled();
+    expect(loginButton).toHaveTextContent("Entrar");
+
+    await user.click(loginButton);
+
+    // Durante o loading: botão desabilitado e texto "Entrando..."
+    await waitFor(() => {
+      expect(loginButton).toBeDisabled();
+      expect(loginButton).toHaveTextContent("Entrando...");
+    });
+    await waitFor(
+      () => {
+        expect(screen.getByText("Home Page")).toBeInTheDocument();
+      },
+      { timeout: 2000 },
+    );
+  });
+
+  it("clears error message when starting new async request", async () => {
+    const user = userEvent.setup();
+
+    vi.mocked(login).mockRejectedValueOnce(new Error("Invalid credentials"));
+
+    render(
+      <MemoryRouter>
+        <Login />
+      </MemoryRouter>,
+    );
+
+    const emailInput = screen.getByLabelText(/e-mail/i);
+    const passwordInput = screen.getByLabelText(/senha/i);
+    const loginButton = screen.getByRole("button", { name: /Entrar/i });
+
+    await user.type(emailInput, "aluno@academusa.com.br");
+    await user.type(passwordInput, "senhaerrada");
+    await user.click(loginButton);
+
+    // Verifica que a mensagem de erro aparece
+    await waitFor(() => {
+      expect(
+        screen.getByText(/Erro ao entrar. Verifique suas credenciais./i),
+      ).toBeInTheDocument();
+    });
+
+    // Segundo mock: sucesso no login
+    vi.mocked(login).mockResolvedValueOnce({
+      data: { id: "123", email: "aluno@academusa.com.br" },
+      error: null,
+    });
+
+    await user.clear(passwordInput);
+    await user.type(passwordInput, "senhacorreta");
+    await user.click(loginButton);
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText(/Erro ao entrar. Verifique suas credenciais./i),
+      ).not.toBeInTheDocument();
+    });
   });
 });
