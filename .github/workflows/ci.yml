@@ -33,7 +33,7 @@ jobs:
       - name: Auditoria de Segurança
         run: npm audit --audit-level=critical
 
-      - name: Executar teste com cobertura mínima de 75% // No momento, a cobertura mínima é de 0% para permitir a integração contínua, mas isso pode ser ajustado conforme o projeto evolui.
+      - name: Executar teste com cobertura mínima de 75%
         run: npm run test:coverage
 
       - name: Executar testes
