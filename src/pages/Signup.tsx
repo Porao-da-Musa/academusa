@@ -53,8 +53,11 @@ export default function Signup() {
         navigate("/login");
       }, 1200);
     } catch (err) {
-      if (err instanceof Error)
-        setError(err.message ?? "Erro ao cadastrar usuário.");
+      if (err instanceof Error && err.message) {
+        setError(err.message);
+      } else {
+        setError("Erro ao cadastrar usuário.");
+      }
     } finally {
       setLoading(false);
     }
