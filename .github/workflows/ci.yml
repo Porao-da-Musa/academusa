@@ -2,9 +2,9 @@ name: CI - Testes e Build
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, "release/*"]
   push:
-    branches: [main]
+    branches: [main, "release/*"]
 
 jobs:
   test:
