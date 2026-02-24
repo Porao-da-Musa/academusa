@@ -1,5 +1,6 @@
 import React from "react";
 import { Users, TrendingUp, Dumbbell, CheckCircle } from "lucide-react";
+import Footer from "../components/Footer";
 
 const About: React.FC = () => {
   return (
@@ -181,9 +182,7 @@ const About: React.FC = () => {
               </div>
               <span className="text-xl font-bold text-black">Academusa</span>
             </div>
-            <p className="text-black/70 text-center">
-              © 2025 Academusa. Todos os direitos reservados.
-            </p>
+            <Footer />
             <div className="flex gap-6 text-black/70 text-sm">
               <a href="#" className="hover:text-black transition-colors">
                 Termos

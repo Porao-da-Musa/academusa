@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../components/ui/Button";
 import { Dumbbell, CheckCircle } from "lucide-react";
+import Footer from "../components/Footer";
 
 const Plans: React.FC = () => {
   return (
@@ -137,9 +138,7 @@ const Plans: React.FC = () => {
             <span className="text-xl font-bold text-white">Academusa</span>
           </div>
           {/* Rever var para ano atual */}
-          <p className="text-white/70 text-center">
-            © 2025 Academusa. Todos os direitos reservados.
-          </p>
+          <Footer />
           <div className="flex gap-6 text-white/70 text-sm">
             <a href="#" className="hover:text-white transition-colors">
               Termos
