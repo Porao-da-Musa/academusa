@@ -18,8 +18,14 @@ export default function Login() {
     try {
       const user = await login(email, password);
       if (user) navigate("/home");
-    } catch (err: Error | string) {
-      setError("Erro ao entrar. Verifique suas credenciais.");
+    } catch (err) {
+      if (err instanceof Error && err.message) {
+        setError(err.message);
+      } else if (typeof err === "string") {
+        setError(err);
+      } else {
+        setError("Erro ao entrar. Verifique suas credenciais.");
+      }
     } finally {
       setLoading(false);
     }
