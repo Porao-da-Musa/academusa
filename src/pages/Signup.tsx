@@ -9,19 +9,32 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [loading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
   const validate = () => {
-    if (!fullName.trim()) return "Por favor informe seu nome.";
-    if (!email.includes("@")) return "E-mail inválido.";
-    if (password.length < 6) return "Senha deve ter ao menos 6 caracteres.";
-    if (password !== confirmPassword) return "As senhas não conferem.";
+    if (!fullName.trim()) {
+      setLoading(false);
+      return "Por favor informe seu nome.";
+    }
+    if (!email.includes("@")) {
+      setLoading(false);
+      return "E-mail inválido.";
+    }
+    if (password.length < 6) {
+      setLoading(false);
+      return "Senha deve ter ao menos 6 caracteres.";
+    }
+    if (password !== confirmPassword) {
+      setLoading(false);
+      return "As senhas não conferem.";
+    }
     return null;
   };
 
   const handleSignup = async (e: React.FormEvent) => {
+    setLoading(true);
     e.preventDefault();
     setError(null);
     setMessage(null);
@@ -41,6 +54,7 @@ export default function Signup() {
         navigate("/login");
       }, 1200);
     } catch (err: any) {
+      setLoading(false);
       setError(err.message ?? "Erro ao cadastrar usuário.");
     }
   };

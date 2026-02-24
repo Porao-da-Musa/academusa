@@ -17,7 +17,19 @@ export async function registerUser(
   });
 
   if (authError) {
-    throw new Error(`Erro ao registrar usuário: ${authError.message}`);
+    switch (authError.code) {
+      case "user_already_exists":
+        throw new Error("Usuário já cadastrado.");
+
+      case "invalid_email":
+        throw new Error("E-mail inválido.");
+
+      case "weak_password":
+        throw new Error("Senha muito fraca.");
+
+      default:
+        throw new Error("Erro ao criar conta. Tente novamente.");
+    }
   }
 }
 
