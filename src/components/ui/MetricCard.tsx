@@ -20,15 +20,13 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   className = "",
 }) => {
   return (
-    <Card className={`bg-white h-[25vh] w-full flex flex-col ${className}`}>
-      <div className="top flex">
-        <p className="font-light text-start text-base text-gray-600">{title}</p>
-        <Icon className={`h-6 w-6 ${iconColor} ml-auto`} />
+    <Card className={`bg-white ${className} m-0`}>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-gray-600 text-sm">{title}</span>
+        <Icon className={`h-5 w-5 ${iconColor}`} />
       </div>
 
-      <div className="mid flex-1">
-        <p className="font-normal text-2xl mt-3 text-black">{value}</p>
-      </div>
+      <div className="font-normal text-2xl text-black">{value}</div>
 
       {bottomContent && <div className="bottom">{bottomContent}</div>}
     </Card>

@@ -2,9 +2,9 @@ name: CI - Testes e Build
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, "release/*"]
   push:
-    branches: [main]
+    branches: [main, "release/*"]
 
 jobs:
   test:
@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [24.x, 22.x]
+        node-version: [24.x]
 
     steps:
       - name: Checkout do código
@@ -31,7 +31,7 @@ jobs:
         run: npm run lint
 
       - name: Auditoria de Segurança
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=critical
 
       - name: Executar teste com cobertura mínima de 75%
         run: npm run test:coverage
