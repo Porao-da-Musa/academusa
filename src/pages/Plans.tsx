@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "../components/Button";
-import { Dumbbell, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
+import { Footer } from "../components/Footer";
 
 const Plans: React.FC = () => {
   return (
@@ -127,32 +128,7 @@ const Plans: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="bg-white/20 p-2 rounded-lg">
-              <Dumbbell className="h-6 w-6 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">Academusa</span>
-          </div>
-          {/* Rever var para ano atual */}
-          <p className="text-white/70 text-center">
-            © 2025 Academusa. Todos os direitos reservados.
-          </p>
-          <div className="flex gap-6 text-white/70 text-sm">
-            <a href="#" className="hover:text-white transition-colors">
-              Termos
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Privacidade
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
-              Contato
-            </a>
-          </div>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Users, TrendingUp, Dumbbell, CheckCircle } from "lucide-react";
+import { Footer } from "../components/Footer";
 
 const About: React.FC = () => {
   return (
@@ -173,31 +174,7 @@ const About: React.FC = () => {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div className="bg-black/20 p-2 rounded-lg">
-                <Dumbbell className="h-6 w-6 text-black" />
-              </div>
-              <span className="text-xl font-bold text-black">Academusa</span>
-            </div>
-            <p className="text-black/70 text-center">
-              © 2025 Academusa. Todos os direitos reservados.
-            </p>
-            <div className="flex gap-6 text-black/70 text-sm">
-              <a href="#" className="hover:text-black transition-colors">
-                Termos
-              </a>
-              <a href="#" className="hover:text-black transition-colors">
-                Privacidade
-              </a>
-              <a href="#" className="hover:text-black transition-colors">
-                Contato
-              </a>
-            </div>
-          </div>
-        </div>
+        <Footer blackText />
       </div>
     </div>
   );
