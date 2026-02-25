@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Dumbbell, Menu, X } from "lucide-react";
 import { AuthButtons } from "../../../features/auth/components/AuthButtons";
 import { NavbarVariant } from "./types/navbar.types";
 
-interface NavRoute {
+type NavRoute = {
   label: string;
   path: string;
   isAnchor?: boolean;
-}
+};
 
-interface NavBarProps {
-  variant?: NavbarVariant;
-  routes?: NavRoute[];
-  logoText?: string;
-}
+type NavBarProps = {
+  readonly variant?: NavbarVariant;
+  readonly routes?: NavRoute[];
+  readonly logoText?: string;
+};
 
-export const Navbar: React.FC<NavBarProps> = ({
+export function Navbar({
   variant = NavbarVariant.PUBLIC,
   routes = [],
   logoText = "Academusa",
-}) => {
+}: NavBarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
@@ -32,6 +32,7 @@ export const Navbar: React.FC<NavBarProps> = ({
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -69,29 +70,41 @@ export const Navbar: React.FC<NavBarProps> = ({
             ? "w-full px-6 py-3 bg-white border-b border-slate-200 shadow-sm"
             : "top-4 left-1/2 -translate-x-1/2 px-6 py-3 bg-white/95 backdrop-blur-sm rounded-full shadow-md border border-slate-100"
         }
-        ${!isHomeVariant && (isScrolled || isMobileMenuOpen) ? "shadow-lg scale-[1.01]" : ""}
+        ${
+          !isHomeVariant && (isScrolled || isMobileMenuOpen)
+            ? "shadow-lg scale-[1.01]"
+            : ""
+        }
       `}
     >
       <div
-        className={`flex items-center ${isHomeVariant ? "justify-between" : "gap-10"}`}
+        className={`flex items-center ${
+          isHomeVariant ? "justify-between" : "gap-10"
+        }`}
       >
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2 group transition-all">
           <div
-            className={`p-2 rounded-lg transition-colors ${isHomeVariant ? "bg-orange-50" : "bg-slate-100"}`}
+            className={`p-2 rounded-lg transition-colors ${
+              isHomeVariant ? "bg-orange-50" : "bg-slate-100"
+            }`}
           >
             <Dumbbell
-              className={`${isHomeVariant ? "h-7 w-7 text-orange-600" : "h-5 w-5 text-slate-700"} group-hover:scale-105 transition-transform`}
+              className={`${
+                isHomeVariant
+                  ? "h-7 w-7 text-orange-600"
+                  : "h-5 w-5 text-slate-700"
+              } group-hover:scale-105 transition-transform`}
             />
           </div>
           <span
-            className={`font-bold tracking-tight text-slate-900 ${isHomeVariant ? "text-xl" : "text-lg"}`}
+            className={`font-bold tracking-tight text-slate-900 ${
+              isHomeVariant ? "text-xl" : "text-lg"
+            }`}
           >
             {logoText}
           </span>
         </Link>
 
-        {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-1">
           {routes.map((route) => {
             const isActive = location.pathname === route.path;
@@ -114,14 +127,11 @@ export const Navbar: React.FC<NavBarProps> = ({
               <Link
                 key={route.label}
                 to={route.path}
-                className={`
-                  ${baseClass}
-                  ${
-                    isActive
-                      ? "bg-orange-600 text-white border-orange-600 shadow-sm"
-                      : "text-slate-600 border-transparent hover:text-orange-600 hover:bg-orange-50"
-                  }
-                `}
+                className={`${baseClass} ${
+                  isActive
+                    ? "bg-orange-600 text-white border-orange-600 shadow-sm"
+                    : "text-slate-600 border-transparent hover:text-orange-600 hover:bg-orange-50"
+                }`}
               >
                 {route.label}
               </Link>
@@ -131,32 +141,35 @@ export const Navbar: React.FC<NavBarProps> = ({
 
         {variant === NavbarVariant.PUBLIC && <AuthButtons />}
 
-        {/* Mobile Toggle */}
         <button
           className="md:hidden p-2 text-slate-600 hover:text-orange-600 transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={() => setIsMobileMenuOpen((prev) => !prev)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Menu Content */}
       {isMobileMenuOpen && (
         <div
           className={`
-          md:hidden absolute left-0 top-full mt-2 w-full bg-white border border-slate-200 shadow-xl p-4
-          ${isHomeVariant ? "" : "rounded-2xl"}
-        `}
+            md:hidden absolute left-0 top-full mt-2 w-full bg-white border border-slate-200 shadow-xl p-4
+            ${isHomeVariant ? "" : "rounded-2xl"}
+          `}
         >
           <div className="flex flex-col gap-2">
             {routes.map((route) => {
               const isActive = location.pathname === route.path;
+
               return (
                 <Link
                   key={route.label}
                   to={route.path}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className={`px-4 py-3 rounded-lg transition-colors ${isActive ? "bg-orange-600 text-white" : "text-slate-700 hover:bg-orange-50 hover:text-orange-600"}`}
+                  className={`px-4 py-3 rounded-lg transition-colors ${
+                    isActive
+                      ? "bg-orange-600 text-white"
+                      : "text-slate-700 hover:bg-orange-50 hover:text-orange-600"
+                  }`}
                 >
                   {route.label}
                 </Link>
@@ -174,4 +187,4 @@ export const Navbar: React.FC<NavBarProps> = ({
       )}
     </nav>
   );
-};
+}

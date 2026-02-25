@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../shared/ui/Button/Button";
 import {
@@ -12,7 +11,7 @@ import {
 } from "lucide-react";
 import { Footer } from "../../../shared/ui/Footer/Footer";
 
-const LandingPage: React.FC = () => {
+const LandingPage = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 relative overflow-hidden">
       {/* Elementos Decorativos de Fundo */}

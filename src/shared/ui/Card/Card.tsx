@@ -1,11 +1,11 @@
-import React from "react";
+import type { ReactNode } from "react";
 
-interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-}
+type CardProps = {
+  readonly children: ReactNode;
+  readonly className?: string;
+};
 
-export const Card: React.FC<CardProps> = ({ children, className = "" }) => {
+export function Card({ children, className = "" }: CardProps) {
   return (
     <div
       className={`
@@ -19,4 +19,4 @@ export const Card: React.FC<CardProps> = ({ children, className = "" }) => {
       {children}
     </div>
   );
-};
+}

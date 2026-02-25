@@ -1,4 +1,3 @@
-import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { PublicLayout } from "./layouts/PublicLayout";
 import { DashboardLayout } from "./layouts/DashboardLayout";
@@ -18,7 +17,7 @@ import Training from "../features/my-workout/pages/MyWorkout";
 import Exercises from "../features/exercises/pages/Exercises";
 import NotFound from "./routes/NotFound";
 
-const App: React.FC = () => {
+const App = () => {
   return (
     <Router>
       <Routes>

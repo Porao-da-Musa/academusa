@@ -1,20 +1,22 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../../../shared/ui/Button/Button";
 
-interface AuthButtonsProps {
-  isMobile?: boolean;
-  onLinkClick?: () => void;
-}
+type AuthButtonsProps = {
+  readonly isMobile?: boolean;
+  readonly onLinkClick?: () => void;
+};
 
-export const AuthButtons: React.FC<AuthButtonsProps> = ({
+export function AuthButtons({
   isMobile = false,
   onLinkClick,
-}) => {
+}: AuthButtonsProps) {
+  const loginPath = "/login";
+  const signupPath = "/signup";
+
   if (isMobile) {
     return (
       <div className="flex flex-col gap-2 pt-2 border-t border-slate-100">
-        <Link to="/login" onClick={onLinkClick}>
+        <Link to={loginPath} onClick={onLinkClick}>
           <Button
             variant="outline"
             className="w-full rounded-xl border-slate-300"
@@ -22,7 +24,8 @@ export const AuthButtons: React.FC<AuthButtonsProps> = ({
             Entrar
           </Button>
         </Link>
-        <Link to="/signup" onClick={onLinkClick}>
+
+        <Link to={signupPath} onClick={onLinkClick}>
           <Button className="w-full rounded-xl bg-orange-600 text-white hover:bg-orange-700">
             Começar
           </Button>
@@ -33,7 +36,7 @@ export const AuthButtons: React.FC<AuthButtonsProps> = ({
 
   return (
     <div className="hidden md:flex items-center gap-3">
-      <Link to="/login">
+      <Link to={loginPath}>
         <Button
           variant="outline"
           size="sm"
@@ -42,7 +45,8 @@ export const AuthButtons: React.FC<AuthButtonsProps> = ({
           Entrar
         </Button>
       </Link>
-      <Link to="/signup">
+
+      <Link to={signupPath}>
         <Button
           variant="primary"
           size="sm"
@@ -53,4 +57,4 @@ export const AuthButtons: React.FC<AuthButtonsProps> = ({
       </Link>
     </div>
   );
-};
+}
