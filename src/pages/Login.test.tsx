@@ -1,17 +1,28 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import { login } from "../services/authService";
 
-vi.mock("../services/supabaseConfig", () => ({
-  login: vi
-    .fn()
-    .mockResolvedValue({ id: "123", email: "aluno@academusa.com.br" }),
+vi.mock("../services/supabaseClient", () => ({
+  supabase: {
+    auth: {
+      signInWithPassword: vi.fn(),
+      signOut: vi.fn(),
+    },
+  },
+}));
+
+vi.mock("../services/authService", () => ({
+  login: vi.fn(),
 }));
 
 describe("Login Component", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("renders the login form", () => {
     render(
       <MemoryRouter>
@@ -27,11 +38,13 @@ describe("Login Component", () => {
   });
 
   it("allows user to input email and password and finally login", async () => {
-    const { login } = await import("../services/authService");
-
     vi.mocked(login).mockResolvedValue({
-      data: { id: "123", email: "aluno@academusa.com.br" },
-      error: null,
+      id: "123",
+      email: "aluno@academusa.com.br",
+      app_metadata: {},
+      user_metadata: {},
+      aud: "authenticated",
+      created_at: new Date().toISOString(),
     });
 
     const user = userEvent.setup();
@@ -63,14 +76,7 @@ describe("Login Component", () => {
   });
 
   it("shows error message on invalid credentials", async () => {
-    vi.mock("../services/authService");
-    vi.mocked(login).mockRejectedValueOnce({
-      __isAuthError: true,
-      name: "AuthApiError",
-      status: 400,
-      code: "invalid_credentials",
-      message: "Invalid login credentials",
-    });
+    vi.mocked(login).mockRejectedValueOnce(new Error("Invalid credentials"));
 
     const user = userEvent.setup();
 
@@ -89,9 +95,7 @@ describe("Login Component", () => {
     await user.click(loginButton);
 
     await waitFor(() => {
-      expect(
-        screen.getByText(/Erro ao entrar. Verifique suas credenciais./i),
-      ).toBeInTheDocument();
+      expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument();
     });
   });
 
@@ -202,8 +206,12 @@ describe("Login Component", () => {
           setTimeout(
             () =>
               resolve({
-                data: { id: "123", email: "aluno@academusa.com.br" },
-                error: null,
+                id: "123",
+                email: "aluno@academusa.com.br",
+                app_metadata: {},
+                user_metadata: {},
+                aud: "authenticated",
+                created_at: new Date().toISOString(),
               }),
             100,
           ),
@@ -248,8 +256,12 @@ describe("Login Component", () => {
           setTimeout(
             () =>
               resolve({
-                data: { id: "123", email: "aluno@academusa.com.br" },
-                error: null,
+                id: "123",
+                email: "aluno@academusa.com.br",
+                app_metadata: {},
+                user_metadata: {},
+                aud: "authenticated",
+                created_at: new Date().toISOString(),
               }),
             150,
           ),
@@ -313,25 +325,30 @@ describe("Login Component", () => {
     await user.click(loginButton);
 
     // Verifica que a mensagem de erro aparece
-    await waitFor(() => {
-      expect(
-        screen.getByText(/Erro ao entrar. Verifique suas credenciais./i),
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument();
+      },
+      { timeout: 2000 },
+    );
 
     // Segundo mock: sucesso no login
     vi.mocked(login).mockResolvedValueOnce({
-      data: { id: "123", email: "aluno@academusa.com.br" },
-      error: null,
+      id: "123",
+      email: "aluno@academusa.com.br",
+      app_metadata: {},
+      user_metadata: {},
+      aud: "authenticated",
+      created_at: new Date().toISOString(),
     });
 
     await user.clear(passwordInput);
-    await user.type(passwordInput, "senhacorreta");
+    await user.type(passwordInput, "aluniacademusa");
     await user.click(loginButton);
 
     await waitFor(() => {
       expect(
-        screen.queryByText(/Erro ao entrar. Verifique suas credenciais./i),
+        screen.queryByText(/Invalid credentials/i),
       ).not.toBeInTheDocument();
     });
   });
