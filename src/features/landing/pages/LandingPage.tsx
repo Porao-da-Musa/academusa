@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "../components/Button";
+import { Button } from "../../../shared/ui/Button/Button";
 import {
   Dumbbell,
   Zap,
@@ -10,7 +10,7 @@ import {
   ArrowRight,
   Star,
 } from "lucide-react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../../../shared/ui/Footer/Footer";
 
 const LandingPage: React.FC = () => {
   return (

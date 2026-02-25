@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { Navbar } from "../components/NavBar";
-import { NavbarVariant } from "../types/navbar.types";
+import { Navbar } from "../../shared/ui/NavBar/NavBar";
+import { NavbarVariant } from "../../shared/ui/NavBar/types/navbar.types";
 
 const publicRoutes = [
   { label: "Funcionalidades", path: "/features", isAnchor: true },

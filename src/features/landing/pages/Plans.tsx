@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "../components/Button";
+import { Button } from "../../../shared/ui/Button/Button";
 import { CheckCircle } from "lucide-react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../../../shared/ui/Footer/Footer";
 
 const Plans: React.FC = () => {
   return (

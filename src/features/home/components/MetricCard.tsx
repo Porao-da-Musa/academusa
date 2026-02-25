@@ -1,6 +1,6 @@
 import React from "react";
 import type { LucideIcon } from "lucide-react";
-import { Card } from "./Card";
+import { Card } from "../../../shared/ui/Card/Card";
 
 interface MetricCardProps {
   title: string;

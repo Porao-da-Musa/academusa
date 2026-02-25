@@ -2,21 +2,21 @@ import React from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { PublicLayout } from "./layouts/PublicLayout";
 import { DashboardLayout } from "./layouts/DashboardLayout";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 // Pages
-import LandingPage from "./pages/LandingPage";
-import About from "./pages/About";
-import Plans from "./pages/Plans";
-import { Dashboard } from "./pages/Dashboard";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
-import Home from "./pages/Home";
+import LandingPage from "../features/landing/pages/LandingPage";
+import About from "../features/landing/pages/About";
+import Plans from "../features/landing/pages/Plans";
+import { Dashboard } from "../features/dashboard/pages/Dashboard";
+import Signup from "../features/auth/pages/Signup";
+import Login from "../features/auth/pages/Login";
+import Home from "../features/home/pages/Home";
 import { HomeLayout } from "./layouts/HomeLayout";
-import Map from "./pages/Map";
-import Training from "./pages/Training";
-import Exercises from "./pages/Exercises";
-import NotFound from "./pages/NotFound";
+import Map from "../features/gym-map/pages/GymMap";
+import Training from "../features/my-workout/pages/MyWorkout";
+import Exercises from "../features/exercises/pages/Exercises";
+import NotFound from "./routes/NotFound";
 
 const App: React.FC = () => {
   return (

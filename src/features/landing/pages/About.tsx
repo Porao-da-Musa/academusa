@@ -1,6 +1,6 @@
 import React from "react";
 import { Users, TrendingUp, Dumbbell, CheckCircle } from "lucide-react";
-import { Footer } from "../components/Footer";
+import { Footer } from "../../../shared/ui/Footer/Footer";
 
 const About: React.FC = () => {
   return (
