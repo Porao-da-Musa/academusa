@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Dumbbell, Menu, X } from "lucide-react";
-import { AuthButtons } from "./ui/AuthButtons";
+import { AuthButtons } from "./AuthButtons";
 import { NavbarVariant } from "../types/navbar.types";
 
 interface NavRoute {

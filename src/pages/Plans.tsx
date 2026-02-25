@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../components/ui/Button";
+import { Button } from "../components/Button";
 import { Dumbbell, CheckCircle } from "lucide-react";
 
 const Plans: React.FC = () => {

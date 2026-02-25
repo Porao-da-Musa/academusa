@@ -9,11 +9,14 @@ import {
   ListChecks,
   Map,
 } from "lucide-react";
-import { Card } from "../components/ui/Card";
-import { MetricCard } from "../components/ui/MetricCard";
-import { Button } from "../components/ui/Button";
+import { Card } from "../components/Card";
+import { MetricCard } from "../components/MetricCard";
+import { Button } from "../components/Button";
 import { Link } from "react-router-dom";
-import { hardOccupancyThreshold, lowOccupancyThreshold } from "../constants";
+import {
+  HIGH_OCCUPANCY_THRESHOLD,
+  LOW_OCCUPANCY_THRESHOLD,
+} from "../constants/occupancy.constants";
 
 const name = "Alex";
 const trains = "5/4";
@@ -32,13 +35,13 @@ const todayWorkout = [
 ];
 
 const getOccupancyStatus = (rate: number) => {
-  if (rate < lowOccupancyThreshold) {
+  if (rate < LOW_OCCUPANCY_THRESHOLD) {
     return {
       color: "text-green-600",
       message: "Baixa - ótimo momento!",
     };
   }
-  if (rate < hardOccupancyThreshold) {
+  if (rate < HIGH_OCCUPANCY_THRESHOLD) {
     return {
       color: "text-amber-500",
       message: "Média",

@@ -1,0 +1,2 @@
+export const LOW_OCCUPANCY_THRESHOLD = 35;
+export const HIGH_OCCUPANCY_THRESHOLD = 70;
