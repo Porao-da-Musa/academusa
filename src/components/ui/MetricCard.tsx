@@ -27,7 +27,6 @@ export const MetricCard: React.FC<MetricCardProps> = ({
       </div>
 
       <div className="font-normal text-2xl text-black">{value}</div>
-      
 
       {bottomContent && <div className="bottom">{bottomContent}</div>}
     </Card>

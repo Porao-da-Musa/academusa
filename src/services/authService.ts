@@ -13,11 +13,7 @@ export const login = async (email: string, password: string) => {
   return data.user;
 };
 
-export const signup = async(
-  name: string,
-  email: string,
-  password: string,
-) => {
+export const signup = async (name: string, email: string, password: string) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -29,11 +25,22 @@ export const signup = async(
   });
 
   if (error) {
-    throw new Error(`Erro ao registrar usuário: ${error.message}`);
-  }
+    switch (error.code) {
+      case "user_already_exists":
+        throw new Error("Usuário já cadastrado.");
 
-  return data.user
-}
+      case "invalid_email":
+        throw new Error("E-mail inválido.");
+
+      case "weak_password":
+        throw new Error("Senha muito fraca.");
+
+      default:
+        throw new Error("Erro ao criar conta. Tente novamente.");
+    }
+  }
+  return data.user;
+};
 
 export const logout = async () => {
   const { error } = await supabase.auth.signOut();

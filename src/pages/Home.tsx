@@ -94,7 +94,9 @@ export default function Home() {
           iconColor="text-purple-600"
           value={`${average_minutes}min`}
           bottomContent={
-            <p className="text-sm text-purple-600 mt-1">Meta: {train_target} min</p>
+            <p className="text-sm text-purple-600 mt-1">
+              Meta: {train_target} min
+            </p>
           }
         />
 
