@@ -1,7 +1,7 @@
 import { Users, TrendingUp, Dumbbell, CheckCircle } from "lucide-react";
 import { Footer } from "../../../shared/ui/Footer/Footer";
 
-const About = () => {
+export function About() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-200 py-24 px-6">
       <div className="max-w-6xl mx-auto space-y-24">
@@ -177,6 +177,4 @@ const About = () => {
       </div>
     </div>
   );
-};
-
-export default About;
+}

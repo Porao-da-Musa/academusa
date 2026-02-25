@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { Footer } from "../../../shared/ui/Footer/Footer";
 
-const LandingPage = () => {
+export function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 relative overflow-hidden">
       {/* Elementos Decorativos de Fundo */}
@@ -453,6 +453,4 @@ const LandingPage = () => {
       </div>
     </div>
   );
-};
-
-export default LandingPage;
+}

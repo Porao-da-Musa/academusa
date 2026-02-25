@@ -4,18 +4,18 @@ import { DashboardLayout } from "./layouts/DashboardLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 // Pages
-import LandingPage from "../features/landing/pages/LandingPage";
-import About from "../features/landing/pages/About";
-import Plans from "../features/landing/pages/Plans";
+import { LandingPage } from "../features/landing/pages/LandingPage";
+import { About } from "../features/landing/pages/About";
+import { Plans } from "../features/landing/pages/Plans";
 import { Dashboard } from "../features/dashboard/pages/Dashboard";
-import Signup from "../features/auth/pages/Signup";
-import Login from "../features/auth/pages/Login";
-import Home from "../features/home/pages/Home";
+import { Signup } from "../features/auth/pages/Signup";
+import { Login } from "../features/auth/pages/Login";
+import { Home } from "../features/home/pages/Home";
 import { HomeLayout } from "./layouts/HomeLayout";
-import Map from "../features/gym-map/pages/GymMap";
-import Training from "../features/my-workout/pages/MyWorkout";
-import Exercises from "../features/exercises/pages/Exercises";
-import NotFound from "./routes/NotFound";
+import { GymMap } from "../features/gym-map/pages/GymMap";
+import { MyWorkout } from "../features/my-workout/pages/MyWorkout";
+import { Exercises } from "../features/exercises/pages/Exercises";
+import { NotFound } from "./routes/NotFound";
 
 const App = () => {
   return (
@@ -50,8 +50,8 @@ const App = () => {
           }
         >
           <Route path="/home" element={<Home />} />
-          <Route path="/home/map" element={<Map />} />
-          <Route path="/home/training" element={<Training />} />
+          <Route path="/home/map" element={<GymMap />} />
+          <Route path="/home/my-workout" element={<MyWorkout />} />
           <Route path="/home/exercises" element={<Exercises />} />
         </Route>
 

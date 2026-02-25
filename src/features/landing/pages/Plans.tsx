@@ -2,7 +2,7 @@ import { Button } from "../../../shared/ui/Button/Button";
 import { CheckCircle } from "lucide-react";
 import { Footer } from "../../../shared/ui/Footer/Footer";
 
-const Plans = () => {
+export function Plans() {
   return (
     <div className="min-h-screen bg-gradient-to-b py-24 px-6">
       <div className="max-w-6xl mx-auto space-y-24"></div>
@@ -130,6 +130,4 @@ const Plans = () => {
       <Footer />
     </div>
   );
-};
-
-export default Plans;
+}

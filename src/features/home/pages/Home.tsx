@@ -54,7 +54,7 @@ const getOccupancyStatus = (rate: number) => {
   };
 };
 
-export default function Home() {
+export function Home() {
   const occupancyStatus = getOccupancyStatus(ocupancy_rate);
   return (
     <div className="bg-gray-50 p-6 justify-center px-12">
