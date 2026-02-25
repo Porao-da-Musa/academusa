@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
-import { Card } from "../../../shared/ui/Card/Card";
+import { Card } from "@shared/ui/Card/Card";
 
 type MetricCardProps = {
   readonly title: string;

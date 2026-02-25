@@ -4,17 +4,17 @@ import { DashboardLayout } from "./layouts/DashboardLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 // Pages
-import { LandingPage } from "../features/landing/pages/LandingPage";
-import { About } from "../features/landing/pages/About";
-import { Plans } from "../features/landing/pages/Plans";
-import { Dashboard } from "../features/dashboard/pages/Dashboard";
-import { Signup } from "../features/auth/pages/Signup";
-import { Login } from "../features/auth/pages/Login";
-import { Home } from "../features/home/pages/Home";
+import { LandingPage } from "@features/landing/pages/LandingPage";
+import { About } from "@features/landing/pages/About";
+import { Plans } from "@features/landing/pages/Plans";
+import { Dashboard } from "@features/dashboard/pages/Dashboard";
+import { Signup } from "@features/auth/pages/Signup";
+import { Login } from "@features/auth/pages/Login";
+import { Home } from "@features/home/pages/Home";
 import { HomeLayout } from "./layouts/HomeLayout";
-import { GymMap } from "../features/gym-map/pages/GymMap";
-import { MyWorkout } from "../features/my-workout/pages/MyWorkout";
-import { Exercises } from "../features/exercises/pages/Exercises";
+import { GymMap } from "@features/gym-map/pages/GymMap";
+import { MyWorkout } from "@features/my-workout/pages/MyWorkout";
+import { Exercises } from "@features/exercises/pages/Exercises";
 import { NotFound } from "./routes/NotFound";
 
 const App = () => {

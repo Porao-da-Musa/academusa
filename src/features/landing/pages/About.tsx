@@ -1,5 +1,5 @@
 import { Users, TrendingUp, Dumbbell, CheckCircle } from "lucide-react";
-import { Footer } from "../../../shared/ui/Footer/Footer";
+import { Footer } from "@shared/ui/Footer/Footer";
 
 export function About() {
   return (

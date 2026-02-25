@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuthGuard } from "../../features/auth/hooks/useAuthGuard";
+import { useAuthGuard } from "@features/auth/hooks/useAuthGuard";
 
 type ProtectedRouteProps = {
   readonly children: React.ReactNode;

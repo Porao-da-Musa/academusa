@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "../../../shared/ui/Button/Button";
+import { Button } from "@shared/ui/Button/Button";
 
 type AuthButtonsProps = {
   readonly isMobile?: boolean;

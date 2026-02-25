@@ -1,6 +1,6 @@
-import { Button } from "../../../shared/ui/Button/Button";
+import { Button } from "@shared/ui/Button/Button";
 import { CheckCircle } from "lucide-react";
-import { Footer } from "../../../shared/ui/Footer/Footer";
+import { Footer } from "@shared/ui/Footer/Footer";
 
 export function Plans() {
   return (

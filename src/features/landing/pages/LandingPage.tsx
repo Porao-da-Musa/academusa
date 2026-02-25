@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "../../../shared/ui/Button/Button";
+import { Button } from "@shared/ui/Button/Button";
 import {
   Dumbbell,
   Zap,
@@ -9,7 +9,7 @@ import {
   ArrowRight,
   Star,
 } from "lucide-react";
-import { Footer } from "../../../shared/ui/Footer/Footer";
+import { Footer } from "@shared/ui/Footer/Footer";
 
 export function LandingPage() {
   return (
