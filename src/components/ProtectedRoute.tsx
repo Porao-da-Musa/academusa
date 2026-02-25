@@ -1,42 +1,12 @@
-import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { supabase } from "../services/supabaseClient";
+import { useAuthGuard } from "../hooks/useAuthGuard";
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
+type ProtectedRouteProps = {
+  readonly children: React.ReactNode;
+};
 
-export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  const [loading, setLoading] = useState(true);
-  const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const {
-        data: { user },
-        error,
-      } = await supabase.auth.getUser();
-
-      if (error) {
-        setAuthenticated(false);
-        alert("Erro ao verificar autenticação. Por favor, tente novamente.");
-      } else {
-        setAuthenticated(Boolean(user));
-      }
-
-      setLoading(false);
-    };
-
-    checkAuth();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setAuthenticated(!!session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+export function ProtectedRoute({ children }: ProtectedRouteProps) {
+  const { loading, authenticated } = useAuthGuard();
 
   if (loading) {
     return (
@@ -51,4 +21,4 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   }
 
   return <>{children}</>;
-};
+}
