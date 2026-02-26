@@ -10,6 +10,7 @@ import {
   ArrowRight,
   Star,
 } from "lucide-react";
+import Footer from "../components/ui/Footer";
 
 const LandingPage: React.FC = () => {
   return (
@@ -459,9 +460,7 @@ const LandingPage: React.FC = () => {
               <span className="text-xl font-bold text-white">Academusa</span>
             </div>
             {/* Alterar data com var */}
-            <p className="text-white/70 text-center">
-              © 2025 Academusa. Todos os direitos reservados.
-            </p>
+            <Footer className="text-white/70 text-center"></Footer>
             <div className="flex gap-6 text-white/70 text-sm">
               <a href="#" className="hover:text-white transition-colors">
                 Termos
