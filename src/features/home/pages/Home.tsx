@@ -1,0 +1,211 @@
+import {
+  Activity,
+  Timer,
+  TrendingUp,
+  Flame,
+  MoveUp,
+  MoveDown,
+  BicepsFlexed,
+  ListChecks,
+  Map,
+} from "lucide-react";
+import { Card } from "@shared/ui/Card/Card";
+import { MetricCard } from "../components/MetricCard";
+import { Button } from "@shared/ui/Button/Button";
+import { Link } from "react-router-dom";
+import {
+  HIGH_OCCUPANCY_THRESHOLD,
+  LOW_OCCUPANCY_THRESHOLD,
+} from "../constants/occupancy.constants";
+
+const name = "Alex";
+const trains = "5/4";
+const average_train = 20;
+const average_minutes = 45;
+const train_target = 60;
+const personal_records = 3;
+const ocupancy_rate = 50;
+
+const todayWorkout = [
+  { exercise: "Supino Reto", equipment: "Barra Livre", sets: 4, reps: 12 },
+  { exercise: "Crucifixo Inclinado", equipment: "Halteres", sets: 3, reps: 15 },
+  { exercise: "Tríceps Testa", equipment: "Barra W", sets: 3, reps: 12 },
+  { exercise: "Tríceps Corda", equipment: "Polia Alta", sets: 3, reps: 15 },
+  { exercise: "Rosca Direta", equipment: "Barra EZ", sets: 4, reps: 10 },
+];
+
+const getOccupancyStatus = (rate: number) => {
+  if (rate < LOW_OCCUPANCY_THRESHOLD) {
+    return {
+      color: "text-green-600",
+      message: "Baixa - ótimo momento!",
+    };
+  }
+  if (rate < HIGH_OCCUPANCY_THRESHOLD) {
+    return {
+      color: "text-amber-500",
+      message: "Média",
+    };
+  }
+
+  return {
+    color: "text-red-600",
+    message: "Alta",
+  };
+};
+
+export function Home() {
+  const occupancyStatus = getOccupancyStatus(ocupancy_rate);
+  return (
+    <div className="bg-gray-50 p-6 justify-center px-12">
+      <div className="flex w-full h-min" id="welcome-card">
+        <Card className="bg-blue-700 h-min w-full py-9">
+          <p className="font-medium text-3xl">Bem vindo de volta, {name}!</p>
+          <p className="mt-2">Pronto para começar seu treino?</p>
+        </Card>
+      </div>
+
+      {/* Métricas */}
+      <div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-2"
+        id="metrics-cards"
+      >
+        <MetricCard
+          title="Treinos Esta Semana"
+          icon={Activity}
+          iconColor="text-blue-600"
+          value={trains}
+          bottomContent={
+            <p
+              className={`flex items-center gap-1 text-sm mt-1 ${
+                average_train > 0 ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {average_train < 0 ? (
+                <MoveDown size={10} />
+              ) : (
+                <MoveUp size={10} />
+              )}
+              <span>{Math.abs(average_train)}% da semana passada</span>
+            </p>
+          }
+        />
+
+        <MetricCard
+          title="Tempo Médio"
+          icon={Timer}
+          iconColor="text-purple-600"
+          value={`${average_minutes}min`}
+          bottomContent={
+            <p className="text-sm text-purple-600 mt-1">
+              Meta: {train_target} min
+            </p>
+          }
+        />
+
+        <MetricCard
+          title="Recordes Pessoais"
+          icon={TrendingUp}
+          iconColor="text-orange-600"
+          value={personal_records}
+          bottomContent={
+            <p className="text-sm text-orange-600 mt-1">Novos esse mês</p>
+          }
+        />
+
+        <MetricCard
+          title="Lotação da Academia"
+          icon={Flame}
+          iconColor="text-red-600"
+          value={`${ocupancy_rate}%`}
+          bottomContent={
+            <p className={`text-sm font-medium ${occupancyStatus.color} mt-1`}>
+              {occupancyStatus.message}
+            </p>
+          }
+        />
+      </div>
+
+      {/* Ações Rápidas */}
+      <div className="flex flex-col md:flex-row" id="middle-cards">
+        <Card className="bg-white w-full flex flex-col">
+          <Link to="/home/map">
+            <div className="bg-red-200 rounded w-fit p-2">
+              <Map className="h-6 w-6 text-red-600" />
+            </div>
+
+            <span className="font-medium mt-3 text-black md:text-base">
+              Ver mapa da academia
+            </span>
+
+            <p className="text-xs md:text-sm text-gray-500 mt-1">
+              Veja a disponibilidade de equipamentos e densidade de pessoas em
+              tempo real
+            </p>
+          </Link>
+        </Card>
+
+        <Card className="bg-white w-full flex flex-col">
+          <Link to="/home/training">
+            <div className="bg-pink-200 rounded w-fit p-2">
+              <ListChecks className="h-6 w-6 text-pink-600" />
+            </div>
+            <span className="font-medium mt-3 text-black text-xs md:text-base ">
+              Gerenciar treino
+            </span>
+            <p className="text-xs md:text-sm text-gray-500 mt-1">
+              Crie e personalize sua rotina de treino adaptativa
+            </p>
+          </Link>
+        </Card>
+
+        <Card className="bg-white w-full flex flex-col">
+          <Link to="/home/exercises">
+            <div className="bg-purple-200 rounded w-fit p-2">
+              <BicepsFlexed className="h-6 w-6 text-purple-600" />
+            </div>
+            <span className="font-medium mt-3 text-black text-sm md:text-base">
+              Explorar exercícios
+            </span>
+            <p className="text-xs md:text-sm text-gray-500 mt-1">
+              Encontre exercícios alternativos quando o equipamento estiver
+              ocupado
+            </p>
+          </Link>
+        </Card>
+      </div>
+
+      {/* Treino de Hoje */}
+      <div className="flex w-full" id="workout">
+        <Card className="bg-white w-full flex flex-col">
+          <h2 className="text-xl font-normal text-black mb-4">
+            Treino de Hoje
+          </h2>
+
+          <div className="flex flex-col gap-3 mb-4">
+            {todayWorkout.map((exercise, index) => (
+              <div
+                key={index}
+                className="bg-gray-100 w-full p-4 rounded-lg flex justify-between items-center"
+              >
+                <div>
+                  <p className="font-normal text-black">{exercise.exercise}</p>
+                  <p className="text-sm text-gray-500">{exercise.equipment}</p>
+                </div>
+                <span className="font-normal text-gray-700">
+                  {exercise.sets}x{exercise.reps}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          <Link to="/home/training">
+            <Button className="!bg-blue-700 text-white w-full">
+              Iniciar Treino
+            </Button>
+          </Link>
+        </Card>
+      </div>
+    </div>
+  );
+}
