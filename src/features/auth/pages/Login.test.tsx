@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import Login from "./Login";
+import { Login } from "./Login";
 import { login } from "../services/authService";
 
 vi.mock("../services/supabaseClient", () => ({
