@@ -18,6 +18,7 @@ export function Login() {
     try {
       const user = await login(email, password);
       if (user) navigate("/home");
+      console.log(error);
     } catch (err) {
       if (err instanceof Error && err.message) {
         setError(err.message);
@@ -27,6 +28,7 @@ export function Login() {
         setError("Erro ao entrar. Verifique suas credenciais.");
       }
     } finally {
+      console.log(error);
       setLoading(false);
     }
   };
