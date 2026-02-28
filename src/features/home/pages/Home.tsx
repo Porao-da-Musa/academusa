@@ -146,7 +146,7 @@ export function Home() {
         </Card>
 
         <Card className="bg-white w-full flex flex-col">
-          <Link to="/home/training">
+          <Link to="/home/my-workout">
             <div className="bg-pink-200 rounded w-fit p-2">
               <ListChecks className="h-6 w-6 text-pink-600" />
             </div>
@@ -199,7 +199,7 @@ export function Home() {
             ))}
           </div>
 
-          <Link to="/home/training">
+          <Link to="/home/my-workout">
             <Button className="!bg-blue-700 text-white w-full">
               Iniciar Treino
             </Button>

@@ -5,7 +5,7 @@ import { NavbarVariant } from "@shared/ui/NavBar/navbar.types";
 const homeRoutes = [
   { label: "Painel", path: "/home" },
   { label: "Mapa da Academia", path: "/home/map" },
-  { label: "Meu Treino", path: "/home/training" },
+  { label: "Meu Treino", path: "/home/my-workout" },
   { label: "Exercícios", path: "/home/exercises" },
 ];
 
