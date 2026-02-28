@@ -9,9 +9,9 @@ import {
   ListChecks,
   Map,
 } from "lucide-react";
-import { Card } from "@shared/ui/Card/Card";
+import { Card } from "@shared/ui/Card";
 import { MetricCard } from "../components/MetricCard";
-import { Button } from "@shared/ui/Button/Button";
+import { Button } from "@shared/ui/Button";
 import { Link } from "react-router-dom";
 import {
   HIGH_OCCUPANCY_THRESHOLD,
