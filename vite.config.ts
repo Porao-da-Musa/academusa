@@ -11,6 +11,7 @@ export default defineConfig({
       "@features": path.resolve(__dirname, "src/features"),
       "@shared": path.resolve(__dirname, "src/shared"),
       "@entities": path.resolve(__dirname, "src/entities"),
+      "@services": path.resolve(__dirname, "src/services"),
     },
   },
   test: {
