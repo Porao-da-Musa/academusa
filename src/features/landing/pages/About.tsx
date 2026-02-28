@@ -1,4 +1,4 @@
-import { Footer } from "@shared/ui/Footer/Footer";
+import { Footer } from "@shared/ui/Footer";
 import { AboutHeader } from "../components/AboutHeader";
 import { TrainerShowcaseCard } from "../components/TrainerShowcaseCard";
 import { TechnologySection } from "../components/TechnologySection";

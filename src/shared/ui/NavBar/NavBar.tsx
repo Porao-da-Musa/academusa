@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Dumbbell, Menu, X } from "lucide-react";
 import { AuthButtons } from "@features/auth/components/AuthButtons";
-import { NavbarVariant } from "./types/navbar.types";
+import { NavbarVariant } from "./navbar.types";
 
 type NavRoute = {
   label: string;
