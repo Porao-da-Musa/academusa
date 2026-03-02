@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import type { EquipmentStatus } from "../types/equipmentOccupation.mock";
 import {
   LOW_OCCUPANCY_THRESHOLD,
@@ -21,7 +21,8 @@ function getBarClasses(occupancyPercent: number): { bg: string; text: string } {
 export default function ExerciseBarComponent({
   equipment,
 }: ExerciseBarComponentProps) {
-  const { name, total, inUse, estimatedWaitMinutes } = equipment;
+  const [showDetails, setShowDetails] = useState(false);
+  const { name, total, inUse, estimatedWaitMinutes, machines } = equipment;
   const occupancyPercent = total > 0 ? Math.round((inUse / total) * 100) : 0;
   const barClasses = getBarClasses(occupancyPercent);
 
@@ -41,7 +42,7 @@ export default function ExerciseBarComponent({
           id="exercise-bar-stats"
           className="flex items-center gap-2 text-sm text-gray-600"
         >
-          {estimatedWaitMinutes != null && (
+          {estimatedWaitMinutes !== undefined && estimatedWaitMinutes > 0 && (
             <span>~{estimatedWaitMinutes}min espera</span>
           )}
           <span
@@ -68,12 +69,19 @@ export default function ExerciseBarComponent({
         </div>
       </div>
 
-      <Link
-        to="/details"
-        className="text-sm text-blue-500 hover:underline mt-1"
+      <button
+        onClick={() => setShowDetails((prev) => !prev)}
+        className="text-sm text-blue-500 hover:underline mt-1 text-left"
       >
-        Ver detalhes
-      </Link>
+        {showDetails ? "Ocultar detalhes" : "Ver detalhes"}
+      </button>
+
+      {showDetails && (
+        <div
+          id="exercise-bar-details"
+          className="mt-2 flex flex-col gap-1"
+        ></div>
+      )}
     </div>
   );
 }

@@ -5,8 +5,8 @@ export const equipmentMock: EquipmentStatus[] = [
     id: "1",
     name: "Esteira",
     total: 10,
-    inUse: 5,
-    estimatedWaitMinutes: 15,
+    inUse: 0,
+    estimatedWaitMinutes: 0,
     machines: [
       { id: "1", name: "Esteira 1", status: "Ocupado", remainingMinutes: 10 },
       { id: "2", name: "Esteira 2", status: "Disponível" },
