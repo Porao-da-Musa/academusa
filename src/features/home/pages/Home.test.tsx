@@ -30,7 +30,7 @@ describe("Home", () => {
     expect(treinoDeHojeHeading).toBeInTheDocument();
   });
 
-  it("Should redirect to /exercises when 'Iniciar Treino' is clicked", async () => {
+  it("Should redirect to /my-workout when 'Iniciar Treino' is clicked", async () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <Routes>
