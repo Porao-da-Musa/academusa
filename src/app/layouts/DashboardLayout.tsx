@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { Navbar } from "@shared/ui/NavBar/NavBar";
-import { NavbarVariant } from "@shared/ui/NavBar/types/navbar.types";
+import { Navbar } from "@shared/ui/NavBar";
+import { NavbarVariant } from "@shared/ui/NavBar/navbar.types";
 
 const dashboardRoutes = [
   { label: "Alunos", path: "/dashboard/alunos" },
