@@ -1,12 +1,14 @@
-import { useState } from "react";
 import type { EquipmentStatus } from "../types/equipmentOccupation.mock";
 import {
   LOW_OCCUPANCY_THRESHOLD,
   HIGH_OCCUPANCY_THRESHOLD,
 } from "../../home/constants/occupancy.constants";
+import EquipmentMachinesGrid from "./EquipmentMachinesGrid";
 
-interface ExerciseBarComponentProps {
+interface EquipmentOccupationItemProps {
   equipment: EquipmentStatus;
+  isExpanded: boolean;
+  onToggle: () => void;
 }
 
 function getBarClasses(occupancyPercent: number): { bg: string; text: string } {
@@ -18,10 +20,11 @@ function getBarClasses(occupancyPercent: number): { bg: string; text: string } {
   return { bg: "bg-red-500", text: "text-red-500" };
 }
 
-export default function ExerciseBarComponent({
+export default function EquipmentOccupationItem({
   equipment,
-}: ExerciseBarComponentProps) {
-  const [showDetails, setShowDetails] = useState(false);
+  isExpanded,
+  onToggle,
+}: EquipmentOccupationItemProps) {
   const { name, total, inUse, estimatedWaitMinutes, machines } = equipment;
   const occupancyPercent = total > 0 ? Math.round((inUse / total) * 100) : 0;
   const barClasses = getBarClasses(occupancyPercent);
@@ -32,8 +35,13 @@ export default function ExerciseBarComponent({
         id="exercise-bar-header"
         className="flex items-center justify-between"
       >
-        <div id="exercise-bar-info" className="flex items-center gap-2">
-          <span className="font-semibold text-gray-800">{name}</span>
+        <div
+          id="exercise-bar-info"
+          className=" sm:text-xs lg:text-lg xl:text-xl flex items-center gap-2"
+        >
+          <span className="lg:text-sm  font-semibold text-gray-800">
+            {name}
+          </span>
           <span className="text-sm text-gray-500">
             ({inUse}/{total} em uso)
           </span>
@@ -70,18 +78,22 @@ export default function ExerciseBarComponent({
       </div>
 
       <button
-        onClick={() => setShowDetails((prev) => !prev)}
+        onClick={onToggle}
         className="text-sm text-blue-500 hover:underline mt-1 text-left"
       >
-        {showDetails ? "Ocultar detalhes" : "Ver detalhes"}
+        {isExpanded ? "Ocultar detalhes" : "Ver detalhes"}
       </button>
 
-      {showDetails && (
-        <div
-          id="exercise-bar-details"
-          className="mt-2 flex flex-col gap-1"
-        ></div>
-      )}
+      <div
+        id="exercise-bar-details"
+        className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+          isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+      >
+        <div className="overflow-hidden">
+          <EquipmentMachinesGrid machines={machines} />
+        </div>
+      </div>
     </div>
   );
 }
