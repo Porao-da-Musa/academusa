@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { Home } from "./Home";
@@ -13,10 +13,10 @@ describe("Home", () => {
       </BrowserRouter>,
     );
 
-    const treinoDeHojeHeading = screen.getByRole("heading", {
+    const todayWorkoutHeading = screen.getByRole("heading", {
       name: /treino de hoje/i,
     });
-    expect(treinoDeHojeHeading).toBeInTheDocument();
+    expect(todayWorkoutHeading).toBeInTheDocument();
   });
 
   it('should render Treinos when "Treino de Hoje" is rendered', () => {
@@ -26,8 +26,8 @@ describe("Home", () => {
       </BrowserRouter>,
     );
 
-    const treinoDeHojeHeading = screen.getByText("Supino Reto");
-    expect(treinoDeHojeHeading).toBeInTheDocument();
+    const exerciseText = screen.getByText("Supino Reto");
+    expect(exerciseText).toBeInTheDocument();
   });
 
   it("Should redirect to /my-workout when 'Iniciar Treino' is clicked", async () => {
@@ -40,21 +40,16 @@ describe("Home", () => {
       </MemoryRouter>,
     );
 
-    const iniciarTreinoButton = screen.getByRole("button", {
+    const startWorkoutButton = screen.getByRole("button", {
       name: /iniciar treino/i,
     });
-    expect(iniciarTreinoButton).toBeInTheDocument();
+    expect(startWorkoutButton).toBeInTheDocument();
 
-    await userEvent.click(iniciarTreinoButton);
+    await userEvent.click(startWorkoutButton);
 
-    await waitFor(
-      () => {
-        const treinoDeHojeHeading = screen.getByRole("heading", {
-          name: /Bem-vindo à Página Meu Treino!/i,
-        });
-        expect(treinoDeHojeHeading).toBeInTheDocument();
-      },
-      { timeout: 2000 },
-    );
+    const myWorkoutHeading = await screen.findByRole("heading", {
+      name: /Bem-vindo à Página Meu Treino!/i,
+    });
+    expect(myWorkoutHeading).toBeInTheDocument();
   });
 });
