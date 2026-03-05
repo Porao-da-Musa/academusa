@@ -26,6 +26,7 @@ export default defineConfig({
         "src/components/**/*.{ts,tsx}",
         "src/layouts/**/*.{ts,tsx}",
         "src/pages/**/*.{ts,tsx}",
+        "src/app/**/*.{ts,tsx}",
       ],
 
       exclude: [
