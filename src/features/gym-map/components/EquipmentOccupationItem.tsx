@@ -1,23 +1,24 @@
 import type { EquipmentStatus } from "../types/equipmentOccupation.mock";
+import { EquipmentMachinesGrid } from "./EquipmentMachinesGrid";
+import { AvailabilityBar } from "./AvailabilityBar";
 import {
   LOW_OCCUPANCY_THRESHOLD,
   HIGH_OCCUPANCY_THRESHOLD,
-} from "../../home/constants/occupancy.constants";
-import EquipmentMachinesGrid from "./EquipmentMachinesGrid";
+} from "@features/home/constants/occupancy.constants";
+
+function getBarClasses(occupancyPercent: number): { bg: string; text: string } {
+  if (occupancyPercent <= LOW_OCCUPANCY_THRESHOLD)
+    return { bg: "bg-green-500", text: "text-green-500" };
+  if (occupancyPercent <= HIGH_OCCUPANCY_THRESHOLD)
+    return { bg: "bg-amber-400", text: "text-amber-400" };
+
+  return { bg: "bg-red-500", text: "text-red-500" };
+}
 
 interface EquipmentOccupationItemProps {
   equipment: EquipmentStatus;
   isExpanded: boolean;
   onToggle: () => void;
-}
-
-function getBarClasses(occupancyPercent: number): { bg: string; text: string } {
-  if (occupancyPercent <= LOW_OCCUPANCY_THRESHOLD)
-    return { bg: "bg-green-500 ", text: "text-green-500" };
-  if (occupancyPercent <= HIGH_OCCUPANCY_THRESHOLD)
-    return { bg: "bg-amber-400", text: "text-amber-400" };
-
-  return { bg: "bg-red-500", text: "text-red-500" };
 }
 
 export default function EquipmentOccupationItem({
@@ -61,21 +62,10 @@ export default function EquipmentOccupationItem({
         </div>
       </div>
 
-      {/* Barra de disponibilidade */}
-      <div
-        id="exercise-bar-track"
-        className="relative w-full mt-2 h-9 bg-gray-200 rounded-lg"
-      >
-        <div
-          id="exercise-bar-fill"
-          className={`relative h-full rounded-l-lg transition-[width,background-color] duration-700 ease-in-out ${barClasses.bg}`}
-          style={{ width: `${occupancyPercent}%` }}
-        >
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 font-sm text-white text-sm whitespace-nowrap">
-            {occupancyPercent}%
-          </span>
-        </div>
-      </div>
+      <AvailabilityBar
+        occupancyPercent={occupancyPercent}
+        bgClass={barClasses.bg}
+      />
 
       <button
         onClick={onToggle}

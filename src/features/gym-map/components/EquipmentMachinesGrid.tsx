@@ -9,7 +9,7 @@ interface EquipmentMachinesGridProps {
   }[];
 }
 
-export default function EquipmentMachinesGrid({
+export function EquipmentMachinesGrid({
   machines,
 }: EquipmentMachinesGridProps) {
   return (
