@@ -17,6 +17,7 @@ import {
   HIGH_OCCUPANCY_THRESHOLD,
   LOW_OCCUPANCY_THRESHOLD,
 } from "../constants/occupancy.constants";
+import { WelcomeCard } from "../components/WelcomeCard";
 
 const name = "Alex";
 const trains = "5/4";
@@ -59,15 +60,12 @@ export function Home() {
   return (
     <div className="bg-gray-50 p-6 justify-center px-12">
       <div className="flex w-full h-min" id="welcome-card">
-        <Card className="bg-blue-700 h-min w-full py-9">
-          <p className="font-medium text-3xl">Bem vindo de volta, {name}!</p>
-          <p className="mt-2">Pronto para começar seu treino?</p>
-        </Card>
+        <WelcomeCard name={name} />
       </div>
 
       {/* Métricas */}
       <div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-2"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
         id="metrics-cards"
       >
         <MetricCard
@@ -146,7 +144,7 @@ export function Home() {
         </Card>
 
         <Card className="bg-white w-full flex flex-col">
-          <Link to="/home/training">
+          <Link to="/home/my-workout">
             <div className="bg-pink-200 rounded w-fit p-2">
               <ListChecks className="h-6 w-6 text-pink-600" />
             </div>
@@ -199,7 +197,7 @@ export function Home() {
             ))}
           </div>
 
-          <Link to="/home/training">
+          <Link to="/home/my-workout">
             <Button className="!bg-blue-700 text-white w-full">
               Iniciar Treino
             </Button>

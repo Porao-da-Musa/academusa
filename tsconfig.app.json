@@ -12,7 +12,8 @@
       "@app/*": ["app/*"],
       "@features/*": ["features/*"],
       "@shared/*": ["shared/*"],
-      "@entities/*": ["entities/*"]
+      "@entities/*": ["entities/*"],
+      "@services/*": ["services/*"]
     },
 
     /* Bundler mode */

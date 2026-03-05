@@ -11,6 +11,7 @@ export default defineConfig({
       "@features": path.resolve(__dirname, "src/features"),
       "@shared": path.resolve(__dirname, "src/shared"),
       "@entities": path.resolve(__dirname, "src/entities"),
+      "@services": path.resolve(__dirname, "src/services"),
     },
   },
   test: {
@@ -25,6 +26,7 @@ export default defineConfig({
         "src/components/**/*.{ts,tsx}",
         "src/layouts/**/*.{ts,tsx}",
         "src/pages/**/*.{ts,tsx}",
+        "src/app/**/*.{ts,tsx}",
       ],
 
       exclude: [
