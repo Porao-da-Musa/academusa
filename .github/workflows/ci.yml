@@ -36,8 +36,5 @@ jobs:
       - name: Executar teste com cobertura mínima de 75%
         run: npm run test:coverage
 
-      - name: Executar testes
-        run: npm test -- --run
-
       - name: Build do projeto
         run: npm run build
