@@ -3,6 +3,8 @@ name: Move Taiga Card to Ready to Test
 on:
   pull_request:
     types: [closed]
+    branches:
+      - "release/*"
 
 jobs:
   move-taiga-card:
@@ -12,46 +14,60 @@ jobs:
     steps:
       - name: Extract Taiga User Story ID from PR body
         id: taiga
+        env:
+          BODY: ${{ github.event.pull_request.body }}
         run: |
-          BODY="${{ github.event.pull_request.body }}"
-          if [[ $BODY =~ /us/([0-9]+) ]]; then
-            echo "us_id=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
-          else
+          US_ID=$(echo "$BODY" | grep -oE '/us/[0-9]+' | grep -oE '[0-9]+' | head -n1)
+
+          if [ -z "$US_ID" ]; then
             echo "No Taiga User Story found in PR description"
             exit 1
           fi
 
+          echo "Taiga User Story ID: $US_ID"
+          echo "us_id=$US_ID" >> $GITHUB_OUTPUT
+
       - name: Authenticate with Taiga
         id: taiga_auth
+        env:
+          TAIGA_USERNAME: ${{ secrets.TAIGA_USERNAME }}
+          TAIGA_PASSWORD: ${{ secrets.TAIGA_PASSWORD }}
         run: |
           RESPONSE=$(curl -s -X POST https://api.taiga.io/api/v1/auth \
           -H "Content-Type: application/json" \
-          -d '{
-            "type": "normal",
-            "username": "'"$TAIGA_USERNAME"'",
-            "password": "'"$TAIGA_PASSWORD"'"
-          }')
+          -d "{
+            \"type\": \"normal\",
+            \"username\": \"$TAIGA_USERNAME\",
+            \"password\": \"$TAIGA_PASSWORD\"
+          }")
 
-          TOKEN=$(echo $RESPONSE | jq -r '.auth_token')
+          TOKEN=$(echo "$RESPONSE" | jq -r '.auth_token')
 
-          if [ "$TOKEN" = "null" ]; then
+          if [ "$TOKEN" = "null" ] || [ -z "$TOKEN" ]; then
             echo "Failed to authenticate with Taiga"
+            echo "$RESPONSE"
             exit 1
           fi
 
           echo "token=$TOKEN" >> $GITHUB_OUTPUT
-        env:
-          TAIGA_USERNAME: ${{ secrets.TAIGA_USERNAME }}
-          TAIGA_PASSWORD: ${{ secrets.TAIGA_PASSWORD }}
 
       - name: Move User Story to Ready to Test
+        env:
+          TOKEN: ${{ steps.taiga_auth.outputs.token }}
+          US_ID: ${{ steps.taiga.outputs.us_id }}
         run: |
-          curl -X PATCH https://api.taiga.io/api/v1/userstories/$US_ID \
+          RESPONSE=$(curl -s -o response.json -w "%{http_code}" \
+          -X PATCH https://api.taiga.io/api/v1/userstories/$US_ID \
           -H "Authorization: Bearer $TOKEN" \
           -H "Content-Type: application/json" \
           -d '{
             "status": READY_TO_TEST_STATUS_ID
-          }'
-        env:
-          TOKEN: ${{ steps.taiga_auth.outputs.token }}
-          US_ID: ${{ steps.taiga.outputs.us_id }}
+          }')
+
+          if [ "$RESPONSE" -ne 200 ]; then
+            echo "Failed to update Taiga User Story"
+            cat response.json
+            exit 1
+          fi
+
+          echo "User Story moved to Ready to Test"
