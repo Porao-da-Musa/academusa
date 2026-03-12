@@ -1,0 +1,16 @@
+name: Move Taiga Card to Ready to Test
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  move:
+    if: github.event.pull_request.merged == true
+    uses: ./.github/workflows/taiga-update-status.yml
+    with:
+      status_id: 10629136
+      project_id: 1752166
+    secrets:
+      TAIGA_USERNAME: ${{ secrets.TAIGA_USERNAME }}
+      TAIGA_PASSWORD: ${{ secrets.TAIGA_PASSWORD }}
