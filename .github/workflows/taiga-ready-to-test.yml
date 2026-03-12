@@ -1,16 +1,27 @@
-name: Move Taiga Task
+name: Move Taiga Card to Ready to Test
 
 on:
   pull_request:
     types: [closed]
 
 jobs:
-  taiga:
+  move-taiga-card:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     steps:
-      - name: Login Taiga
+      - name: Extract Taiga User Story ID from PR body
+        id: taiga
+        run: |
+          BODY="${{ github.event.pull_request.body }}"
+          if [[ $BODY =~ /us/([0-9]+) ]]; then
+            echo "us_id=${BASH_REMATCH[1]}" >> $GITHUB_OUTPUT
+          else
+            echo "No Taiga User Story found in PR description"
+            exit 1
+          fi
+
+      - name: Authenticate with Taiga
         id: taiga_auth
         run: |
           RESPONSE=$(curl -s -X POST https://api.taiga.io/api/v1/auth \
@@ -22,16 +33,25 @@ jobs:
           }')
 
           TOKEN=$(echo $RESPONSE | jq -r '.auth_token')
+
+          if [ "$TOKEN" = "null" ]; then
+            echo "Failed to authenticate with Taiga"
+            exit 1
+          fi
+
           echo "token=$TOKEN" >> $GITHUB_OUTPUT
         env:
           TAIGA_USERNAME: ${{ secrets.TAIGA_USERNAME }}
           TAIGA_PASSWORD: ${{ secrets.TAIGA_PASSWORD }}
 
-      - name: Update task
+      - name: Move User Story to Ready to Test
         run: |
-          curl -X PATCH https://api.taiga.io/api/v1/tasks/$TASK_ID \
+          curl -X PATCH https://api.taiga.io/api/v1/userstories/$US_ID \
           -H "Authorization: Bearer $TOKEN" \
           -H "Content-Type: application/json" \
-          -d '{"status": 12}'
+          -d '{
+            "status": READY_TO_TEST_STATUS_ID
+          }'
         env:
           TOKEN: ${{ steps.taiga_auth.outputs.token }}
+          US_ID: ${{ steps.taiga.outputs.us_id }}
