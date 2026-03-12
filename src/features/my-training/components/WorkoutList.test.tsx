@@ -30,7 +30,7 @@ describe("WorkoutExerciseList", () => {
     render(
       <WorkoutExerciseList
         exercises={exercisesMock}
-        DeleteTraining={() => {}}
+        onDeleteExercise={() => {}}
       />,
     );
 
@@ -42,7 +42,7 @@ describe("WorkoutExerciseList", () => {
     render(
       <WorkoutExerciseList
         exercises={exercisesMock}
-        DeleteTraining={() => {}}
+        onDeleteExercise={() => {}}
       />,
     );
 
@@ -52,7 +52,7 @@ describe("WorkoutExerciseList", () => {
   });
 
   test("não deve renderizar exercícios quando a lista estiver vazia", () => {
-    render(<WorkoutExerciseList exercises={[]} DeleteTraining={() => {}} />);
+    render(<WorkoutExerciseList exercises={[]} onDeleteExercise={() => {}} />);
 
     const exercise = screen.queryByText("Supino");
 

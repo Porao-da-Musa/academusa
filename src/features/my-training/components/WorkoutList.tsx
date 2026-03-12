@@ -3,10 +3,10 @@ import { WorkoutExerciseCard } from "./WorkoutCard";
 
 type Props = {
   exercises: WorkoutExercise[];
-  DeleteTraining: (id: string) => void;
+  onDeleteExercise: (id: string) => void;
 };
 
-export function WorkoutExerciseList({ exercises, DeleteTraining }: Props) {
+export function WorkoutExerciseList({ exercises, onDeleteExercise }: Props) {
   return (
     <div className="space-y-6">
       {exercises.map((exercise) => {
@@ -14,7 +14,7 @@ export function WorkoutExerciseList({ exercises, DeleteTraining }: Props) {
           <WorkoutExerciseCard
             key={exercise.id}
             exercise={exercise}
-            DeleteTraining={DeleteTraining}
+            onDeleteExercise={onDeleteExercise}
           />
         );
       })}

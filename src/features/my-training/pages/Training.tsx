@@ -11,7 +11,7 @@ export function TrainingPage() {
     (exercise) => exercise.status === "Ocupado",
   );
 
-  function DeleteMyTraining(id: string) {
+  function deleteMyTraining(id: string) {
     setExercises((prev) => prev.filter((training) => training.id !== id));
   }
 
@@ -23,7 +23,7 @@ export function TrainingPage() {
         <div className="mt-6">
           <WorkoutExerciseList
             exercises={exercises}
-            DeleteTraining={DeleteMyTraining}
+            onDeleteExercise={deleteMyTraining}
           />
         </div>
       </div>

@@ -1,12 +1,13 @@
 import type { WorkoutExercise } from "../types/training.types";
-import { Trash2, Clock, CheckCircle } from "lucide-react";
+import { StatusBadge } from "../components/StatusBadge";
+import { Trash2 } from "lucide-react";
 
 type Props = {
   exercise: WorkoutExercise;
-  DeleteTraining: (id: string) => void;
+  onDeleteExercise: (id: string) => void;
 };
 
-export function WorkoutExerciseCard({ exercise, DeleteTraining }: Props) {
+export function WorkoutExerciseCard({ exercise, onDeleteExercise }: Props) {
   const isAvailable = exercise.status === "Disponível";
 
   return (
@@ -23,24 +24,16 @@ export function WorkoutExerciseCard({ exercise, DeleteTraining }: Props) {
             <p className=" flex mt-1 text-sm text-gray-600">
               {exercise.equipment}{" "}
               <span className="ml-2 inline-flex items-center gap-1 font-medium leading-none">
-                {isAvailable ? (
-                  <>
-                    <CheckCircle size={14} className="text-green-600" />
-                    <span className="text-green-600">Disponível</span>
-                  </>
-                ) : (
-                  <>
-                    <Clock size={14} className="text-red-600" />
-                    <span className="text-red-600">Ocupado</span>
-                  </>
-                )}
+                <span className="ml-2 inline-flex items-center gap-1 font-medium leading-none">
+                  <StatusBadge isAvailable={isAvailable} />
+                </span>
               </span>
             </p>
           </div>
         </div>
 
         <button
-          onClick={() => DeleteTraining(exercise.id)}
+          onClick={() => onDeleteExercise(exercise.id)}
           className="text-red-600 hover:scale-125 transition-all"
         >
           <Trash2 size={20} />
@@ -73,9 +66,9 @@ export function WorkoutExerciseCard({ exercise, DeleteTraining }: Props) {
             <p className=" text-black">Alternativas Sugeridas:</p>
 
             <div className="mt-2 flex flex-wrap gap-2">
-              {exercise.alternatives.map((alt, index) => (
+              {exercise.alternatives.map((alt) => (
                 <button
-                  key={index}
+                  key={alt}
                   onClick={() => {}}
                   className="rounded-lg bg-blue-50 p-2 text-sm  text-blue-600 hover:bg-blue-200 transition"
                 >
