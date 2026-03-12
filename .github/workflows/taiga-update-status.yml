@@ -1,0 +1,97 @@
+name: Update Taiga User Story Status
+
+on:
+  workflow_call:
+    inputs:
+      status_id:
+        required: true
+        type: number
+      project_id:
+        required: true
+        type: number
+    secrets:
+      TAIGA_USERNAME:
+        required: true
+      TAIGA_PASSWORD:
+        required: true
+
+jobs:
+  update-status:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Extract Taiga User Story REF from PR body
+        id: taiga
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          echo "$PR_BODY" > pr_body.txt
+
+          US_REF=$(grep -oE "/us/[0-9]+" pr_body.txt | head -n1 | grep -oE "[0-9]+")
+
+          if [ -z "$US_REF" ]; then
+            echo "No Taiga User Story found in PR description"
+            exit 1
+          fi
+
+          echo "us_ref=$US_REF" >> $GITHUB_OUTPUT
+
+      - name: Authenticate with Taiga
+        id: taiga_auth
+        env:
+          TAIGA_USERNAME: ${{ secrets.TAIGA_USERNAME }}
+          TAIGA_PASSWORD: ${{ secrets.TAIGA_PASSWORD }}
+        run: |
+          RESPONSE=$(curl -s -X POST https://api.taiga.io/api/v1/auth \
+          -H "Content-Type: application/json" \
+          -d '{
+            "type": "normal",
+            "username": "'"$TAIGA_USERNAME"'",
+            "password": "'"$TAIGA_PASSWORD"'"
+          }')
+
+          TOKEN=$(echo "$RESPONSE" | jq -r '.auth_token')
+
+          if [ "$TOKEN" = "null" ] || [ -z "$TOKEN" ]; then
+            echo "Failed to authenticate with Taiga"
+            exit 1
+          fi
+
+          echo "token=$TOKEN" >> $GITHUB_OUTPUT
+
+      - name: Get User Story ID and Version
+        id: story
+        env:
+          TOKEN: ${{ steps.taiga_auth.outputs.token }}
+          US_REF: ${{ steps.taiga.outputs.us_ref }}
+          PROJECT_ID: ${{ inputs.project_id }}
+        run: |
+          RESPONSE=$(curl -s \
+          -H "Authorization: Bearer $TOKEN" \
+          "https://api.taiga.io/api/v1/userstories/by_ref?ref=$US_REF&project=$PROJECT_ID")
+
+          US_ID=$(echo "$RESPONSE" | jq -r '.id')
+          VERSION=$(echo "$RESPONSE" | jq -r '.version')
+
+          if [ "$US_ID" = "null" ] || [ -z "$US_ID" ]; then
+            echo "Failed to fetch user story"
+            exit 1
+          fi
+
+          echo "id=$US_ID" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update Taiga status
+        env:
+          TOKEN: ${{ steps.taiga_auth.outputs.token }}
+          US_ID: ${{ steps.story.outputs.id }}
+          VERSION: ${{ steps.story.outputs.version }}
+          STATUS_ID: ${{ inputs.status_id }}
+        run: |
+          curl -s -X PATCH https://api.taiga.io/api/v1/userstories/$US_ID \
+          -H "Authorization: Bearer $TOKEN" \
+          -H "Content-Type: application/json" \
+          -d "{
+            \"status\": $STATUS_ID,
+            \"version\": $VERSION
+          }"
