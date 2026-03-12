@@ -10,22 +10,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Extract Taiga User Story ID from PR body
+      - name: Extract Taiga User Story REF from PR body
         id: taiga
         env:
           PR_BODY: ${{ github.event.pull_request.body }}
         run: |
           echo "$PR_BODY" > pr_body.txt
 
-          US_ID=$(grep -oE "/us/[0-9]+" pr_body.txt | head -n1 | grep -oE "[0-9]+")
+          US_REF=$(grep -oE "/us/[0-9]+" pr_body.txt | head -n1 | grep -oE "[0-9]+")
 
-          if [ -z "$US_ID" ]; then
+          if [ -z "$US_REF" ]; then
             echo "No Taiga User Story found in PR description"
             exit 1
           fi
 
-          echo "Found Taiga User Story: $US_ID"
-          echo "us_id=$US_ID" >> $GITHUB_OUTPUT
+          echo "Found Taiga User Story ref: $US_REF"
+          echo "us_ref=$US_REF" >> $GITHUB_OUTPUT
 
       - name: Authenticate with Taiga
         id: taiga_auth
@@ -50,15 +50,39 @@ jobs:
 
           echo "token=$TOKEN" >> $GITHUB_OUTPUT
 
+      - name: Get Taiga User Story ID and Version
+        id: story
+        env:
+          TOKEN: ${{ steps.taiga_auth.outputs.token }}
+          US_REF: ${{ steps.taiga.outputs.us_ref }}
+          PROJECT_ID: 1752166
+        run: |
+          RESPONSE=$(curl -s \
+          -H "Authorization: Bearer $TOKEN" \
+          "https://api.taiga.io/api/v1/userstories/by_ref?ref=$US_REF&project=$PROJECT_ID")
+
+          US_ID=$(echo "$RESPONSE" | jq -r '.id')
+          VERSION=$(echo "$RESPONSE" | jq -r '.version')
+
+          if [ "$US_ID" = "null" ] || [ -z "$US_ID" ]; then
+            echo "Failed to fetch user story"
+            exit 1
+          fi
+
+          echo "id=$US_ID" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Move User Story to Ready to Test
         env:
           TOKEN: ${{ steps.taiga_auth.outputs.token }}
-          US_ID: ${{ steps.taiga.outputs.us_id }}
-          READY_TO_TEST_STATUS_ID: 10737797
+          US_ID: ${{ steps.story.outputs.id }}
+          VERSION: ${{ steps.story.outputs.version }}
+          READY_TO_TEST_STATUS_ID: 10629136
         run: |
           curl -s -X PATCH https://api.taiga.io/api/v1/userstories/$US_ID \
           -H "Authorization: Bearer $TOKEN" \
           -H "Content-Type: application/json" \
           -d "{
-            \"status\": $READY_TO_TEST_STATUS_ID
+            \"status\": $READY_TO_TEST_STATUS_ID,
+            \"version\": $VERSION
           }"
