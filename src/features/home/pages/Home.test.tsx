@@ -16,6 +16,7 @@ describe("Home", () => {
     const todayWorkoutHeading = screen.getByRole("heading", {
       name: /treino de hoje/i,
     });
+
     expect(todayWorkoutHeading).toBeInTheDocument();
   });
 
@@ -30,7 +31,7 @@ describe("Home", () => {
     expect(exerciseText).toBeInTheDocument();
   });
 
-  it("Should redirect to /my-workout when 'Iniciar Treino' is clicked", async () => {
+  it("should redirect to /home/my-workout when 'Iniciar Treino' is clicked", async () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <Routes>
@@ -43,13 +44,12 @@ describe("Home", () => {
     const startWorkoutButton = screen.getByRole("button", {
       name: /iniciar treino/i,
     });
+
     expect(startWorkoutButton).toBeInTheDocument();
 
     await userEvent.click(startWorkoutButton);
+    const exercise = await screen.findByText(/supino/i);
 
-    const myWorkoutHeading = await screen.findByRole("heading", {
-      name: /Bem-vindo à Página Meu Treino!/i,
-    });
-    expect(myWorkoutHeading).toBeInTheDocument();
+    expect(exercise).toBeInTheDocument();
   });
 });
