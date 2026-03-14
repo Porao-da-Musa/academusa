@@ -20,12 +20,12 @@ const iconVariants = {
   },
 } as const;
 
-interface ActionCardProps {
+type ActionCardProps = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
   subtitle: string;
   variant?: ColorVariant;
-}
+};
 
 export const ActionCard = ({
   icon: Icon,

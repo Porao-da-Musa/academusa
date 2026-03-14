@@ -23,11 +23,10 @@ export default defineConfig({
       provider: "v8",
       reporter: ["text", "json", "html"],
       include: [
-        "src/components/**/*.{ts,tsx}",
-        "src/layouts/**/*.{ts,tsx}",
-        "src/pages/**/*.{ts,tsx}",
+        "src/app/**/*.{ts,tsx}",
+        "src/shared/**/*.{ts,tsx}",
+        "src/features/**/*.{ts,tsx}",
       ],
-
       exclude: [
         "src/tests/**",
         "**/*.test.{ts,tsx}",
@@ -35,10 +34,8 @@ export default defineConfig({
         "src/main.tsx",
         "vite.config.ts",
       ],
-
       thresholds: {
         global: {
-          // SETADO PARA 0 TEMPORARIAMENTE, MAS DEVE SER CONFIGURADO DE ACORDO COM AS NECESSIDADES DO PROJETO, PARA GARANTIR QUE O CÓDIGO ESTEJA SENDO TESTADO ADEQUADAMENTE.
           lines: 0,
           branches: 0,
           functions: 0,

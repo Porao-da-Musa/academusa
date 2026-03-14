@@ -1,13 +1,12 @@
 import { Dumbbell } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export function Footer({
-  blackText = false,
-}: {
+type FooterProps = {
   readonly blackText?: boolean;
-}) {
-  const currentYear = new Date().getFullYear();
+};
 
+export function Footer({ blackText = false }: FooterProps) {
+  const currentYear = new Date().getFullYear();
   const primaryText = blackText ? "text-black" : "text-white";
   const secondaryText = blackText ? "text-black/70" : "text-white/70";
   const hoverText = blackText ? "hover:text-black" : "hover:text-white";
