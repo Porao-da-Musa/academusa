@@ -67,12 +67,7 @@ describe("Login Component", () => {
 
     await user.click(loginButton);
 
-    await waitFor(
-      () => {
-        expect(screen.getByText("Home Page")).toBeInTheDocument();
-      },
-      { timeout: 2000 },
-    );
+    expect(await screen.findByText("Home Page")).toBeInTheDocument();
   });
 
   it("shows error message on invalid credentials", async () => {
@@ -94,9 +89,7 @@ describe("Login Component", () => {
     await user.type(passwordInput, "wrongpassword");
     await user.click(loginButton);
 
-    await waitFor(() => {
-      expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument();
-    });
+    expect(await screen.findByText(/Invalid credentials/i)).toBeInTheDocument();
   });
 
   it("shows error message on invalid email format", async () => {
@@ -160,7 +153,6 @@ describe("Login Component", () => {
     const emailInput = screen.getByLabelText(/e-mail/i) as HTMLInputElement;
     const passwordInput = screen.getByLabelText(/senha/i) as HTMLInputElement;
 
-    // Verifica que os campos começam vazios
     expect(emailInput.value).toBe("");
     expect(passwordInput.value).toBe("");
 
@@ -237,16 +229,11 @@ describe("Login Component", () => {
 
     await user.click(loginButton);
 
-    await waitFor(() => {
-      expect(loginButton).toBeDisabled();
-    });
+    expect(loginButton).toBeDisabled();
 
-    await waitFor(
-      () => {
-        expect(loginButton).not.toBeDisabled();
-      },
-      { timeout: 2000 },
-    );
+    await waitFor(() => {
+      expect(loginButton).not.toBeDisabled();
+    });
   });
 
   it("shows correct UI behavior during async loading state", async () => {
@@ -286,23 +273,17 @@ describe("Login Component", () => {
     await user.type(emailInput, "aluno@academusa.com.br");
     await user.type(passwordInput, "aluniacademusa");
 
-    // Estado inicial: botão habilitado com texto "Entrar"
     expect(loginButton).not.toBeDisabled();
     expect(loginButton).toHaveTextContent("Entrar");
 
     await user.click(loginButton);
 
-    // Durante o loading: botão desabilitado e texto "Entrando..."
     await waitFor(() => {
       expect(loginButton).toBeDisabled();
-      expect(loginButton).toHaveTextContent("Entrando...");
     });
-    await waitFor(
-      () => {
-        expect(screen.getByText("Home Page")).toBeInTheDocument();
-      },
-      { timeout: 2000 },
-    );
+
+    expect(loginButton).toHaveTextContent("Entrando...");
+    expect(await screen.findByText("Home Page")).toBeInTheDocument();
   });
 
   it("clears error message when starting new async request", async () => {
@@ -324,15 +305,8 @@ describe("Login Component", () => {
     await user.type(passwordInput, "senhaerrada");
     await user.click(loginButton);
 
-    // Verifica que a mensagem de erro aparece
-    await waitFor(
-      () => {
-        expect(screen.getByText(/Invalid credentials/i)).toBeInTheDocument();
-      },
-      { timeout: 2000 },
-    );
+    expect(await screen.findByText(/Invalid credentials/i)).toBeInTheDocument();
 
-    // Segundo mock: sucesso no login
     vi.mocked(login).mockResolvedValueOnce({
       id: "123",
       email: "aluno@academusa.com.br",
@@ -346,10 +320,6 @@ describe("Login Component", () => {
     await user.type(passwordInput, "aluniacademusa");
     await user.click(loginButton);
 
-    await waitFor(() => {
-      expect(
-        screen.queryByText(/Invalid credentials/i),
-      ).not.toBeInTheDocument();
-    });
+    expect(screen.queryByText(/Invalid credentials/i)).not.toBeInTheDocument();
   });
 });
