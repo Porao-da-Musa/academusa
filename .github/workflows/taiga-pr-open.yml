@@ -1,0 +1,15 @@
+name: Move Taiga Card to Code Review
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  move:
+    uses: ./.github/workflows/taiga-update-status.yml
+    with:
+      status_id: 10737797
+      project_id: 1752166
+    secrets:
+      TAIGA_USERNAME: ${{ secrets.TAIGA_USERNAME }}
+      TAIGA_PASSWORD: ${{ secrets.TAIGA_PASSWORD }}
