@@ -48,8 +48,7 @@ describe("Home", () => {
     expect(startWorkoutButton).toBeInTheDocument();
 
     await userEvent.click(startWorkoutButton);
-    const exercise = await screen.findByText(/supino/i);
-
-    expect(exercise).toBeInTheDocument();
+    const exercises = await screen.findAllByText(/supino/i);
+    expect(exercises.length).toBeGreaterThan(0);
   });
 });
