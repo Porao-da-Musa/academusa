@@ -35,7 +35,7 @@ describe("Home", () => {
       <MemoryRouter initialEntries={["/"]}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home/my-training" element={<TrainingPage />} />
+          <Route path="/home/my-workout" element={<TrainingPage />} />
         </Routes>
       </MemoryRouter>,
     );
