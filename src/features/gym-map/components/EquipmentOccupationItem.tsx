@@ -33,11 +33,8 @@ export function EquipmentOccupationItem({
   return (
     <div id="exercise-bar" className="m-4 rounded-lg bg-white">
       <div className="flex items-center justify-between">
-        <div
-          id="exercise-bar-info"
-          className=" sm:text-xs lg:text-lg xl:text-xl flex items-center gap-2"
-        >
-          <span className="lg:text-sm  font-semibold text-gray-800">
+        <div id="exercise-bar-info" className="flex items-center gap-2">
+          <span className="!sm:text-xs font-semibold text-gray-800">
             {name}
           </span>
           <span className="text-sm text-gray-500">
@@ -46,7 +43,7 @@ export function EquipmentOccupationItem({
         </div>
         <div
           id="exercise-bar-stats"
-          className="flex items-center gap-2 text-sm text-gray-600"
+          className="flex items-center gap-2 text-sm !text-gray-600"
         >
           {estimatedWaitMinutes !== undefined && estimatedWaitMinutes > 0 && (
             <span>~{estimatedWaitMinutes}min espera</span>

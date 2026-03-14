@@ -17,7 +17,7 @@ export function EquipmentOccupationCard() {
         <TrendingUp className="text-gray-700" />
         <h2 className="text-lg text-gray-800">Ocupação de Equipamentos</h2>
       </div>
-      <div id="gym-map-list">
+      <div id="gym-map-list" className="p-0">
         {equipmentMock.map((equipment) => (
           <EquipmentOccupationItem
             key={equipment.id}
