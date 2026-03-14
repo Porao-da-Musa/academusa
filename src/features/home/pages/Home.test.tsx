@@ -3,7 +3,7 @@ import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { Home } from "./Home";
 import { describe, it, expect } from "vitest";
-import { MyWorkout } from "@features/my-workout/pages/MyWorkout";
+import { TrainingPage } from "@features/my-training/pages/Training";
 
 describe("Home", () => {
   it("should render Home component", () => {
@@ -35,7 +35,7 @@ describe("Home", () => {
       <MemoryRouter initialEntries={["/"]}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home/my-workout" element={<MyWorkout />} />
+          <Route path="/home/my-training" element={<TrainingPage />} />
         </Routes>
       </MemoryRouter>,
     );
