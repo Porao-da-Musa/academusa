@@ -3,8 +3,8 @@ import { StatusBadge } from "../components/StatusBadge";
 import { Trash2 } from "lucide-react";
 
 type Props = {
-  exercise: WorkoutExercise;
-  onDeleteExercise: (id: string) => void;
+  readonly exercise: WorkoutExercise;
+  readonly onDeleteExercise: (id: string) => void;
 };
 
 export function WorkoutExerciseCard({ exercise, onDeleteExercise }: Props) {

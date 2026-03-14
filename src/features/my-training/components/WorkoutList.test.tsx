@@ -25,8 +25,9 @@ const exercisesMock: WorkoutExercise[] = [
     alternatives: [],
   },
 ];
-describe("WorkoutExerciseList", () => {
-  test("deve renderizar a lista de exercícios", () => {
+
+describe("WorkoutList", () => {
+  test("should render the exercise list", () => {
     render(
       <WorkoutExerciseList
         exercises={exercisesMock}
@@ -38,7 +39,7 @@ describe("WorkoutExerciseList", () => {
     expect(screen.getByText("Agachamento")).toBeInTheDocument();
   });
 
-  test("deve renderizar a quantidade correta de exercícios", () => {
+  test("should render the correct number of exercises", () => {
     render(
       <WorkoutExerciseList
         exercises={exercisesMock}
@@ -51,7 +52,7 @@ describe("WorkoutExerciseList", () => {
     expect(status.length).toBe(2);
   });
 
-  test("não deve renderizar exercícios quando a lista estiver vazia", () => {
+  test("should not render exercises when the list is empty", () => {
     render(<WorkoutExerciseList exercises={[]} onDeleteExercise={() => {}} />);
 
     const exercise = screen.queryByText("Supino");

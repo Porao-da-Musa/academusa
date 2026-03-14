@@ -2,8 +2,8 @@ import type { WorkoutExercise } from "../types/training.types";
 import { WorkoutExerciseCard } from "./WorkoutCard";
 
 type Props = {
-  exercises: WorkoutExercise[];
-  onDeleteExercise: (id: string) => void;
+  readonly exercises: WorkoutExercise[];
+  readonly onDeleteExercise: (id: string) => void;
 };
 
 export function WorkoutExerciseList({ exercises, onDeleteExercise }: Props) {

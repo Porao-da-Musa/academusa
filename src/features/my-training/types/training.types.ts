@@ -1,12 +1,12 @@
 type Status = "Ocupado" | "Disponível";
 
 export type WorkoutExercise = {
-  id: string;
-  order: number;
-  name: string;
-  equipment: string;
-  status: Status;
-  sets: number;
-  reps: number;
-  alternatives?: string[];
+  readonly id: string;
+  readonly order: number;
+  readonly name: string;
+  readonly equipment: string;
+  readonly status: Status;
+  readonly sets: number;
+  readonly reps: number;
+  readonly alternatives?: string[];
 };
