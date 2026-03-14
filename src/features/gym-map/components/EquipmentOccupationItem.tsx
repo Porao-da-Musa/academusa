@@ -21,7 +21,7 @@ interface EquipmentOccupationItemProps {
   onToggle: () => void;
 }
 
-export default function EquipmentOccupationItem({
+export function EquipmentOccupationItem({
   equipment,
   isExpanded,
   onToggle,
@@ -32,10 +32,7 @@ export default function EquipmentOccupationItem({
 
   return (
     <div id="exercise-bar" className="m-4 rounded-lg bg-white">
-      <div
-        id="exercise-bar-header"
-        className="flex items-center justify-between"
-      >
+      <div className="flex items-center justify-between">
         <div
           id="exercise-bar-info"
           className=" sm:text-xs lg:text-lg xl:text-xl flex items-center gap-2"

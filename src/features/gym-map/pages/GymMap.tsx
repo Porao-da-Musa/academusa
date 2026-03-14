@@ -1,4 +1,4 @@
-import EquipmentOccupationCard from "../components/EquipmentOccupationCard";
+import { EquipmentOccupationCard } from "../components/EquipmentOccupationCard";
 
 export function GymMap() {
   return (

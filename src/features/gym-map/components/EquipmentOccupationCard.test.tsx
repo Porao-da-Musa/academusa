@@ -3,13 +3,16 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { EquipmentOccupationCard } from "./EquipmentOccupationCard";
 import { equipmentMock } from "../mocks/equipment.mock";
-import EquipmentOccupationItem from "./EquipmentOccupationItem";
+import { EquipmentOccupationItem } from "./EquipmentOccupationItem";
+import { EquipmentMachinesGrid } from "./EquipmentMachinesGrid";
 
 describe("Ocupação de Equipamentos", () => {
   it("deve renderizar o card de ocupação de equipamentos", () => {
     render(<EquipmentOccupationCard />);
 
-    const card = screen.getByText(/Ocupação de Equipamentos/i);
+    const card = screen.getByRole("heading", {
+      name: /Ocupação de Equipamentos/i,
+    });
     expect(card).toBeInTheDocument();
   });
 
@@ -39,6 +42,30 @@ describe("Ocupação de Equipamentos", () => {
       screen.getByText(`~${equipment.estimatedWaitMinutes}min espera`),
     ).toBeInTheDocument();
     expect(screen.getAllByText("40%").length).toBeGreaterThan(0);
+  });
+
+  it("deve verificar se ao alterar o indice de ocupação, a porcentagem exibida é atualizada corretamente", () => {
+    const equipment = equipmentMock[0]; // Esteira: inUse 0/10, 0min espera, 0%
+    const { rerender } = render(
+      <EquipmentOccupationItem
+        equipment={equipment}
+        isExpanded={false}
+        onToggle={() => {}}
+      />,
+    );
+    expect(screen.getAllByText("0%").length).toBeGreaterThan(0);
+
+    rerender(
+      <EquipmentOccupationItem
+        equipment={{ ...equipment, inUse: 5, estimatedWaitMinutes: 10 }}
+        isExpanded={false}
+        onToggle={() => {}}
+      />,
+    );
+
+    expect(screen.queryByText("(5/10 em uso)")).toBeInTheDocument();
+    expect(screen.queryByText("~10min espera")).toBeInTheDocument();
+    expect(screen.getAllByText("50%")).toHaveLength(2);
   });
 
   it("deve exibir porcentagem maior ao aumentar o inUse do equipamento", () => {
@@ -164,6 +191,47 @@ describe("Ocupação de Equipamentos", () => {
       expect(
         screen.getAllByRole("button", { name: /Ver detalhes/i }),
       ).toHaveLength(equipmentMock.length - 1);
+    });
+
+    it("deve refletir a mudança de status de uma máquina na UI", async () => {
+      const initialMachines = equipmentMock[0].machines;
+      const { rerender } = render(
+        <EquipmentMachinesGrid machines={initialMachines} />,
+      );
+
+      // 1. Verifica o estado inicial
+      const initialOccupied = initialMachines.filter(
+        (m) => m.status === "Ocupado",
+      ).length;
+      const initialFree = initialMachines.filter(
+        (m) => m.status === "Disponível",
+      ).length;
+
+      expect(screen.getAllByTestId("icon-ocupado")).toHaveLength(
+        initialOccupied,
+      );
+      expect(screen.getAllByTestId("icon-disponivel")).toHaveLength(
+        initialFree,
+      );
+
+      // 2. Altera o status de uma máquina para "Disponível"
+      const updatedMachines = JSON.parse(JSON.stringify(initialMachines));
+      updatedMachines[0].status = "Disponível";
+
+      rerender(<EquipmentMachinesGrid machines={updatedMachines} />);
+
+      // 3. Verifica se a UI foi atualizada
+      const finalOccupied = updatedMachines.filter(
+        (m: { status: string }) => m.status === "Ocupado",
+      ).length;
+      const finalFree = updatedMachines.filter(
+        (m: { status: string }) => m.status === "Disponível",
+      ).length;
+
+      expect(screen.queryAllByTestId("icon-ocupado")).toHaveLength(
+        finalOccupied,
+      );
+      expect(screen.getAllByTestId("icon-disponivel")).toHaveLength(finalFree);
     });
   });
 });

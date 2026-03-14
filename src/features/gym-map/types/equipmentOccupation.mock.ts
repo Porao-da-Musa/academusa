@@ -4,10 +4,12 @@ export type EquipmentStatus = {
   total: number;
   inUse: number;
   estimatedWaitMinutes?: number;
-  machines: {
-    id: string;
-    name: string;
-    status: "Disponível" | "Ocupado";
-    remainingMinutes?: number;
-  }[];
+  machines: Machine[];
+};
+
+export type Machine = {
+  id: string;
+  name: string;
+  status: "Disponível" | "Ocupado";
+  remainingMinutes?: number;
 };
