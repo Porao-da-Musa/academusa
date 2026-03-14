@@ -13,7 +13,7 @@ import { Login } from "@features/auth/pages/Login";
 import { Home } from "@features/home/pages/Home";
 import { HomeLayout } from "./layouts/HomeLayout";
 import { GymMap } from "@features/gym-map/pages/GymMap";
-import { MyWorkout } from "@features/my-workout/pages/MyWorkout";
+import { TrainingPage } from "@features/my-training/pages/Training";
 import { Exercises } from "@features/exercises/pages/Exercises";
 import { NotFound } from "./routes/NotFound";
 
@@ -51,7 +51,7 @@ const App = () => {
         >
           <Route path="/home" element={<Home />} />
           <Route path="/home/map" element={<GymMap />} />
-          <Route path="/home/my-workout" element={<MyWorkout />} />
+          <Route path="/home/my-workout" element={<TrainingPage />} />
           <Route path="/home/exercises" element={<Exercises />} />
         </Route>
 

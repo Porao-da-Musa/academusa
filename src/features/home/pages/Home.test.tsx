@@ -3,7 +3,7 @@ import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 import { Home } from "./Home";
 import { describe, it, expect } from "vitest";
-import { MyWorkout } from "@features/my-workout/pages/MyWorkout";
+import { TrainingPage } from "@features/my-training/pages/Training";
 
 describe("Home", () => {
   it("should render Home component", () => {
@@ -16,6 +16,7 @@ describe("Home", () => {
     const todayWorkoutHeading = screen.getByRole("heading", {
       name: /treino de hoje/i,
     });
+
     expect(todayWorkoutHeading).toBeInTheDocument();
   });
 
@@ -30,12 +31,12 @@ describe("Home", () => {
     expect(exerciseText).toBeInTheDocument();
   });
 
-  it("Should redirect to /my-workout when 'Iniciar Treino' is clicked", async () => {
+  it("should redirect to /home/my-workout when 'Iniciar Treino' is clicked", async () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home/my-workout" element={<MyWorkout />} />
+          <Route path="/home/my-workout" element={<TrainingPage />} />
         </Routes>
       </MemoryRouter>,
     );
@@ -43,13 +44,11 @@ describe("Home", () => {
     const startWorkoutButton = screen.getByRole("button", {
       name: /iniciar treino/i,
     });
+
     expect(startWorkoutButton).toBeInTheDocument();
 
     await userEvent.click(startWorkoutButton);
-
-    const myWorkoutHeading = await screen.findByRole("heading", {
-      name: /Bem-vindo à Página Meu Treino!/i,
-    });
-    expect(myWorkoutHeading).toBeInTheDocument();
+    const exercises = await screen.findAllByText(/supino/i);
+    expect(exercises.length).toBeGreaterThan(0);
   });
 });
