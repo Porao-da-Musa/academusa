@@ -1,3 +1,13 @@
+import { vi } from "vitest";
+
+vi.mock("../../../services/supabaseClient", () => ({
+  supabase: {
+    from: vi.fn(),
+    auth: {
+      getSession: vi.fn(),
+    },
+  },
+}));
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
