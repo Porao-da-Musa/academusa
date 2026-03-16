@@ -2,10 +2,18 @@ import { vi } from "vitest";
 
 vi.mock("../../../services/supabaseClient", () => ({
   supabase: {
-    from: vi.fn(),
     auth: {
-      getSession: vi.fn(),
+      getUser: vi.fn().mockResolvedValue({
+        data: {
+          user: {
+            user_metadata: {
+              name: "Kaique",
+            },
+          },
+        },
+      }),
     },
+    from: vi.fn(),
   },
 }));
 import { render, screen } from "@testing-library/react";
