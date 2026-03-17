@@ -5,7 +5,7 @@ import { WelcomeCard } from "./WelcomeCard";
 describe("Componente WelcomeCard", () => {
   it("it should display the full greeting when a dynamic name is passed via props", () => {
     const mockUserName = "UsuarioTeste123";
-    render(<WelcomeCard name={mockUserName} />);
+    render(<WelcomeCard />);
 
     expect(
       screen.getByText(`Bem vindo de volta, ${mockUserName}!`),
