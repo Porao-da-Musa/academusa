@@ -1,3 +1,21 @@
+import { vi } from "vitest";
+
+vi.mock("../../../services/supabaseClient", () => ({
+  supabase: {
+    auth: {
+      getUser: vi.fn().mockResolvedValue({
+        data: {
+          user: {
+            user_metadata: {
+              name: "Kaique",
+            },
+          },
+        },
+      }),
+    },
+    from: vi.fn(),
+  },
+}));
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter, MemoryRouter, Route, Routes } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
