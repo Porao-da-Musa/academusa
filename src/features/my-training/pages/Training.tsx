@@ -7,7 +7,10 @@ import { useState } from "react";
 export function TrainingPage() {
   const [exercises, setExercises] = useState<WorkoutExercise[]>(myTrainingMock);
 
-  const hasOccupied = exercises.some(
+  const [visibleIds] = useState(() => exercises.slice(0, 5).map((ex) => ex.id));
+
+  const visibleExercises = exercises.filter((ex) => visibleIds.includes(ex.id));
+  const hasOccupied = visibleExercises.some(
     (exercise) => exercise.status === "Ocupado",
   );
 
@@ -22,7 +25,7 @@ export function TrainingPage() {
 
         <div className="mt-6">
           <WorkoutExerciseList
-            exercises={exercises}
+            exercises={visibleExercises}
             onDeleteExercise={deleteMyTraining}
           />
         </div>
