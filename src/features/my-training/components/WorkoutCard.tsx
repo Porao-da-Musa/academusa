@@ -1,13 +1,24 @@
-import type { WorkoutExercise } from "../types/training.types";
-import { StatusBadge } from "../components/StatusBadge";
+import type {
+  WorkoutExercise,
+  AlternativeTradeExercise,
+} from "../types/training.types";
+import { StatusBadge } from "./hooks/StatusBadge";
 import { Trash2 } from "lucide-react";
 
 type Props = {
   readonly exercise: WorkoutExercise;
   readonly onDeleteExercise: (id: string) => void;
+  readonly onTradeExercices: (
+    id: string,
+    alternative: AlternativeTradeExercise,
+  ) => void;
 };
 
-export function WorkoutExerciseCard({ exercise, onDeleteExercise }: Props) {
+export function WorkoutExerciseCard({
+  exercise,
+  onDeleteExercise,
+  onTradeExercices,
+}: Props) {
   const isAvailable = exercise.status === "Disponível";
 
   return (
@@ -68,11 +79,11 @@ export function WorkoutExerciseCard({ exercise, onDeleteExercise }: Props) {
             <div className="mt-2 flex flex-wrap gap-2">
               {exercise.alternatives.map((alt) => (
                 <button
-                  key={alt}
-                  onClick={() => {}}
+                  key={alt.id}
+                  onClick={() => onTradeExercices(exercise.id, alt)}
                   className="rounded-lg bg-blue-50 p-2 text-sm  text-blue-600 hover:bg-blue-200 transition"
                 >
-                  {alt}
+                  {alt.equipment}
                 </button>
               ))}
             </div>

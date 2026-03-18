@@ -1,7 +1,10 @@
 import { myTrainingMock } from "../mocks/myTraining.mock";
 import { WorkoutAlertBanner } from "../components/WorkoutAlertBanner";
 import { WorkoutExerciseList } from "../components/WorkoutList";
-import type { WorkoutExercise } from "../types/training.types";
+import type {
+  WorkoutExercise,
+  AlternativeTradeExercise,
+} from "../types/training.types";
 import { useState } from "react";
 
 export function TrainingPage() {
@@ -10,12 +13,32 @@ export function TrainingPage() {
   const [visibleIds] = useState(() => exercises.slice(0, 5).map((ex) => ex.id));
 
   const visibleExercises = exercises.filter((ex) => visibleIds.includes(ex.id));
+
   const hasOccupied = visibleExercises.some(
     (exercise) => exercise.status === "Ocupado",
   );
 
   function deleteMyTraining(id: string) {
     setExercises((prev) => prev.filter((training) => training.id !== id));
+  }
+
+  function tradeExercise(
+    exerciseId: string,
+    alternative: AlternativeTradeExercise,
+  ) {
+    setExercises((prev) =>
+      prev.map((ex) => {
+        if (ex.id !== exerciseId) return ex;
+
+        return {
+          ...ex,
+          name: alternative.name,
+          equipment: alternative.equipment,
+          status: "Disponível",
+          alternatives: [],
+        };
+      }),
+    );
   }
 
   return (
@@ -27,6 +50,7 @@ export function TrainingPage() {
           <WorkoutExerciseList
             exercises={visibleExercises}
             onDeleteExercise={deleteMyTraining}
+            onTradeExercices={tradeExercise}
           />
         </div>
       </div>

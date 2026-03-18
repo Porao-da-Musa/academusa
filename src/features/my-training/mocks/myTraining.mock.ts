@@ -9,7 +9,10 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Ocupado",
     sets: 4,
     reps: 10,
-    alternatives: ["Halteres", "Máquina Chest Press", "Barra"],
+    alternatives: [
+      { id: "101", name: "Supino com Halteres", equipment: "Halteres" },
+      { id: "102", name: "Chest Press", equipment: "Máquina" },
+    ],
   },
   {
     id: "2",
@@ -19,6 +22,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Disponível",
     sets: 3,
     reps: 12,
+    alternatives: [],
   },
   {
     id: "3",
@@ -28,6 +32,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Disponível",
     sets: 3,
     reps: 10,
+    alternatives: [],
   },
   {
     id: "4",
@@ -37,6 +42,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Disponível",
     sets: 3,
     reps: 10,
+    alternatives: [],
   },
   {
     id: "5",
@@ -46,7 +52,10 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Ocupado",
     sets: 3,
     reps: 12,
-    alternatives: ["Halteres", "Polia", "Barra W"],
+    alternatives: [
+      { id: "101", name: "Supino com Halteres", equipment: "Halteres" },
+      { id: "102", name: "Chest Press", equipment: "Máquina" },
+    ],
   },
   {
     id: "6",
@@ -56,6 +65,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Disponível",
     sets: 3,
     reps: 12,
+    alternatives: [],
   },
   {
     id: "7",
@@ -65,6 +75,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Disponível",
     sets: 3,
     reps: 15,
+    alternatives: [],
   },
   {
     id: "8",
@@ -74,7 +85,10 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Ocupado",
     sets: 4,
     reps: 8,
-    alternatives: ["Smith", "Hack Machine"],
+    alternatives: [
+      { id: "101", name: "Supino com Halteres", equipment: "Halteres" },
+      { id: "102", name: "Chest Press", equipment: "Máquina" },
+    ],
   },
   {
     id: "9",
@@ -84,6 +98,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Disponível",
     sets: 3,
     reps: 15,
+    alternatives: [],
   },
   {
     id: "10",
@@ -93,5 +108,6 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Disponível",
     sets: 3,
     reps: 20,
+    alternatives: [],
   },
 ];

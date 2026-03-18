@@ -32,6 +32,7 @@ describe("WorkoutList", () => {
       <WorkoutExerciseList
         exercises={exercisesMock}
         onDeleteExercise={() => {}}
+        onTradeExercices={() => {}}
       />,
     );
 
@@ -44,6 +45,7 @@ describe("WorkoutList", () => {
       <WorkoutExerciseList
         exercises={exercisesMock}
         onDeleteExercise={() => {}}
+        onTradeExercices={() => {}}
       />,
     );
 
@@ -53,7 +55,13 @@ describe("WorkoutList", () => {
   });
 
   test("should not render exercises when the list is empty", () => {
-    render(<WorkoutExerciseList exercises={[]} onDeleteExercise={() => {}} />);
+    render(
+      <WorkoutExerciseList
+        exercises={[]}
+        onDeleteExercise={() => {}}
+        onTradeExercices={() => {}}
+      />,
+    );
 
     const exercise = screen.queryByText("Supino");
 
