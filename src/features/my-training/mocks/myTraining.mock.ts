@@ -97,7 +97,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     name: "Abdominal Crunch",
     equipment: "Máquina",
     status: "Disponível",
-    sets: 3,
+    sets: 0,
     reps: 20,
     alternatives: [],
   },
