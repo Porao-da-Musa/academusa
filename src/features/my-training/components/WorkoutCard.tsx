@@ -1,17 +1,12 @@
-import type {
-  WorkoutExercise,
-  AlternativeTradeExercise,
-} from "../types/training.types";
+import type { WorkoutExercise } from "../types/training.types";
 import { StatusBadge } from "./hooks/StatusBadge";
 import { Trash2 } from "lucide-react";
+import { exercisesTraining } from "../mocks/exercices";
 
 type Props = {
   readonly exercise: WorkoutExercise;
   readonly onDeleteExercise: (id: string) => void;
-  readonly onTradeExercices: (
-    id: string,
-    alternative: AlternativeTradeExercise,
-  ) => void;
+  readonly onTradeExercices: (id: string, alternative: WorkoutExercise) => void;
 };
 
 export function WorkoutExerciseCard({
@@ -75,17 +70,22 @@ export function WorkoutExerciseCard({
         exercise.alternatives.length > 0 && (
           <div className="mt-4 rounded-lg p-3 text-sm">
             <p className=" text-black">Alternativas Sugeridas:</p>
-
             <div className="mt-2 flex flex-wrap gap-2">
-              {exercise.alternatives.map((alt) => (
-                <button
-                  key={alt.id}
-                  onClick={() => onTradeExercices(exercise.id, alt)}
-                  className="rounded-lg bg-blue-50 p-2 text-sm  text-blue-600 hover:bg-blue-200 transition"
-                >
-                  {alt.equipment}
-                </button>
-              ))}
+              {exercise.alternatives.map((altId) => {
+                const alt = exercisesTraining.find((e) => e.id === altId);
+
+                if (!alt) return null;
+
+                return (
+                  <button
+                    key={alt.id}
+                    onClick={() => onTradeExercices(exercise.id, alt)}
+                    className="rounded-lg bg-blue-50 p-2 text-sm text-blue-600 hover:bg-blue-200 transition"
+                  >
+                    {alt.name}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}

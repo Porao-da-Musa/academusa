@@ -1,16 +1,10 @@
-import type {
-  WorkoutExercise,
-  AlternativeTradeExercise,
-} from "../types/training.types";
+import type { WorkoutExercise } from "../types/training.types";
 import { WorkoutExerciseCard } from "./WorkoutCard";
 
 type Props = {
   readonly exercises: WorkoutExercise[];
   readonly onDeleteExercise: (id: string) => void;
-  readonly onTradeExercices: (
-    id: string,
-    alternative: AlternativeTradeExercise,
-  ) => void;
+  readonly onTradeExercices: (id: string, alternative: WorkoutExercise) => void;
 };
 
 export function WorkoutExerciseList({

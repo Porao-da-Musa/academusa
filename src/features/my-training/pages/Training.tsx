@@ -1,16 +1,15 @@
 import { myTrainingMock } from "../mocks/myTraining.mock";
 import { WorkoutAlertBanner } from "../components/WorkoutAlertBanner";
 import { WorkoutExerciseList } from "../components/WorkoutList";
-import type {
-  WorkoutExercise,
-  AlternativeTradeExercise,
-} from "../types/training.types";
+import type { WorkoutExercise } from "../types/training.types";
 import { useState } from "react";
 
 export function TrainingPage() {
   const [exercises, setExercises] = useState<WorkoutExercise[]>(myTrainingMock);
 
-  const [visibleIds] = useState(() => exercises.slice(0, 5).map((ex) => ex.id));
+  const [visibleIds] = useState(() =>
+    exercises.slice(0, 10).map((ex) => ex.id),
+  );
 
   const visibleExercises = exercises.filter((ex) => visibleIds.includes(ex.id));
 
@@ -22,10 +21,7 @@ export function TrainingPage() {
     setExercises((prev) => prev.filter((training) => training.id !== id));
   }
 
-  function tradeExercise(
-    exerciseId: string,
-    alternative: AlternativeTradeExercise,
-  ) {
+  function tradeExercise(exerciseId: string, alternative: WorkoutExercise) {
     setExercises((prev) =>
       prev.map((ex) => {
         if (ex.id !== exerciseId) return ex;
@@ -34,7 +30,7 @@ export function TrainingPage() {
           ...ex,
           name: alternative.name,
           equipment: alternative.equipment,
-          status: "Disponível",
+          status: alternative.status,
           alternatives: [],
         };
       }),

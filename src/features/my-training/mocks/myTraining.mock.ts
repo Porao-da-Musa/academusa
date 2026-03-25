@@ -9,10 +9,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Ocupado",
     sets: 4,
     reps: 10,
-    alternatives: [
-      { id: "101", name: "Supino com Halteres", equipment: "Halteres" },
-      { id: "102", name: "Chest Press", equipment: "Máquina" },
-    ],
+    alternatives: ["101", "103"],
   },
   {
     id: "2",
@@ -52,10 +49,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Ocupado",
     sets: 3,
     reps: 12,
-    alternatives: [
-      { id: "101", name: "Supino com Halteres", equipment: "Halteres" },
-      { id: "102", name: "Chest Press", equipment: "Máquina" },
-    ],
+    alternatives: ["101", "102"],
   },
   {
     id: "6",
@@ -85,10 +79,7 @@ export const myTrainingMock: WorkoutExercise[] = [
     status: "Ocupado",
     sets: 4,
     reps: 8,
-    alternatives: [
-      { id: "101", name: "Supino com Halteres", equipment: "Halteres" },
-      { id: "102", name: "Chest Press", equipment: "Máquina" },
-    ],
+    alternatives: ["101", "102"],
   },
   {
     id: "9",
