@@ -3,6 +3,7 @@ import { WorkoutAlertBanner } from "../components/WorkoutAlertBanner";
 import { WorkoutExerciseList } from "../components/WorkoutList";
 import type { WorkoutExercise } from "../types/training.types";
 import { useState } from "react";
+import { exercisesTraining } from "../mocks/exercises.mock";
 
 export function TrainingPage() {
   const [exercises, setExercises] = useState<WorkoutExercise[]>(myTrainingMock);
@@ -21,19 +22,30 @@ export function TrainingPage() {
     setExercises((prev) => prev.filter((training) => training.id !== id));
   }
 
-  function tradeExercise(exerciseId: string, alternative: WorkoutExercise) {
+  function tradeExercise(exerciseId: string, alternativeId: string) {
+    const alternative = exercisesTraining.find((e) => e.id === alternativeId);
+
+    if (!alternative) {
+      console.warn("Alternative not found", { alternativeId });
+      return;
+    }
+
     setExercises((prev) =>
       prev.map((ex) => {
         if (ex.id !== exerciseId) return ex;
 
         return {
-          ...ex,
-          name: alternative.name,
-          equipment: alternative.equipment,
-          status: alternative.status,
-          alternatives: [],
+          ...alternative,
+          id: ex.id,
+          order: ex.order,
         };
       }),
+    );
+  }
+
+  function updateExercise(id: string, data: Partial<WorkoutExercise>) {
+    setExercises((prev) =>
+      prev.map((ex) => (ex.id === id ? { ...ex, ...data } : ex)),
     );
   }
 
@@ -46,7 +58,8 @@ export function TrainingPage() {
           <WorkoutExerciseList
             exercises={visibleExercises}
             onDeleteExercise={deleteMyTraining}
-            onTradeExercices={tradeExercise}
+            onTradeExercice={tradeExercise}
+            onUpdateExercise={updateExercise}
           />
         </div>
       </div>

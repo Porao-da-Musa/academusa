@@ -7,8 +7,8 @@ export const exercisesTraining: WorkoutExercise[] = [
     name: "Supino com Halteres",
     equipment: "Halteres",
     status: "Disponível",
-    sets: 3,
-    reps: 12,
+    sets: 30,
+    reps: 120,
     alternatives: [],
   },
   {

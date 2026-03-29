@@ -32,7 +32,8 @@ describe("WorkoutList", () => {
       <WorkoutExerciseList
         exercises={exercisesMock}
         onDeleteExercise={() => {}}
-        onTradeExercices={() => {}}
+        onTradeExercice={() => {}}
+        onUpdateExercise={() => {}}
       />,
     );
 
@@ -45,7 +46,8 @@ describe("WorkoutList", () => {
       <WorkoutExerciseList
         exercises={exercisesMock}
         onDeleteExercise={() => {}}
-        onTradeExercices={() => {}}
+        onTradeExercice={() => {}}
+        onUpdateExercise={() => {}}
       />,
     );
 
@@ -59,7 +61,8 @@ describe("WorkoutList", () => {
       <WorkoutExerciseList
         exercises={[]}
         onDeleteExercise={() => {}}
-        onTradeExercices={() => {}}
+        onTradeExercice={() => {}}
+        onUpdateExercise={() => {}}
       />,
     );
 

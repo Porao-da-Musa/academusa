@@ -4,13 +4,18 @@ import { WorkoutExerciseCard } from "./WorkoutCard";
 type Props = {
   readonly exercises: WorkoutExercise[];
   readonly onDeleteExercise: (id: string) => void;
-  readonly onTradeExercices: (id: string, alternative: WorkoutExercise) => void;
+  readonly onTradeExercice: (id: string, alternativeId: string) => void;
+  readonly onUpdateExercise: (
+    id: string,
+    data: Partial<WorkoutExercise>,
+  ) => void;
 };
 
 export function WorkoutExerciseList({
   exercises,
   onDeleteExercise,
-  onTradeExercices,
+  onTradeExercice,
+  onUpdateExercise,
 }: Props) {
   return (
     <div className="space-y-6">
@@ -23,7 +28,8 @@ export function WorkoutExerciseList({
               order: index + 1,
             }}
             onDeleteExercise={onDeleteExercise}
-            onTradeExercices={onTradeExercices}
+            onTradeExercice={onTradeExercice}
+            onUpdateExercise={onUpdateExercise}
           />
         );
       })}
