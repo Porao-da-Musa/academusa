@@ -27,8 +27,8 @@ export const exercisesTraining: WorkoutExercise[] = [
     name: "Treino de peito",
     equipment: "Maquina de supino inclinado",
     status: "Disponível",
-    sets: 0,
-    reps: 0,
+    sets: 10,
+    reps: 10,
     alternatives: [],
   },
 ];
