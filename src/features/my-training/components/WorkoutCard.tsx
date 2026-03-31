@@ -1,13 +1,24 @@
 import type { WorkoutExercise } from "../types/training.types";
-import { StatusBadge } from "../components/StatusBadge";
+import { StatusBadge } from "./StatusBadge";
 import { Trash2 } from "lucide-react";
+import { exercisesTraining } from "../mocks/exercises.mock";
 
 type Props = {
   readonly exercise: WorkoutExercise;
   readonly onDeleteExercise: (id: string) => void;
+  readonly onTradeExercice: (id: string, alternativeId: string) => void;
+  readonly onUpdateExercise: (
+    id: string,
+    data: Partial<WorkoutExercise>,
+  ) => void;
 };
 
-export function WorkoutExerciseCard({ exercise, onDeleteExercise }: Props) {
+export function WorkoutExerciseCard({
+  exercise,
+  onDeleteExercise,
+  onTradeExercice,
+  onUpdateExercise,
+}: Props) {
   const isAvailable = exercise.status === "Disponível";
 
   return (
@@ -45,8 +56,13 @@ export function WorkoutExerciseCard({ exercise, onDeleteExercise }: Props) {
           <label className="text-sm text-gray-600">Séries</label>
           <input
             type="number"
-            defaultValue={exercise.sets}
+            value={exercise.sets}
             className="mt-1 w-full rounded-lg border text-black border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            onChange={(e) =>
+              onUpdateExercise(exercise.id, {
+                sets: Number(e.target.value),
+              })
+            }
           />
         </div>
 
@@ -54,8 +70,13 @@ export function WorkoutExerciseCard({ exercise, onDeleteExercise }: Props) {
           <label className="text-sm text-gray-600">Repetições</label>
           <input
             type="number"
-            defaultValue={exercise.reps}
+            value={exercise.reps}
             className="mt-1 w-full rounded-lg border text-black border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+            onChange={(e) =>
+              onUpdateExercise(exercise.id, {
+                sets: Number(e.target.value),
+              })
+            }
           />
         </div>
       </div>
@@ -64,17 +85,22 @@ export function WorkoutExerciseCard({ exercise, onDeleteExercise }: Props) {
         exercise.alternatives.length > 0 && (
           <div className="mt-4 rounded-lg p-3 text-sm">
             <p className=" text-black">Alternativas Sugeridas:</p>
-
             <div className="mt-2 flex flex-wrap gap-2">
-              {exercise.alternatives.map((alt) => (
-                <button
-                  key={alt}
-                  onClick={() => {}}
-                  className="rounded-lg bg-blue-50 p-2 text-sm  text-blue-600 hover:bg-blue-200 transition"
-                >
-                  {alt}
-                </button>
-              ))}
+              {exercise.alternatives.map((altId) => {
+                const alt = exercisesTraining.find((e) => e.id === altId);
+
+                if (!alt) return null;
+
+                return (
+                  <button
+                    key={alt.id}
+                    onClick={() => onTradeExercice(exercise.id, alt.id)}
+                    className="rounded-lg bg-blue-50 p-2 text-sm text-blue-600 hover:bg-blue-200 transition"
+                  >
+                    {alt.name}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
