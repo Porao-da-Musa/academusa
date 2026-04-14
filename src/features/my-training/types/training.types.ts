@@ -26,7 +26,5 @@ export type WorkoutHeaderProps = {
   onChangePlan: (planId: string) => void;
   plans: TrainingPlan[];
   label?: string;
-  onAddExercise: (
-    exercise: Omit<WorkoutExercise, "id" | "order" | "status" | "alternatives">,
-  ) => void;
+  onOpenAddExercise: () => void;
 };

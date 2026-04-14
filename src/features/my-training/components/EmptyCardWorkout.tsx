@@ -8,7 +8,6 @@ export function EmptyWorkoutCard({ onAddExercise }: Props) {
       <p className="text-gray-500 text-base mb-6">
         Nenhum exercício neste plano de treino ainda
       </p>
-
       <button
         onClick={onAddExercise}
         className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm px-5 py-3 rounded-xl transition"

@@ -6,7 +6,7 @@ export function WorkoutHeader({
   selectedPlan,
   onChangePlan,
   plans,
-  onAddExercise,
+  onOpenAddExercise,
 }: WorkoutHeaderProps) {
   return (
     <div className="relative z-20 mb-6">
@@ -28,7 +28,7 @@ export function WorkoutHeader({
           />
         </div>
 
-        <AddExerciseButton onAddExercise={onAddExercise} />
+        <AddExerciseButton onOpenAddExercise={onOpenAddExercise} />
       </div>
     </div>
   );

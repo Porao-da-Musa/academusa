@@ -6,9 +6,11 @@ import { useState } from "react";
 import { exercisesTraining } from "../mocks/exercises.mock";
 import { WorkoutHeader } from "../components/WorkoutHeader";
 import { trainingPlans } from "../mocks/plans.mocks";
+import { AddExerciseModal } from "../components/AddExerciseModal";
 
 export function TrainingPage() {
   const [exercises, setExercises] = useState<WorkoutExercise[]>(myTrainingMock);
+  const [isAddExerciseModalOpen, setIsAddExerciseModalOpen] = useState(false);
 
   const [selectedPlan, setSelectedPlan] = useState("Treino de Empurrar");
 
@@ -76,7 +78,7 @@ export function TrainingPage() {
           selectedPlan={selectedPlan}
           onChangePlan={setSelectedPlan}
           plans={trainingPlans}
-          onAddExercise={addExercise}
+          onOpenAddExercise={() => setIsAddExerciseModalOpen(true)}
         />
         {hasOccupied && <WorkoutAlertBanner hasOccupied={hasOccupied} />}
 
@@ -86,8 +88,16 @@ export function TrainingPage() {
             onDeleteExercise={deleteMyTraining}
             onTradeExercice={tradeExercise}
             onUpdateExercise={updateExercise}
+            onOpenAddExercise={() => setIsAddExerciseModalOpen(true)}
           />
         </div>
+
+        {isAddExerciseModalOpen && (
+          <AddExerciseModal
+            onClose={() => setIsAddExerciseModalOpen(false)}
+            onAddExercise={addExercise}
+          />
+        )}
       </div>
     </div>
   );
