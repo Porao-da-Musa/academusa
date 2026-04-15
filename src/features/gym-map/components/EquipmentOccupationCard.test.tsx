@@ -6,8 +6,8 @@ import { equipmentMock } from "../mocks/equipment.mock";
 import { EquipmentOccupationItem } from "./EquipmentOccupationItem";
 import { EquipmentMachinesGrid } from "./EquipmentMachinesGrid";
 
-describe("Ocupação de Equipamentos", () => {
-  it("deve renderizar o card de ocupação de equipamentos", () => {
+describe("Equipment Occupation", () => {
+  it("should render the equipment occupation card", () => {
     render(<EquipmentOccupationCard />);
 
     const card = screen.getByRole("heading", {
@@ -16,7 +16,7 @@ describe("Ocupação de Equipamentos", () => {
     expect(card).toBeInTheDocument();
   });
 
-  it("deve renderizar os itens de ocupação de equipamentos", () => {
+  it("should render the equipment occupation items", () => {
     render(<EquipmentOccupationCard />);
 
     equipmentMock.forEach((equipment) => {
@@ -24,8 +24,8 @@ describe("Ocupação de Equipamentos", () => {
     });
   });
 
-  it("deve exibir nome, fração de uso, minutos de espera e porcentagem no header do item", () => {
-    const equipment = equipmentMock[1]; // Bicicleta Ergométrica: inUse 2/5, 10min espera, 40%
+  it("should display name, usage fraction, wait minutes and percentage in the item header", () => {
+    const equipment = equipmentMock[1]; // Ergometric Bike: inUse 2/5, 10min wait, 40%
     render(
       <EquipmentOccupationItem
         equipment={equipment}
@@ -44,8 +44,8 @@ describe("Ocupação de Equipamentos", () => {
     expect(screen.getAllByText("40%").length).toBeGreaterThan(0);
   });
 
-  it("deve verificar se ao alterar o indice de ocupação, a porcentagem exibida é atualizada corretamente", () => {
-    const equipment = equipmentMock[0]; // Esteira: inUse 0/10, 0min espera, 0%
+  it("should verify that when changing the occupation index, the displayed percentage is updated correctly", () => {
+    const equipment = equipmentMock[0]; // Treadmill: inUse 0/10, 0min wait, 0%
     const { rerender } = render(
       <EquipmentOccupationItem
         equipment={equipment}
@@ -68,10 +68,10 @@ describe("Ocupação de Equipamentos", () => {
     expect(screen.getAllByText("50%")).toHaveLength(2);
   });
 
-  it("deve exibir porcentagem maior ao aumentar o inUse do equipamento", () => {
+  it("should display higher percentage when increasing the equipment inUse", () => {
     const baseEquipment = {
       id: "1",
-      name: "Esteira",
+      name: "Treadmill",
       total: 10,
       inUse: 2,
       estimatedWaitMinutes: 0,
@@ -97,7 +97,7 @@ describe("Ocupação de Equipamentos", () => {
     expect(screen.getAllByText("90%").length).toBeGreaterThan(0);
   });
 
-  it("deve exibir porcentagem menor ao diminuir o inUse do equipamento", () => {
+  it("should display lower percentage when decreasing the equipment inUse", () => {
     const baseEquipment = {
       id: "1",
       name: "Esteira",
@@ -126,8 +126,8 @@ describe("Ocupação de Equipamentos", () => {
     expect(screen.getAllByText("20%").length).toBeGreaterThan(0);
   });
 
-  describe("exibição de detalhes", () => {
-    it("deve exibir as máquinas do equipamento ao expandir", async () => {
+  describe("detail display", () => {
+    it("should display the equipment machines when expanding", async () => {
       const user = userEvent.setup();
       render(<EquipmentOccupationCard />);
 
@@ -139,7 +139,7 @@ describe("Ocupação de Equipamentos", () => {
       });
     });
 
-    it("deve expandir os detalhes ao clicar em Ver detalhes", async () => {
+    it("should expand details when clicking View details", async () => {
       const user = userEvent.setup();
       render(<EquipmentOccupationCard />);
 
@@ -170,7 +170,7 @@ describe("Ocupação de Equipamentos", () => {
       ).not.toBeInTheDocument();
     });
 
-    it("deve fechar o primeiro item e abrir o segundo ao clicar em Ver detalhes do segundo", async () => {
+    it("should close the first item and open the second when clicking View details on the second", async () => {
       const user = userEvent.setup();
       render(<EquipmentOccupationCard />);
 
@@ -193,13 +193,13 @@ describe("Ocupação de Equipamentos", () => {
       ).toHaveLength(equipmentMock.length - 1);
     });
 
-    it("deve refletir a mudança de status de uma máquina na UI", async () => {
+    it("should reflect the status change of a machine in the UI", async () => {
       const initialMachines = equipmentMock[0].machines;
       const { rerender } = render(
         <EquipmentMachinesGrid machines={initialMachines} />,
       );
 
-      // 1. Verifica o estado inicial
+      // 1. Checks the initial state
       const initialOccupied = initialMachines.filter(
         (m) => m.status === "Ocupado",
       ).length;
@@ -207,20 +207,18 @@ describe("Ocupação de Equipamentos", () => {
         (m) => m.status === "Disponível",
       ).length;
 
-      expect(screen.getAllByTestId("icon-ocupado")).toHaveLength(
+      expect(screen.getAllByTestId("icon-occupied")).toHaveLength(
         initialOccupied,
       );
-      expect(screen.getAllByTestId("icon-disponivel")).toHaveLength(
-        initialFree,
-      );
+      expect(screen.getAllByTestId("icon-available")).toHaveLength(initialFree);
 
-      // 2. Altera o status de uma máquina para "Disponível"
+      // 2. Changes machine status to "Available"
       const updatedMachines = JSON.parse(JSON.stringify(initialMachines));
       updatedMachines[0].status = "Disponível";
 
       rerender(<EquipmentMachinesGrid machines={updatedMachines} />);
 
-      // 3. Verifica se a UI foi atualizada
+      // 3. Checks if the UI was updated
       const finalOccupied = updatedMachines.filter(
         (m: { status: string }) => m.status === "Ocupado",
       ).length;
@@ -228,10 +226,10 @@ describe("Ocupação de Equipamentos", () => {
         (m: { status: string }) => m.status === "Disponível",
       ).length;
 
-      expect(screen.queryAllByTestId("icon-ocupado")).toHaveLength(
+      expect(screen.queryAllByTestId("icon-occupied")).toHaveLength(
         finalOccupied,
       );
-      expect(screen.getAllByTestId("icon-disponivel")).toHaveLength(finalFree);
+      expect(screen.getAllByTestId("icon-available")).toHaveLength(finalFree);
     });
   });
 });

@@ -15,11 +15,11 @@ function getBarClasses(occupancyPercent: number): { bg: string; text: string } {
   return { bg: "bg-red-500", text: "text-red-500" };
 }
 
-interface EquipmentOccupationItemProps {
+type EquipmentOccupationItemProps = {
   equipment: EquipmentStatus;
   isExpanded: boolean;
   onToggle: () => void;
-}
+};
 
 export function EquipmentOccupationItem({
   equipment,
@@ -31,9 +31,9 @@ export function EquipmentOccupationItem({
   const barClasses = getBarClasses(occupancyPercent);
 
   return (
-    <div id="exercise-bar" className="m-4 rounded-lg bg-white">
+    <div className="m-4 rounded-lg bg-white">
       <div className="flex items-center justify-between">
-        <div id="exercise-bar-info" className="flex items-center gap-2">
+        <div className="equipment-info flex items-center gap-2">
           <span className="!sm:text-xs font-semibold text-gray-800">
             {name}
           </span>
@@ -41,10 +41,7 @@ export function EquipmentOccupationItem({
             ({inUse}/{total} em uso)
           </span>
         </div>
-        <div
-          id="exercise-bar-stats"
-          className="flex items-center gap-2 text-sm !text-gray-600"
-        >
+        <div className="equipment-stats flex items-center gap-2 text-sm !text-gray-600">
           {estimatedWaitMinutes !== undefined && estimatedWaitMinutes > 0 && (
             <span>~{estimatedWaitMinutes}min espera</span>
           )}
@@ -69,8 +66,7 @@ export function EquipmentOccupationItem({
       </button>
 
       <div
-        id="exercise-bar-details"
-        className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+        className={`equipment-details grid transition-[grid-template-rows] duration-300 ease-in-out ${
           isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         }`}
       >

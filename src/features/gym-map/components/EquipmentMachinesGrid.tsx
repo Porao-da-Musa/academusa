@@ -37,14 +37,14 @@ export const EquipmentMachinesGrid = ({
             {machine.status === "Disponível" ? (
               <SquareCheck
                 className="w-5 h-5 text-green-500"
-                data-testid="icon-disponivel"
+                data-testid="icon-available"
                 role="img"
                 aria-label="Status: Disponível"
               />
             ) : (
               <Ban
                 className="w-5 h-5 text-red-500"
-                data-testid="icon-ocupado"
+                data-testid="icon-occupied"
                 role="img"
                 aria-label="Status: Ocupado"
               />
