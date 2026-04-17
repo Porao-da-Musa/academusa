@@ -17,7 +17,7 @@ export function AvailabilityBar({
         className={`relative h-full rounded-l-lg transition-[width,background-color] duration-700 ease-in-out ${bgClass}`}
         style={{ width: `${occupancyPercent}%` }}
       >
-        <span className="absolute right-2 top-1/2 -translate-y-1/2 font-sm text-white text-sm whitespace-nowrap">
+        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-white text-sm whitespace-nowrap">
           {occupancyPercent}%
         </span>
       </div>

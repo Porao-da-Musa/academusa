@@ -23,7 +23,6 @@ export const EquipmentMachinesGrid = ({
           id={`machine-${machine.id}`}
           className="flex items-center justify-between p-3 bg-slate-50 rounded-lg shadow sm:text-sm lg:text-base"
           tabIndex={0}
-          role="listitem"
           aria-label={`Máquina ${machine.name}, status: ${machine.status}`}
         >
           <span className="text-slate-900 font-medium">{machine.name}</span>

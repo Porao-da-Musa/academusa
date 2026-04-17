@@ -27,16 +27,18 @@ export function EquipmentOccupationItem({
   onToggle,
 }: EquipmentOccupationItemProps) {
   const { name, total, inUse, estimatedWaitMinutes, machines } = equipment;
-  const occupancyPercent = total > 0 ? Math.round((inUse / total) * 100) : 0;
+  const occupancyPercent =
+    total > 0 && total < 100 ? Math.round((inUse / total) * 100) : 0;
+  console.log(
+    `Calculating occupancy for ${name}: inUse=${inUse}, total=${total}, occupancyPercent=${occupancyPercent}%`,
+  );
   const barClasses = getBarClasses(occupancyPercent);
 
   return (
     <div className="m-4 rounded-lg bg-white">
       <div className="flex items-center justify-between">
         <div className="equipment-info flex items-center gap-2">
-          <span className="!sm:text-xs font-semibold text-gray-800">
-            {name}
-          </span>
+          <span className="sm:text-xs font-semibold text-gray-800">{name}</span>
           <span className="text-sm text-gray-500">
             ({inUse}/{total} em uso)
           </span>
