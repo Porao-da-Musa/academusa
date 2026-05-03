@@ -1,9 +1,9 @@
 import { Ban, SquareCheck } from "lucide-react";
-import type { Machine } from "../types/equipmentOccupation.mock";
+import type { Machine } from "../types/equipmentOccupation.types";
 
-interface EquipmentMachinesGridProps {
+type EquipmentMachinesGridProps = {
   machines: Machine[];
-}
+};
 
 export const EquipmentMachinesGrid = ({
   machines,

@@ -1,4 +1,4 @@
-import type { EquipmentStatus } from "../types/equipmentOccupation.mock";
+import type { EquipmentStatus } from "../types/equipmentOccupation.types";
 
 export const equipmentMock: EquipmentStatus[] = [
   {

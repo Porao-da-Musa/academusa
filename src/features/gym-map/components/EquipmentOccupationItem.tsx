@@ -1,4 +1,4 @@
-import type { EquipmentStatus } from "../types/equipmentOccupation.mock";
+import type { EquipmentStatus } from "../types/equipmentOccupation.types";
 import { EquipmentMachinesGrid } from "./EquipmentMachinesGrid";
 import { AvailabilityBar } from "./AvailabilityBar";
 import {
@@ -29,9 +29,7 @@ export function EquipmentOccupationItem({
   const { name, total, inUse, estimatedWaitMinutes, machines } = equipment;
   const occupancyPercent =
     total > 0 && total < 100 ? Math.round((inUse / total) * 100) : 0;
-  console.log(
-    `Calculating occupancy for ${name}: inUse=${inUse}, total=${total}, occupancyPercent=${occupancyPercent}%`,
-  );
+
   const barClasses = getBarClasses(occupancyPercent);
 
   return (

@@ -1,7 +1,7 @@
-interface AvailabilityBarProps {
+type AvailabilityBarProps = {
   occupancyPercent: number;
   bgClass: string;
-}
+};
 
 export function AvailabilityBar({
   occupancyPercent,
