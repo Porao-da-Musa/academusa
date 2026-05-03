@@ -53,7 +53,7 @@ describe("Equipment Occupation", () => {
         onToggle={() => {}}
       />,
     );
-    expect(screen.getAllByText("0%").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("40%").length).toBeGreaterThan(0);
 
     rerender(
       <EquipmentOccupationItem
