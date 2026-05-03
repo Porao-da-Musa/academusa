@@ -42,7 +42,7 @@ export function EquipmentOccupationItem({
           </span>
         </div>
         <div className="equipment-stats flex items-center gap-2 text-sm !text-gray-600">
-          {estimatedWaitMinutes !== undefined && estimatedWaitMinutes > 0 && (
+          {estimatedWaitMinutes && estimatedWaitMinutes > 0 && (
             <span>~{estimatedWaitMinutes}min espera</span>
           )}
           <span
