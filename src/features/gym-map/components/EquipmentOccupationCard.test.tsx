@@ -199,7 +199,6 @@ describe("Equipment Occupation", () => {
         <EquipmentMachinesGrid machines={initialMachines} />,
       );
 
-      // 1. Checks the initial state
       const initialOccupied = initialMachines.filter(
         (m) => m.status === "Ocupado",
       ).length;
@@ -212,13 +211,11 @@ describe("Equipment Occupation", () => {
       );
       expect(screen.getAllByTestId("icon-available")).toHaveLength(initialFree);
 
-      // 2. Changes machine status to "Available"
       const updatedMachines = JSON.parse(JSON.stringify(initialMachines));
       updatedMachines[0].status = "Disponível";
 
       rerender(<EquipmentMachinesGrid machines={updatedMachines} />);
 
-      // 3. Checks if the UI was updated
       const finalOccupied = updatedMachines.filter(
         (m: { status: string }) => m.status === "Ocupado",
       ).length;
