@@ -18,8 +18,6 @@ import {
   LOW_OCCUPANCY_THRESHOLD,
 } from "../constants/occupancy.constants";
 import { WelcomeCard } from "../components/WelcomeCard";
-
-const name = "Alex";
 const trains = "5/4";
 const average_train = 20;
 const average_minutes = 45;
@@ -60,7 +58,7 @@ export function Home() {
   return (
     <div className="bg-gray-50 p-6 justify-center px-12">
       <div className="flex w-full h-min" id="welcome-card">
-        <WelcomeCard name={name} />
+        <WelcomeCard />
       </div>
 
       {/* Métricas */}
