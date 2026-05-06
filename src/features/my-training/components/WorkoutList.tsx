@@ -1,4 +1,5 @@
 import type { WorkoutExercise } from "../types/training.types";
+import { EmptyWorkoutCard } from "./EmptyCardWorkout";
 import { WorkoutExerciseCard } from "./WorkoutCard";
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
     id: string,
     data: Partial<WorkoutExercise>,
   ) => void;
+  readonly onOpenAddExercise?: () => void;
 };
 
 export function WorkoutExerciseList({
@@ -16,7 +18,12 @@ export function WorkoutExerciseList({
   onDeleteExercise,
   onTradeExercice,
   onUpdateExercise,
+  onOpenAddExercise,
 }: Props) {
+  if (exercises.length === 0) {
+    return <EmptyWorkoutCard onAddExercise={onOpenAddExercise ?? (() => {})} />;
+  }
+
   return (
     <div className="space-y-6">
       {exercises.map((exercise, index) => {
