@@ -1,9 +1,12 @@
+import { EquipmentOccupationCard } from "../components/EquipmentOccupationCard";
+
 export function GymMap() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-600 p-6">
-      <h1 className="text-4xl font-bold text-white">
-        Bem-vindo à Página Mapa da Academia!
-      </h1>
+    <div
+      id="gym-map-page"
+      className="min-h-screen bg-gray-50 p-3 min-[500px]:p-12"
+    >
+      <EquipmentOccupationCard />
     </div>
   );
 }

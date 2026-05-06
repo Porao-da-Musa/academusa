@@ -10,8 +10,8 @@ export function Card({ children, className = "" }: CardProps) {
     <div
       className={`
         rounded-lg
-        p-5
-        m-2
+        p-3 min-[400px]:p-5
+        m-1 min-[400px]:m-2
         ${className}
       `}
       style={{ boxShadow: "0 0 15px rgba(0, 0, 0, 0.1)" }}
